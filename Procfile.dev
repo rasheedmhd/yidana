@@ -1,0 +1,5 @@
+web: unset PORT && env RUBY_DEBUG_OPEN=true ./wait-for-it.sh -t 0 localhost:5432 -- ./wait-for-it.sh -t 0 localhost:6379 -- rails server
+js: yarn build --watch
+css: yarn build:css --watch
+docker-compose: docker compose up
+sidekiq: ./wait-for-it.sh -t 0 localhost:6379 -- bundle exec sidekiq -C config/sidekiq.yml

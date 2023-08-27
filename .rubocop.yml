@@ -1,0 +1,11 @@
+---
+require:
+- rubocop-performance
+- rubocop-rails
+- rubocop-capybara
+- rubocop-factory_bot
+- rubocop-rspec
+Style/FrozenStringLiteralComment:
+  SafeAutoCorrect: true
+Style/ClassAndModuleChildren:
+  SafeAutoCorrect: true

@@ -1,0 +1,24 @@
+---
+version: '3.7'
+services:
+  mailcatcher:
+    image: stpaquet/alpinemailcatcher
+    ports:
+    - 1080:1080
+    - 1025:1025
+  postgres:
+    restart: unless-stopped
+    image: postgres:15
+    environment:
+      POSTGRES_MULTIPLE_DATABASES: my_app,my_app_testd
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+    - "./.data/postgres/data:/var/lib/postgresql/data"
+    - "./db/initdb.d:/docker-entrypoint-initdb.d"
+    ports:
+    - 5432:5432
+  redis:
+    image: redis
+    ports:
+    - 6379:6379
