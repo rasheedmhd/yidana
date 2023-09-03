@@ -23,6 +23,16 @@ module MyApp
 
     config.generators do |g|
       g.fixtures = false
+      g.test_framework :rspec,
+                       controller_specs: false,
+                       request_specs: false,
+                       view_specs: false,
+                       helper_specs: false,
+                       routing_specs: false
+      g.assets false
+      g.stylesheets false
+      g.helper false
+      g.test_unit fixture: false
     end
 
     config.active_job.queue_adapter = :sidekiq

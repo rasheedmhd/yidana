@@ -9,6 +9,7 @@ ruby '~> 3.2.2'
 
 gem 'pg'
 gem 'redis'
+gem 'rodauth-rails', path: '/Users/stefan/code/plutonium/rodauth-rails'
 gem 'sidekiq'
 gem 'sidekiq-failures'
 
