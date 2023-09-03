@@ -1,0 +1,11 @@
+<% flash.each do |type, msg| %>
+  <%
+    type = {
+      alert: :danger,
+      notice: :primary,
+    }[type.to_sym] || type
+  %>
+  <div class="alert alert-<%= type %>" role="alert">
+    <%= msg %>
+  </div>
+<% end %>
