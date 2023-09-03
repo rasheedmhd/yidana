@@ -63,6 +63,8 @@ end
 group :development do
   gem 'annotate'
   gem 'awesome_print'
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'htmlbeautifier'
   gem 'plutonium_generators', path: '/Users/stefan/code/plutonium/plutonium_generators'
   gem 'rubocop', require: false
