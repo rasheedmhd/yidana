@@ -73,4 +73,6 @@ Rails.application.configure do
   ActiveRecord::Base.logger = Logger.new($stdout)
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = { address: ENV.fetch('MAILCATCHER_HOST', '127.0.0.1'), port: 1_025 }
+
+  config.action_mailer.default_url_options = { host: '127.0.0.1', port: ENV.fetch('PORT', 3000) }
 end

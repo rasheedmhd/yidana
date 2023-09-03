@@ -1,0 +1,22 @@
+<%= form_with url: rodauth(:user).remember_path, method: :post, data: { turbo: false } do |form| %>
+  <fieldset class="form-group mb-3">
+    <div class="form-check">
+      <%= form.radio_button rodauth(:user).remember_param, rodauth(:user).remember_remember_param_value, id: "remember-remember", class: "form-check-input" %>
+      <%= form.label "remember-remember", rodauth(:user).remember_remember_label, class: "form-check-label" %>
+    </div>
+
+    <div class="form-check">
+      <%= form.radio_button rodauth(:user).remember_param, rodauth(:user).remember_forget_param_value, id: "remember-forget", class: "form-check-input" %>
+      <%= form.label "remember-forget", rodauth(:user).remember_forget_label, class: "form-check-label" %>
+    </div>
+
+    <div class="form-check">
+      <%= form.radio_button rodauth(:user).remember_param, rodauth(:user).remember_disable_param_value, id: "remember-disable", class: "form-check-input" %>
+      <%= form.label "remember-disable", rodauth(:user).remember_disable_label, class: "form-check-label" %>
+    </div>
+  </fieldset>
+
+  <div class="form-group mb-3">
+    <%= form.submit rodauth(:user).remember_button, class: "btn btn-primary" %>
+  </div>
+<% end %>
