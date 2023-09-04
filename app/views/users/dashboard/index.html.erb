@@ -1,3 +1,5 @@
 
 
-Users#Dashboard#index
+<% current_user.entities.each do |entity| %>
+  <%= entity.inspect %> <hr />
+<% end %>

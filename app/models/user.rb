@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -13,5 +15,10 @@
 #
 class User < ApplicationRecord
   include Rodauth::Rails.model(:user)
+
   enum :status, unverified: 1, verified: 2, closed: 3
+
+  has_many :entities
+
+  validates :email, presence: true
 end

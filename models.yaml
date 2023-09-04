@@ -1,0 +1,203 @@
+# rails g scaffold job user:belongs_to company:belongs_to office_location:belongs_to name:text role:text experience_level:text job_type:text job_description:text min_annual_salary:integer max_annual_salary:integer offers_equity:boolean technologies:text remote:boolean remote_details:jsonb  how_to_apply:text application_channels:jsonb
+
+- Register recruiters
+- Jobs posted
+
+- We want make the chaching!
+
+- Allow talent profiles
+-
+
+
+PU Schema
+
+
+#
+#          (owner)
+# Team <- TeamUser -> User
+# -> type     ^       ->
+# (cust|org)  |
+#         TeamUserUserRole -> UserRole (Admin  | Operations | Member | Reporter | +Developer)
+# AdminUser <- AdminRoleAdminUser -> AdminRole <- AdminPermissionAdminRole -> AdminPermission
+#
+# SaasResource -> ApplicationRecord
+#   : Pu::SaasResource
+#     -> belongs_to Team
+#
+#
+
+
+
+Entity:
+  type: string
+  name: string
+  slug: string
+  owner: User
+
+rails g model entity type:string name:string slug:string user:belongs_to
+
+
+
+User: tied to a single person. used to authenticate to the app
+Entity: this represents an object we intract with. it could be a customer, a business etc
+        1. Has a single owner
+        2. Can have many users with access
+        3. Each user can have different roles
+EntityUser: gives a user access to an entity. actions are by acl controlled
+
+= Recruiter (Individual | Agency)
++ Organisation
+  + JobDescription
+    + Listing
+  + GigDescription
+    + Listing
+
+
+= Talent (TBD)
+
+
+Job:
+  entity: belongs_to_through :organisation
+  organisation: belongs_to
+  name: text
+  job_role: Text[]
+    - Backend Developer
+    - Data Scientist
+    - Database Administrator
+    - Designer
+    - Desktop Developer
+    - DevOps
+    - Embedded Developer
+    - Frontend Developer
+    - Full Stack Developer
+    - Graphics/Game Developer
+    - Mobile Developer
+    - Product Manager
+    - QA/Test Developer
+    - System Administrator
+  experience_level: ExperienceLevel[]
+    0: Student
+    1: Junior
+    2: Mid-Level
+    3: Senior
+    4: Lead
+    5: Manager
+  job_type: JobTypeEnum[]
+    full_time: Full-time
+    contract: Contract
+    internship: Internship
+  job_description: RichText
+  minimum_annual_salary: Integer
+  maximum_annual_salary: Integer
+  offers_equity: Boolean
+  technologies: Text[]
+  how_to_apply: text
+  application_channels: Hash
+    - url
+    - email
+    - devcongress
+  remote: Boolean
+  remote_details:
+    remote_type: Text
+      - Fully Remote
+      - Remote First
+      - Remote Friendly
+    preferred_timezone: Timezone?
+    preferred_timezone_difference: Integer? # +/- hours preferred
+    notes: Text
+  visa_sponsorship: Boolean?
+  relocation_assistance: Boolean?
+
+
+Company:
+  name: Text
+  headline: Text
+  description: RichText
+  website: Url
+  logo: Url
+  industry: Text[]
+  company_size: Text
+    - 1-10
+    - 11-50
+    - 51-200
+    - 201-500
+    - 501-1000
+    - 1001-5000
+    - 5001-10,000
+    - 10,001+
+  company_type: Text
+    - Private
+    - Public
+    - VC Funded
+    - Government
+    - Non-Governmental Organization
+  benefits: Text[]
+  joel_test: # https://www.joelonsoftware.com/2000/08/09/the-joel-test-12-steps-to-better-code/
+    - Do you use source control?
+    - Can you make a build in one step?
+    - Do you make daily builds?
+    - Do you have a bug database?
+    - Do you fix bugs before writing new code?
+    - Do you have an up-to-date schedule?
+    - Do you have a spec?
+    - Do programmers have quiet working conditions?
+    - Do you use the best tools money can buy?
+    - Do you have testers?
+    - Do new candidates write code during their interview?
+    - Do you do hallway usability testing?
+
+
+# About this job
+# Job type: Full-time
+# Experience level: Junior, Mid-Level, Senior
+# Role: Frontend Developer
+# Industry: Agile Software Development, Automotive, Mobility
+# Company size: 201-500 people
+# Company type: VC Funded
+# Remote details
+# Preferred Timezone: (GMT+01:00) Berlin +/- 4 hours
+# Office Location: München, Germany.  can also work full time from this office.
+# Visa Sponsorship: Yes
+# Relocation Assistance: Yes
+# Technologies
+# javascript
+# reactjs
+# node.js
+# typescript
+# redux
+# Job description
+# FINN makes mobility fun and sustainable. With a flexible car subscription, we bring a true e-commerce experience to car ownership and offset all CO2 emissions along the way. Join our fast-growing startup to build the most popular auto e-commerce platform. We work with the best car brands in the world and are backed by leading global investors.
+
+# Your Role
+
+# As a Frontend Developer, you will be responsible for creating customer-facing and internal web applications that will manage thousands of vehicles and customers on a daily basis. You have a chance to join the team early on and work independently on our product.
+
+# Your Benefits
+
+# You have the flexibility to work either in our Munich office or remotely within 3 hours of the Munich time zone (CET/CEST).
+# You quickly develop and succeed in a highly motivating startup environment with ambitious challenges in cross-functional teams and massive growth potential.
+# Excellent fixed salary, significant virtual equity share of the company, along with a yearly personal development budget of 1,500€.
+# Our team is known for loads of fun and we have frequent team events to strengthen our connection.
+# At FINN you have complete autonomy over your choice of equipment, accessories, editors, tools, and technology.
+# Do you want to drive your own car with FINN? – Get one with our employee discount program.
+# Your Responsibilities
+
+# Best software to support business: Ship new features with your team for our web applications. Your goal is to deliver the best software possible for our customers and business units.
+# Strive for excellence: Strive to deliver the best possible user experience and to follow engineering best practices.
+# Build it, run it: Build features with a ‘build it, run it’ mindset and be responsible for testing, deploying, and monitoring your code. We believe in Serverless!
+# Your Profile
+
+# Profound knowledge of JavaScript, especially React and TypeScript.
+# Have a deep understanding and knowledge of CSS Frameworks and Preprocessors (e.g. Sass, SCSS).
+# Prior experience in testing and bundling Javascript code.
+# Highly passionate about hands-on coding.
+# Previous experience in an agile development team.
+# Strong growth mindset and the motivation to continuously improve self and team performance.
+# Fluency in English.
+# Interested in Joining Our Fast-Growing Startup?
+
+# Please upload your CV and transcripts online. Christian Pötter and Henriette Brune are looking forward to your application!
+
+# Equal Opportunities for Everyone
+
+# FINN is an equal opportunity employer. We embrace and celebrate diversity and are committed to creating an inclusive environment for all .
