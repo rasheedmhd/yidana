@@ -1,4 +1,6 @@
-require "sequel/core"
+# frozen_string_literal: true
+
+require 'sequel/core'
 
 class RodauthUserPlugin < RodauthPlugin
   configure do
@@ -12,7 +14,8 @@ class RodauthUserPlugin < RodauthPlugin
     # http://rodauth.jeremyevans.net/documentation.html
 
     # List of authentication features that are loaded.
-    enable :login, :remember, :logout, :create_account, :verify_account, :verify_account_grace_period, :reset_password, :reset_password_notify, :change_login, :verify_login_change, :change_password, :change_password_notify
+    enable :login, :remember, :logout, :create_account, :verify_account, :verify_account_grace_period, :reset_password,
+           :reset_password_notify, :change_login, :verify_login_change, :change_password, :change_password_notify
 
     # ==> General
 
@@ -28,13 +31,13 @@ class RodauthUserPlugin < RodauthPlugin
     # hmac_secret "<SECRET_KEY>"
 
     # Use path prefix for all routes.
-    prefix "/users"
+    prefix '/users'
 
     # Store password hash in a column instead of a separate table.
     account_password_hash_column :password_hash
 
     # Specify the controller used for view rendering, CSRF, and callbacks.
-    rails_controller { User::RodauthController }
+    rails_controller { Rodauth::UserController }
 
     # Set password when creating account instead of when verifying.
     verify_account_set_password? false
@@ -44,7 +47,7 @@ class RodauthUserPlugin < RodauthPlugin
     # password_confirm_param "confirm_password"
 
     # Redirect back to originally requested location after authentication.
-    # login_return_to_requested_location? true
+    login_return_to_requested_location? true
     # two_factor_auth_return_to_requested_location? true # if using MFA
 
     # Autologin the user after they have reset their password.
@@ -160,7 +163,7 @@ class RodauthUserPlugin < RodauthPlugin
     # ==> Redirects
 
     # Redirect to home page after logout.
-    logout_redirect "/"
+    logout_redirect '/'
 
     # Redirect to wherever login redirects to after account verification.
     verify_account_redirect { login_redirect }

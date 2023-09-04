@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  layout false
   add_flash_types :success, :warning
 
   private
 
-  def current_user
-    rodauth(:user).rails_account
+  def app_name
+    Rails.application.class.module_parent.name
   end
-  helper_method :current_user
+  helper_method :app_name
 end

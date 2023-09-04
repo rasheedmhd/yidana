@@ -10,9 +10,19 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
-  <body>
+  <body class="bg-body-tertiary">
+    <div class="container-fluid">
+      <div class="row justify-content-start">
+        <div class="col-2">
+          <%= render 'sidebar' %>
+        </div>
+        <div class="col-10" style="padding-top:65px;">
+          <%= render 'flash' %>
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+    </div>
     <%= render 'color_modes' %>
-    <%= render 'flash' %>
-    <%= yield %>
   </body>
 </html>
