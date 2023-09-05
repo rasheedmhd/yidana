@@ -25,7 +25,17 @@
 class Entity < ApplicationRecord
   belongs_to :user
 
+  before_validation :maybe_set_slug
+
   validates :name, presence: true, length: { minimum: 3, maximum: 80 }
   validates :slug, presence: true, uniqueness: { scope: :type, case_sensitive: true, if: :will_save_change_to_slug? },
                    length: { minimum: 3, maximum: 100 }
+
+  private
+
+  def maybe_set_slug
+    return unless slug.blank? && name.present?
+
+    self.slug = name.parameterize
+  end
 end

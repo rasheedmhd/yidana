@@ -1,15 +1,15 @@
 # rails g scaffold job user:belongs_to company:belongs_to office_location:belongs_to name:text role:text experience_level:text job_type:text job_description:text min_annual_salary:integer max_annual_salary:integer offers_equity:boolean technologies:text remote:boolean remote_details:jsonb  how_to_apply:text application_channels:jsonb
 
-- Register recruiters
-- Jobs posted
+# - Register recruiters
+# - Jobs posted
 
-- We want make the chaching!
+# - We want make the chaching!
 
-- Allow talent profiles
--
+# - Allow talent profiles
+# -
 
 
-PU Schema
+# PU Schema
 
 
 #
@@ -26,34 +26,36 @@ PU Schema
 #
 #
 
-
-
 Entity:
   type: string
   name: string
   slug: string
   owner: User
+# rails g model entity type:string name:string slug:string user:belongs_to
 
-rails g model entity type:string name:string slug:string user:belongs_to
-
-
-
-User: tied to a single person. used to authenticate to the app
-Entity: this represents an object we intract with. it could be a customer, a business etc
-        1. Has a single owner
-        2. Can have many users with access
-        3. Each user can have different roles
-EntityUser: gives a user access to an entity. actions are by acl controlled
-
-= Recruiter (Individual | Agency)
-+ Organisation
-  + JobDescription
-    + Listing
-  + GigDescription
-    + Listing
+EntityUser:
+  entity: belongs_to
+  user: belongs_to
+  role: enum
+# rails g model entity_user entity:belongs_to user:belongs_to role: integer
 
 
-= Talent (TBD)
+# User: tied to a single person. used to authenticate to the app
+# Entity: this represents an object we intract with. it could be a customer, a business etc
+#         1. Has a single owner
+#         2. Can have many users with access
+#         3. Each user can have different roles
+# EntityUser: gives a user access to an entity. actions are by acl controlled
+
+# = Recruiter (Individual | Agency)
+# + Organisation
+#   + JobDescription
+#     + Listing
+#   + GigDescription
+#     + Listing
+
+
+# = Talent (TBD)
 
 
 Job:

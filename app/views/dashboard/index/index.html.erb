@@ -1,0 +1,11 @@
+
+
+
+<div class="list-group">
+  <% current_user.entities.each do |entity| %>
+    <%= link_to "#{entity.name}#{" *" if entity.id == current_entity.id}", switch_entity_path(entity), class:"list-group-item list-group-item-action" %>
+  <% end %>
+</div>
+
+
+<%= link_to 'Create new entity', onboarding_path %>

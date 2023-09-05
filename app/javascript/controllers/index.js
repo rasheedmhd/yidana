@@ -9,3 +9,9 @@ application.register("color-modes", ColorModesController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import ToastController from "./toast_controller"
+application.register("toast", ToastController)
+
+import Timeago from 'stimulus-timeago'
+application.register('timeago', Timeago)

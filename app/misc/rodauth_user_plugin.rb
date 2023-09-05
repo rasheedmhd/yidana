@@ -57,7 +57,7 @@ class RodauthUserPlugin < RodauthPlugin
     # delete_account_on_close? true
 
     # Redirect to the app from login and registration pages if already logged in.
-    # already_logged_in { redirect login_redirect }
+    already_logged_in { redirect login_redirect }
 
     # Accept both api and form requests
     # Requires the JSON feature
@@ -162,8 +162,11 @@ class RodauthUserPlugin < RodauthPlugin
 
     # ==> Redirects
 
+    # Redirect to dashboard after login.
+    login_redirect { rails_routes.dashboard_path }
+
     # Redirect to home page after logout.
-    logout_redirect '/'
+    logout_redirect { rails_routes.root_path }
 
     # Redirect to wherever login redirects to after account verification.
     verify_account_redirect { login_redirect }
@@ -173,6 +176,9 @@ class RodauthUserPlugin < RodauthPlugin
 
     # Ensure requiring login follows login route changes.
     require_login_redirect { login_path }
+
+    # Redirect to wherever login redirects to after account creation.
+    create_account_redirect { login_redirect }
 
     # ==> Deadlines
     # Change default deadlines for some actions.

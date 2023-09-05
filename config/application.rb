@@ -22,6 +22,7 @@ module MyApp
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.generators do |g|
+      g.factory_bot false
       g.fixtures = false
       g.test_framework :rspec,
                        controller_specs: false,

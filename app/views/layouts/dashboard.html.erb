@@ -11,18 +11,18 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
   <body class="bg-body-tertiary">
-    <div class="container-fluid">
-      <div class="row justify-content-start">
-        <div class="col-2">
-          <%= render 'sidebar' %>
-        </div>
-        <div class="col-10" style="padding-top:65px;">
-          <%= render 'flash' %>
-          <%= yield %>
-        </div>
+    <%= render "messages" %>
+    <main class="row">
+      <div class="col-md-2">
+        <%= render 'sidebar' %>
       </div>
-    </div>
-    </div>
+      <div class="col-md-10">
+        <div class="p-1" style="height: 65px">
+          <%# Fake padding for now %>
+        </div>
+        <%= yield %>
+      </div>
+    </main>
     <%= render 'color_modes' %>
   </body>
 </html>

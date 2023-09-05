@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  layout false
   add_flash_types :success, :warning
 
   private

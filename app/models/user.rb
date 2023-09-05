@@ -16,9 +16,10 @@
 class User < ApplicationRecord
   include Rodauth::Rails.model(:user)
 
-  enum :status, unverified: 1, verified: 2, closed: 3
+  enum :status, { unverified: 1, verified: 2, closed: 3 }, validate: true, prefix: true
 
-  has_many :entities
+  has_many :entity_users
+  has_many :entities, through: :entity_users
 
   validates :email, presence: true
 end

@@ -6,7 +6,15 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root 'pages#home'
 
-  namespace :users do
-    resources :dashboard
+  get 'onboarding', to: 'onboarding#new', as: 'onboarding'
+  post 'onboarding', to: 'onboarding#create'
+
+  # scope 'dashboard', module: 'users' do
+  #   get '', to: 'dashboard#index', as: 'dashboard'
+  # end
+
+  scope 'dashboard', module: :dashboard do
+    get '', to: 'index#index', as: 'dashboard'
+    get 'switch/:entity_id', to: 'index#switch_entity', as: 'switch_entity'
   end
 end
