@@ -23,6 +23,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Entity < ApplicationRecord
+  include Slugged
+
   belongs_to :user
 
   before_validation :maybe_set_slug
@@ -30,6 +32,9 @@ class Entity < ApplicationRecord
   validates :name, presence: true, length: { minimum: 3, maximum: 80 }
   validates :slug, presence: true, uniqueness: { scope: :type, case_sensitive: true, if: :will_save_change_to_slug? },
                    length: { minimum: 3, maximum: 100 }
+
+  has_many :entity_users
+  has_many :users, through: :entity_users
 
   private
 

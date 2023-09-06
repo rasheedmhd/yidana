@@ -3,18 +3,30 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  root 'pages#home'
+  # pu:start routes
+  # This block is required for plutonium to work correctly.
+  # Do not modify unless you know what you are doing.
 
-  get 'onboarding', to: 'onboarding#new', as: 'onboarding'
-  post 'onboarding', to: 'onboarding#create'
-
-  # scope 'dashboard', module: 'users' do
-  #   get '', to: 'dashboard#index', as: 'dashboard'
-  # end
-
-  scope 'dashboard', module: :dashboard do
-    get '', to: 'index#index', as: 'dashboard'
-    get 'switch/:entity_id', to: 'index#switch_entity', as: 'switch_entity'
+  # Onboarding routes
+  scope 'onboarding' do
+    get '', to: 'onboarding#new', as: 'onboarding'
+    post '', to: 'onboarding#create'
+    # pu:routes:onboarding
   end
+
+  # Generic dashboard route
+  get 'dashboard', to: 'dashboard#index' # pu:routes:dashboard
+
+  # Entity specific dashboard route
+  scope ':entity_slug/dashboard', module: :dashboard, as: :entity do
+    get '', to: 'index#index'
+    # pu:routes:entity
+  end
+
+  # pu:end routes
+
+  # Defines the root path route ("/")
+  root 'pages#home' # pu:routes:root
+
+  # Add your routes after this line
 end

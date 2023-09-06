@@ -15,18 +15,23 @@ module CurrentEntity
 
   private
 
+  #
+  # Redirect to onboarding page if current_entity is not set
+  #
+  # Updates the current session with the current entity if it is set
+  #
+  # @see Dashboard#current_entity
+  #
   def require_current_entity
-    # redirect to onboardig page if current_entity is not set
-    redirect_to(onboarding_path) and return unless current_entity.present?
+    if current_entity.present?
+      session[:current_entity] = current_entity.id
+    else
+      redirect_to onboarding_path
+    end
   end
 
   def current_entity
-    @current_entity ||= begin
-      current_entity_id = session[:current_entity]
-      current_entity = current_user.entities.where(id: current_entity_id).first if current_entity_id.present?
-      current_entity = current_user.entities.first unless current_entity.present?
-      session[:current_entity] = current_entity&.id
-      current_entity
-    end
+    # Raise NotFound if user does not have access to the entity
+    @current_entity ||= current_user.entities.where(slug: params.require(:entity_slug)).first!
   end
 end

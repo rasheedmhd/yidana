@@ -13,7 +13,7 @@
       <ul class="dropdown-menu pb-1">
         <li><h6 class="dropdown-header">Switch to</h6></li>
         <% current_user.entities.where.not(id: current_entity.id).order(:name).each do |entity| %>
-          <li><%= link_to "#{entity.name}#{" *" if entity.id == current_entity.id}", switch_entity_path(entity), class:"dropdown-item" %></li>
+          <li><%= link_to "#{entity.name}#{" *" if entity.id == current_entity.id}", entity_path(entity), class:"dropdown-item" %></li>
         <% end %>
         <li><hr class="dropdown-divider mb-1"></li>
         <li><%= link_to 'New', onboarding_path, class: "dropdown-item active btn btn-sm" %></li>

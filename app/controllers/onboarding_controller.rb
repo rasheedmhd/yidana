@@ -11,6 +11,6 @@ class OnboardingController < ApplicationController
     EntityUser.create! entity:, user: current_user, role: :owner
 
     session[:current_entity] = entity.id
-    redirect_to dashboard_path, success: "#{name} created successfully"
+    redirect_to entity_path(entity), success: "#{name} created successfully"
   end
 end
