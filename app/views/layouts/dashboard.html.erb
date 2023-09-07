@@ -12,17 +12,17 @@
   </head>
   <body class="bg-body-tertiary">
     <%= render "messages" %>
-    <main class="row">
-      <div class="col-md-2">
-        <%= render 'sidebar' %>
-      </div>
-      <div class="col-md-10">
-        <div class="p-1" style="height: 65px">
-          <%# Fake padding for now %>
+    <%= render "header" %>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-sm-3 col-xl-2 pt-2">
+          <%= render 'sidebar' %>
         </div>
-        <%= yield %>
+        <div class="col-xs-12 col-sm-9 col-xl-10 pt-2">
+          <%= yield %>
+        </div>
       </div>
-    </main>
+    </div>
     <%= render 'color_modes' %>
   </body>
 </html>

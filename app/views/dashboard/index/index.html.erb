@@ -1,14 +1,3 @@
-<div class="container">
-  <div class="row">
-    <div class="col-2">
-      <div class="card text-center">
-        <div class="card-header">
-          Users
-        </div>
-        <div class="card-body">
-          <p class="card-text fs-1"><%= current_entity.users.count %></p>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="row row-gap-2">
+  <%= render partial: "metric_card", locals: { title: "Users", value: current_entity.users.count } %>
 </div>

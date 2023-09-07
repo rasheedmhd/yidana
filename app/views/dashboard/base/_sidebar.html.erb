@@ -1,13 +1,8 @@
 
 
-  <div class="flex-shrink-0 p-3" >
-    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
-      <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-      <span class="fs-5 fw-semibold">DevCongress Jobs</span>
-    </a>
-
+  <div class="flex-shrink-0 px-2 border-end" >
     <div class="dropdown">
-      <a class="btn btn-lg dropdown-toggle ps-2 mb-2 " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <a class="btn btn-lg dropdown-toggle ps-2 mb-1 " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         <%= current_entity.name %>
       </a>
       <ul class="dropdown-menu pb-1">
@@ -35,11 +30,11 @@
       </li>
       <li class="mb-1">
         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-          Dashboard
+          Users
         </button>
         <div class="collapse" id="dashboard-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Overview</a></li>
+            <li><%= link_to 'Overview', entity_users_path(current_entity), class: "link-body-emphasis d-inline-flex text-decoration-none rounded" %></li>
             <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Weekly</a></li>
             <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Monthly</a></li>
             <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Annually</a></li>

@@ -18,9 +18,13 @@ Rails.application.routes.draw do
   get 'dashboard', to: 'dashboard#index' # pu:routes:dashboard
 
   # Entity specific dashboard route
-  scope ':entity_slug/dashboard', module: :dashboard, as: :entity do
+  scope ':entity/dashboard', module: :dashboard, as: :entity do
     get '', to: 'index#index'
+
     # pu:routes:entity
+
+    # pu:routes:entity:users
+    get 'users', to: 'users#index', as: :users
   end
 
   # pu:end routes

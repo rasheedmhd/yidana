@@ -32,6 +32,6 @@ module CurrentEntity
 
   def current_entity
     # Raise NotFound if user does not have access to the entity
-    @current_entity ||= current_user.entities.where(slug: params.require(:entity_slug)).first!
+    @current_entity ||= current_user.entities.where(slug: params.require(:entity)).first!
   end
 end
