@@ -29,36 +29,29 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-12 table-responsive">
+  <div class="col-12 table-responsive max-vh-75">
     <table class="table table-hover table-striped my-0">
-      <caption>Showing 1-10 out of 43 users</caption>
-      <thead>
+      <thead class="sticky-top">
         <tr>
           <th scope="col">#</th>
           <th scope="col">Email</th>
           <th scope="col">Status</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
-        <% @users.each do |user| %>
+        <% @resources.each do |resource| %>
         <tr>
-          <th scope="row"><%= user.id %></th>
-          <td><%= user.email %></td>
-          <td><%= user.status %></td>
+          <th scope="row"><%= resource.id %></th>
+          <td><%= resource.email %></td>
+          <td><%= resource.status %></td>
+          <td><%= link_to 'Hi' %></td>
         </tr>
         <% end %>
       </tbody>
     </table>
   </div>
   <div class="col-12">
-    <nav aria-label="Page navigation">
-      <ul class="pagination justify-content-center">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
-    </nav>
+    <%= pagination %>
   </div>
 </div>

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  include Pagy::Frontend
+
   def timeago(date, format: :long)
     return if date.blank?
 
@@ -15,5 +17,9 @@ module ApplicationHelper
                timeago_add_suffix_value: true,
                timeago_datetime_value: date.iso8601
              })
+  end
+
+  def pagination
+    render partial: 'pagination', locals: { pagy: @pagy }
   end
 end

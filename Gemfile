@@ -9,9 +9,12 @@ ruby '~> 3.2.2'
 
 gem 'pg'
 gem 'redis'
-gem 'rodauth-rails', path: '/Users/stefan/code/plutonium/rodauth-rails'
 gem 'sidekiq'
 gem 'sidekiq-failures'
+
+# Custom
+gem 'pagy'
+gem 'rodauth-rails', path: '/Users/stefan/code/plutonium/rodauth-rails'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.0.7', '>= 7.0.7.2'

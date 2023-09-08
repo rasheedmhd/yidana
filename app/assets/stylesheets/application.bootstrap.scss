@@ -14,3 +14,15 @@ body {
   vertical-align: -.125em;
   fill: currentColor;
 }
+
+.max-vh-75 {
+  max-height: 75vh
+}
+
+.pagy-bootstrap-nav {
+  display: inline-block !important;
+}
+
+.pagy-bootstrap-nav .pagination {
+  margin-bottom: 0px;
+}
