@@ -22,19 +22,24 @@ module MyApp
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.generators do |g|
-      g.factory_bot false
-      g.fixtures = false
-      g.test_framework :rspec,
-                       controller_specs: false,
-                       request_specs: false,
-                       model_specs: false,
-                       view_specs: false,
-                       helper_specs: false,
-                       routing_specs: false
+      # Disable spec generation
+      g.test_framework false
+
+      # Fixtures and factories
+      # g.factory_bot false
+      # g.test_unit fixture: false
+
+      # # Auto spec generation
+      # g.controller_specs false
+      # g.request_specs false
+      # g.view_specs false
+      # g.helper_specs false
+      # g.routing_specs false
+
+      # Scaffold extras
       g.assets false
       g.stylesheets false
       g.helper false
-      g.test_unit fixture: false
     end
 
     config.active_job.queue_adapter = :sidekiq
