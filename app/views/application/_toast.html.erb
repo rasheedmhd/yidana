@@ -3,7 +3,7 @@
 
     <% flash.each do |type, msg| %>
       <%
-        type = { alert: :danger, warning: :warning, success: :success }[type.to_sym] || :primary
+        type = { alert: :danger, error: :danger, warning: :warning, success: :success }[type.to_sym] || :primary
         title = { danger: 'Error', warning: 'Warning', success: 'Success' }[type] || 'Info'
         icon = {
           danger: 'exclamation-triangle-fill',

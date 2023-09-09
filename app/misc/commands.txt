@@ -1,1 +1,2 @@
 rails generate rodauth:install users
+rails generate simple_form:install --bootstrap

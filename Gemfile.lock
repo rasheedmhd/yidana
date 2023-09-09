@@ -192,6 +192,7 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.15.4-x86_64-darwin)
       racc (~> 1.4)
+    pagy (6.0.4)
     parallel (1.23.0)
     parser (3.2.2.3)
       ast (~> 2.4.1)
@@ -324,6 +325,9 @@ GEM
       redis-client (>= 0.14.0)
     sidekiq-failures (1.0.4)
       sidekiq (>= 4.0.0)
+    simple_form (5.2.0)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
     solargraph (0.49.0)
       backport (~> 1.2)
       benchmark
@@ -398,6 +402,7 @@ DEPENDENCIES
   faker
   htmlbeautifier
   jsbundling-rails
+  pagy
   pg
   plutonium_generators!
   puma (~> 5.0)
@@ -416,6 +421,7 @@ DEPENDENCIES
   shoulda-matchers
   sidekiq
   sidekiq-failures
+  simple_form
   solargraph
   sprockets-rails
   stimulus-rails

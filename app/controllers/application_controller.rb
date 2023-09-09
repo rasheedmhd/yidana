@@ -3,7 +3,7 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
 
-  add_flash_types :success, :warning
+  add_flash_types :success, :warning, :error
 
   private
 

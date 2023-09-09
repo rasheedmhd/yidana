@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # pu:start routes
+
   # This block is required for plutonium to work correctly.
   # Do not modify unless you know what you are doing.
 
@@ -20,17 +21,17 @@ Rails.application.routes.draw do
   # Entity specific dashboard route
   scope ':entity/dashboard', module: :dashboard, as: :entity do
     get '', to: 'index#index'
-
     # pu:routes:entity
 
-    # pu:routes:entity:users
-    get 'users', to: 'users#index', as: :users
+    resources :users do
+      # pu:routes:entity:users
+    end
   end
 
   # pu:end routes
 
   # Defines the root path route ("/")
-  root 'pages#home' # pu:routes:root
+  root 'pages#home'
 
   # Add your routes after this line
 end

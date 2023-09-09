@@ -110,7 +110,7 @@ Job:
   visa_sponsorship: Boolean?
   relocation_assistance: Boolean?
 
-
+# rails g model organisation name:string headline:string description:text website_url:string industry:string company_size:string company_type:string benefits:string joel_test:jsonb
 Company:
   name: Text
   headline: Text

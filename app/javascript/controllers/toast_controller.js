@@ -6,6 +6,5 @@ export default class extends Controller {
     const toastElList = document.querySelectorAll('.toast')
     const toastList = [...toastElList].map(toastEl => new bootstrap.Toast(toastEl, { delay: 5000 }))
     toastList.map(toastEl => toastEl.show())
-    console.log(toastList)
   }
 }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_04_233617) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_09_125747) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -37,6 +37,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_04_233617) do
     t.index ["entity_id"], name: "unique_owner_role_in_entity", unique: true, where: "(role = 0)"
     t.index ["user_id", "entity_id"], name: "index_entity_users_on_user_id_and_entity_id", unique: true
     t.index ["user_id"], name: "index_entity_users_on_user_id"
+  end
+
+  create_table "organisations", force: :cascade do |t|
+    t.bigint "entity_id", null: false
+    t.string "name", null: false
+    t.string "headline"
+    t.text "description"
+    t.string "website_url"
+    t.string "industry", default: [], null: false, array: true
+    t.string "company_size", null: false
+    t.string "company_type", null: false
+    t.string "benefits", default: [], null: false, array: true
+    t.string "joel_test", default: [], null: false, array: true
+    t.string "country", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["entity_id"], name: "index_organisations_on_entity_id"
   end
 
   create_table "user_login_change_keys", force: :cascade do |t|
@@ -72,6 +89,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_04_233617) do
   add_foreign_key "entities", "users"
   add_foreign_key "entity_users", "entities"
   add_foreign_key "entity_users", "users"
+  add_foreign_key "organisations", "entities"
   add_foreign_key "user_login_change_keys", "users", column: "id"
   add_foreign_key "user_password_reset_keys", "users", column: "id"
   add_foreign_key "user_remember_keys", "users", column: "id"
