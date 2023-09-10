@@ -2,19 +2,7 @@
 
 # Joel Test
 class JoelTest
-  class << self
-    def all
-      HASH
-    end
-
-    def keys
-      KEYS
-    end
-
-    def [](key)
-      HASH[key]
-    end
-  end
+  include ::InMemoryHashCollection
 
   HASH = {
     source_control: 'Do you use source control?',
@@ -30,6 +18,4 @@ class JoelTest
     code_screening: 'Do new candidates write code during their interview?',
     hallway_usability: 'Do you do hallway usability testing?'
   }.stringify_keys.freeze
-
-  KEYS = HASH.keys.freeze
 end

@@ -13,6 +13,7 @@ module Dashboard
       {
         dashboard: {
           home: entity_path(current_entity),
+          organisations: entity_organisations_path(current_entity),
           users: entity_users_path(current_entity)
         },
         reports: {

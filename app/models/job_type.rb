@@ -2,25 +2,11 @@
 
 # Job types
 class JobType
-  class << self
-    def all
-      HASH
-    end
-
-    def keys
-      KEYS
-    end
-
-    def [](key)
-      HASH[key]
-    end
-  end
+  include ::InMemoryHashCollection
 
   HASH = {
     full_time: 'Full-time',
     contract: 'Contract',
     internship: 'Internship'
   }.stringify_keys.freeze
-
-  KEYS = HASH.keys.freeze
 end

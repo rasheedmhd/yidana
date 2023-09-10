@@ -1,0 +1,15 @@
+<% organisation = nil unless local_assigns[:organisation].present? %>
+<%
+  unless local_assigns[:actions_template].present?
+    actions_template = organisation.present? ? 'toolbar_actions_single' : 'toolbar_actions_multiple'
+  end
+%>
+
+<div class="row justify-content-between py-2 mb-3 border-bottom">
+  <div class="col-sm-6">
+    <%= render "toolbar_breadcrumbs", organisation: organisation %>
+  </div>
+  <div class="col-sm-6 text-end">
+    <%= render actions_template, organisation: organisation %>
+  </div>
+</div>

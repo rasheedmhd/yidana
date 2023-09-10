@@ -42,7 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_125747) do
   create_table "organisations", force: :cascade do |t|
     t.bigint "entity_id", null: false
     t.string "name", null: false
-    t.string "headline"
+    t.text "headline", null: false
     t.text "description"
     t.string "website_url"
     t.string "industry", default: [], null: false, array: true

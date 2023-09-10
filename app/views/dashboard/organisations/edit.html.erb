@@ -1,0 +1,14 @@
+<div class="container-fluid">
+  <%= render "toolbar", organisation: @resource %>
+
+  <div class="row">
+    <div class="order-2 col-sm-9 col-md-8 col-lg-8 col-xl-10">
+      <turbo-frame id="<%= dom_id @resource %>" data-turbo-action="advance">
+        <%= render "form", organisation: @resource %>
+      </turbo-frame>
+    </div>
+    <div class="order-1 col-sm-3 col-md-4 col-lg-4 col-xl-2 mb-2 border-end">
+    </div>
+  </div>
+
+</div>

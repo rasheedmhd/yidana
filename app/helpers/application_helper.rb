@@ -17,4 +17,24 @@ module ApplicationHelper
       }
     )
   end
+
+  def tooltip(text)
+    text = sanitize text
+    "title=\"#{text}\" data-controller=\"tooltip\" data-bs-title=\"#{text}\"".html_safe
+  end
+
+  def display_name_of(obj)
+    return unless obj.present?
+
+    return obj.map { |i| display_name_of i }.join ', ' if obj.is_a? Array
+
+    name_method = nil
+    %i[display_name name].each do |method|
+      return obj.send method if obj.respond_to? method
+    end
+
+    return "#{obj.class} #{obj.id}" if obj.respond_to? :id
+
+    obj.to_s
+  end
 end

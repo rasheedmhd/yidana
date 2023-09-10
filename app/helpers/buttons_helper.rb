@@ -22,6 +22,8 @@ module ButtonsHelper
   end
 
   def edit_button_for(record)
-    toobar_icon_button edit_user_path(record), :pencil, :primary
+    path_helper = "edit_#{record.class.to_s.underscore}_path".to_sym
+    path = send path_helper, record
+    toobar_icon_button path, :pencil, :primary
   end
 end

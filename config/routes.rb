@@ -26,6 +26,10 @@ Rails.application.routes.draw do
     resources :users do
       # pu:routes:entity:users
     end
+
+    resources :organisations do
+      # pu:routes:entity:organisations
+    end
   end
 
   # pu:end routes

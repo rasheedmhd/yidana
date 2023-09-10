@@ -3,7 +3,7 @@
 # Technology list
 class Technology
   class << self
-    def all
+    def collection
       LIST
     end
   end

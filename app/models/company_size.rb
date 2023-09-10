@@ -2,19 +2,7 @@
 
 # Company sizez
 class CompanySize
-  class << self
-    def all
-      HASH
-    end
-
-    def keys
-      KEYS
-    end
-
-    def [](key)
-      HASH[key]
-    end
-  end
+  include ::InMemoryHashCollection
 
   HASH = {
     A: '1-10',
@@ -25,7 +13,5 @@ class CompanySize
     F: '1001-5000',
     G: '5001-10,000',
     H: '10,001+'
-  }.sort.to_h.stringify_keys.freeze
-
-  KEYS = HASH.keys.freeze
+  }.stringify_keys.freeze
 end

@@ -13,5 +13,5 @@ application.register("hello", HelloController)
 import ToastController from "./toast_controller"
 application.register("toast", ToastController)
 
-import Timeago from 'stimulus-timeago'
-application.register('timeago', Timeago)
+import TooltipController from "./tooltip_controller"
+application.register("tooltip", TooltipController)

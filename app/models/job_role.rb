@@ -2,19 +2,7 @@
 
 # Job roles
 class JobRole
-  class << self
-    def all
-      HASH
-    end
-
-    def keys
-      KEYS
-    end
-
-    def [](key)
-      HASH[key]
-    end
-  end
+  include ::InMemoryHashCollection
 
   HASH = {
     backend: 'Backend Developer',
@@ -32,6 +20,4 @@ class JobRole
     qa: 'QA/Test Developer',
     system_admin: 'System Administrator'
   }.sort.to_h.stringify_keys.freeze
-
-  KEYS = HASH.keys.freeze
 end

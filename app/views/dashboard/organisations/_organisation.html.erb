@@ -1,0 +1,65 @@
+<div class="row py-2">
+  <div class="col-12 text-end">
+    <%= edit_button_for organisation %>
+    <%= delete_button_for organisation %>
+  </div>
+</div>
+
+<div class="row row-gap-2">
+  <dt class="col-md-3">Name</dt>
+  <dd class="col-md-9"><%= organisation.name %></dd>
+
+  <dt class="col-md-3">Headline</dt>
+  <dd class="col-md-9">
+    <div class="overflow-y-scroll" style="max-height:250px">
+      <%= organisation.headline %>
+    </div>
+  </dd>
+
+  <% if organisation.description.present? %>
+    <dt class="col-md-3">Description</dt>
+    <dd class="col-md-9" data-controller="read-more" data-read-more-more-text-value="Read more" data-read-more-less-text-value="Read less">
+      <div class="read-more-content" data-read-more-target="content">
+        <%= organisation.description %>
+      </div>
+      <button class="btn btn-sm btn-link text-decoration-none ps-0" data-action="read-more#toggle">Read more</button>
+    </dd>
+  <% end %>
+
+  <% if organisation.website_url.present? %>
+    <dt class="col-md-3">Website</dt>
+    <dd class="col-md-9">
+        <%= link_to organisation.website_url, organisation.website_url %>
+    </dd>
+  <% end %>
+
+  <dt class="col-md-3">Company Type</dt>
+  <dd class="col-md-9"><%= display_name_of organisation.company_type %></dd>
+
+  <dt class="col-md-3">Company Size</dt>
+  <dd class="col-md-9"><%= display_name_of organisation.company_size %></dd>
+
+  <dt class="col-md-3">Industry</dt>
+  <dd class="col-md-9"><%= display_name_of organisation.industry %></dd>
+
+  <dt class="col-md-3">Country</dt>
+  <dd class="col-md-9"><%= display_name_of organisation.country %></dd>
+
+  <dt class="col-md-3">Joel Test</dt>
+  <dd class="col-md-9">
+    <% JoelTest.collection.each do |test| %>
+      <div>
+        <% if organisation.joel_test.include? test %>
+          <span class="badge bg-success text-white">
+            <i class="bi bi-check"></i>
+          </span>
+        <% else %>
+          <span class="badge bg-danger text-white">
+            <i class="bi bi-x"></i>
+          </span>
+        <% end %>
+        <%= test.name %>
+      </div>
+    <% end %>
+  </dd>
+</div>

@@ -5,7 +5,8 @@ class CreateOrganisations < ActiveRecord::Migration[7.0]
     create_table :organisations do |t|
       t.belongs_to :entity, foreign_key: true, null: false
       t.string :name, null: false
-      t.string :headline
+      t.citext :slug, null: false, index: true
+      t.text :headline, null: false
       t.text :description
       t.string :website_url
       t.string :industry, array: true, null: false, default: []
@@ -17,5 +18,7 @@ class CreateOrganisations < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+
+    add_index :organisations, %i[entity_id slug], unique: true
   end
 end

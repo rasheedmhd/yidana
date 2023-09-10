@@ -14,6 +14,8 @@
     "postcss": "^8.4.28",
     "postcss-cli": "^10.1.0",
     "sass": "^1.66.1",
+    "stimulus-read-more": "^4.1.0",
+    "stimulus-textarea-autogrow": "^4.1.0",
     "stimulus-timeago": "^4.1.0"
   },
   "scripts": {

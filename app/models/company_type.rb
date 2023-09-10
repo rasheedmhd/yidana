@@ -2,19 +2,7 @@
 
 # Company types
 class CompanyType
-  class << self
-    def all
-      HASH
-    end
-
-    def keys
-      KEYS
-    end
-
-    def [](key)
-      HASH[key]
-    end
-  end
+  include ::InMemoryHashCollection
 
   HASH = {
     private: 'Private',
@@ -23,6 +11,4 @@ class CompanyType
     government: 'Government',
     ngo: 'Non-Governmental Organization'
   }.stringify_keys.freeze
-
-  KEYS = HASH.keys.freeze
 end

@@ -1,23 +1,11 @@
 # frozen_string_literal: true
 
 # Countries
-# rubocop:disable Metrics/ClassLength
 class Country
-  class << self
-    def all
-      HASH
-    end
-
-    def keys
-      KEYS
-    end
-
-    def [](key)
-      HASH[key]
-    end
-  end
+  include ::InMemoryHashCollection
 
   HASH = {
+    'GH': 'Ghana',
     'AF': 'Afghanistan',
     'AL': 'Albania',
     'DZ': 'Algeria',
@@ -96,7 +84,6 @@ class Country
     'GM': 'Gambia',
     'GE': 'Georgia',
     'DE': 'Germany',
-    'GH': 'Ghana',
     'GI': 'Gibraltar',
     'GR': 'Greece',
     'GL': 'Greenland',
@@ -258,8 +245,5 @@ class Country
     'YE': 'Yemen',
     'ZM': 'Zambia',
     'ZW': 'Zimbabwe'
-  }.sort.to_h.stringify_keys.freeze
-
-  KEYS = HASH.keys.freeze
+  }.stringify_keys.freeze
 end
-# rubocop:enable Metrics/ClassLength
