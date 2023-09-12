@@ -1,7 +1,11 @@
 <% content_for :toolbar do %>
-  <%= render partial: 'toolbar', locals: { resource_class: Organisation, actions: 'toolbar_actions_multiple'} %>
+  <%= render partial: 'toolbar', locals: { resource_class: Organisation,
+                                           actions: 'toolbar_actions_multiple' } %>
 <% end  %>
 
 <%= render partial: "table", locals: { resource_class: Organisation,
-                                       resources: @organisations, pagy: @pagy,
-                                       fields: Organisation.columns.map(&:name).map(&:to_sym) } %>
+                                       resources: @organisations,
+                                       pagy: @pagy,
+                                       columns: Organisation.columns.map(&:name),
+                                       transformer_factory: -> (column_name) { -> (value) { display_name_of value } if [:industry, :company_size, :company_type, :joel_test, :country, :entity].include? column_name }
+                              } %>
