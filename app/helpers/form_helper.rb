@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-#
-# Override the original form_for helper to disable turbo forms by default if not
-# explicitly opted into
-#
 module FormHelper
   include ActionView::Helpers::FormHelper
 
   alias rails_default_form_for form_for
 
+  #
+  # Override the original form_for helper to disable turbo forms by default if not
+  # explicitly opted into
+  #
   def form_for(record, options = {}, &block)
     options = {
       html: {

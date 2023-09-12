@@ -1,15 +1,14 @@
-<div class="container-fluid">
-  <%= render "toolbar", organisation: @resource %>
+<% content_for :toolbar do  %>
+  <%= render partial: 'toolbar',
+             locals: { resource_class: Organisation, resource: @organisation, actions: 'toolbar_actions_single'} %>
+<% end  %>
 
-  <div class="row">
-    <div class="order-2 col-sm-9 col-md-8 col-lg-8 col-xl-10">
-      <turbo-frame id="<%= dom_id @resource %>" data-turbo-action="advance">
-        <%= render @resource %>
-      </turbo-frame>
-    </div>
-    <div class="order-1 col-sm-3 col-md-4 col-lg-4 col-xl-2 mb-2 border-end">
-      <%= render 'tabs', organisation: @resource %>
-    </div>
-  </div>
+<% content_for :tab_content do %>
+  <turbo-frame id="<%= dom_id @organisation %>" data-turbo-action="advance">
+    <%= render @organisation %>
+  </turbo-frame>
+<% end %>
 
-</div>
+<% content_for :tab_menu do %>
+    <%= render 'tab_menu', resource: @organisation %>
+<% end %>

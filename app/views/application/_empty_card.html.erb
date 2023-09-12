@@ -1,0 +1,12 @@
+<%#
+  locals: {
+    message: "message to display",
+  }
+  yields: true
+%>
+<div class="card text-center pt-4">
+  <div class="card-body">
+    <p class="card-title"><%= message %></p>
+    <%= yield %>
+  </div>
+</div>

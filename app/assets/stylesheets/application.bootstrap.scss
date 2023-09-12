@@ -71,12 +71,3 @@ body {
 .btn-toggle-nav a:focus {
   background-color: var(--bs-tertiary-bg);
 }
-
-
-// Stimulus Read More (https://www.stimulus-components.com/docs/stimulus-read-more/)
-.read-more-content {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: var(--read-more-line-clamp, 2);
-}

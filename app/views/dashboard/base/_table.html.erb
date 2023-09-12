@@ -1,0 +1,61 @@
+<%#
+  locals: {
+    resources: "list of resources to render",
+    resource_class: "Class of resources being rendered",
+    pagy: "pagy instance"
+  }
+%>
+<%
+  fields.delete :id
+%>
+<div class="row">
+  <% unless resources.any? %>
+    <div class="col-12">
+      <%=
+        render 'empty_card', message: "You have no #{resources_name(resource_class).downcase}" do
+          next unless can_perform?(resource_class, :create)
+
+          link_to "Create #{resource_name(resource_class)}", path_for(resource_class, :new), class: 'btn btn-outline-primary'
+        end
+      %>
+    </div>
+  <% else %>
+    <div class="col-12 table-responsive max-vh-75">
+      <table class="table table-hover table-striped my-0">
+        <thead class="sticky-top">
+          <tr>
+            <th scope="col">#</th>
+            <% fields.each do |name| %>
+              <th scope="col" style="min-width: 150px;"><%= attribute_name resource_class, name %></th>
+            <% end  %>
+            <th scope="col"style="min-width: 150px;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% resources.each do |resource| %>
+          <tr class="align-middle">
+            <td style="min-width: 40px"><%= resource.id %></td>
+
+            <% fields.each do |name| %>
+              <% can_read_field? resource, name do %>
+                <td class="text-truncate" style="white-space: nowrap; max-width: 400px"><%= resource[name] %></td>
+              <% end %>
+            <% end  %>
+
+            <td style="white-space: nowrap;">
+              <%= show_button_for(resource, :primary, variant: :table) %>
+              <%= edit_button_for(resource, :secondary, variant: :table) %>
+              <%= delete_button_for(resource, variant: :table) %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <% unless pagy.nil?  %>
+      <div class="col-12">
+        <%= pagination pagy %>
+      </div>
+    <% end  %>
+  <% end %>
+</div>
