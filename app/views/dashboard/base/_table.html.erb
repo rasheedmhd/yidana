@@ -1,42 +1,11 @@
 <%#
   locals: {
-    resources: "list of resources to render",
-    resource_class: "Class of resources being rendered",
-    pagy: "pagy instance",
-    columns: Array(
-      "field_name",
-
-      OR
-
-      {
-        name: "field name",
-        type: "custom type to render",
-        transformer: "value transformer. must respond to #call"
-      }
-    )
+    builder: "instance of Pu::Table::Builder"
   }
 %>
 <%
-  columns = columns.map do |column|
-    case column
-    when Hash
-      name = column.delete :name
-    else
-      name = column
-      column = {}
-    end
-
-    column_definition = resource_class.columns_hash[name.to_s]
-    name = name.to_sym
-    properties = {
-      name: name,
-      type: column_definition&.type,
-      transformer: local_assigns[:transformer_factory].present? ? transformer_factory.call(name) : nil
-    }.update column
-
-    [name, properties]
-  end.to_h
-  columns.delete :id
+  resource_class = builder.model
+  resources = builder.records
 %>
 <div class="row">
   <% unless resources.any? %>
@@ -50,13 +19,13 @@
       %>
     </div>
   <% else %>
-    <div class="col-12 table-responsive max-vh-75">
+    <div class="col-12 table-responsive max-vh-75 py-2">
       <table class="table table-hover table-striped my-0">
         <thead class="sticky-top">
           <tr>
             <th scope="col" style="min-width: 40px">#</th>
-            <% columns.keys.each do |name| %>
-              <th scope="col" style="min-width: 150px;"><%= attribute_name resource_class, name %></th>
+            <% builder.column_names.each do |name| %>
+              <th scope="col" style="min-width: 150px;"><%= name %></th>
             <% end  %>
             <th scope="col"style="min-width: 150px;">Actions</th>
           </tr>
@@ -64,17 +33,16 @@
         <tbody>
           <% resources.each do |resource| %>
           <tr class="align-middle">
-            <td><%= resource.id %></td>
+            <td><%= link_to resource.to_param, resource, class: "text-decoration-none" %></td>
 
-            <% columns.each do |name, properties| %>
-              <% can_read_field? resource, name do %>
-                <%= render partial: 'table_cell', locals: { value: resource.send(name), **properties } %>
-              <% end %>
+            <% builder.columns.each do |name, column| %>
+              <% column[:value] = resource.send(name) %>
+              <%= render partial: 'table_cell', locals: { column: } %>
             <% end  %>
 
             <td style="white-space: nowrap;">
               <%= show_button_for(resource, :primary, variant: :table) %>
-              <%= edit_button_for(resource, :secondary, variant: :table) %>
+              <%= edit_button_for(resource, 'warning-emphasis', variant: :table) %>
               <%= delete_button_for(resource, variant: :table) %>
             </td>
           </tr>
@@ -82,9 +50,9 @@
         </tbody>
       </table>
     </div>
-    <% unless pagy.nil?  %>
+    <% if builder.pagination.present?  %>
       <div class="col-12">
-        <%= pagination pagy %>
+        <%= pagination builder.pagination %>
       </div>
     <% end  %>
   <% end %>

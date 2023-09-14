@@ -1,49 +1,32 @@
 <%#
   locals: {
-    name: "field name",
-    value: "field value",
-    type: "field type",
-    transformer: "proc that transforms the value",
+    column: {
+      name: "field name",
+      value: "field value",
+      type: "field type",
+      transformer: "proc that transforms the value"
+    }
   }
 %>
 <%
-
-  case type
-  when :string, :text, :citext
-    max_width = 400
-  when :integer, :float, :decimal
-    transformer ||= -> (value) { number_with_delimiter value }
-  when :datetime, :timestamp, :time, :date
-    transformer ||= -> (value) { timeago value }
-  when :boolean
-    transformer = -> (value) { tag.input(class: "form-check-input", type: "checkbox", checked: value) }
-  end
-
-  # ensure values
-  max_width ||= 250
-  transformer ||= -> (value) { value }
-
-  if name.ends_with? '_url'
-    transformer = -> (value) { link_to value, value, class: "text-decoration-none", target: "_blank" }
-  end
-
-  value = [value] unless value.nil? || value.respond_to?(:each)
+  value = column[:value]
+  transformer = column[:transformer]
+  max_width = column[:options][:max_width]
 %>
 
 
 <td class="text-truncate" style="max-width: <%= max_width %>px;">
-  <% unless value.nil?  %>
-    <% value.each do |value| %>
-      <span title="<%= value %>">
-        <%= transformer.call value %>
-      </span><br />
-    <% end %>
+  <% if value.respond_to?(:each)  %>
+    <ul class="mb-0">
+      <% value.each do |value| %>
+        <li title="<%= value %>">
+          <%= transformer.call value %>
+        </li>
+      <% end %>
+    </ul>
+  <% elsif value.present?  %>
+    <span title="<%= value %>">
+      <%= transformer.call value %>
+    </span>
   <% end %>
 </td>
-
-<%#
-  binary:      { name: "blob" },
-  blob:        { name: "blob" },
-  boolean:     { name: "tinyint", limit: 1 },
-  json:        { name: "json" },
-%>

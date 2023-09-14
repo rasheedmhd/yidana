@@ -5,12 +5,19 @@ module Dashboard
     include CurrentEntity
     include EntityUrlHelpers
 
+    before_action :set_page_title
+    before_action :set_sidebar_menu
+
     layout 'dashboard'
 
     private
 
-    def sidebar_menu
-      {
+    def set_page_title
+      @page_title = 'Dashboard'
+    end
+
+    def set_sidebar_menu
+      @sidebar_menu = {
         dashboard: {
           home: entity_path(current_entity),
           organisations: entity_organisations_path(current_entity),
@@ -24,6 +31,5 @@ module Dashboard
         }
       }
     end
-    helper_method :sidebar_menu
   end
 end

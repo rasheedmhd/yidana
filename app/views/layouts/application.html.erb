@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="auto">
   <head>
-    <title><%= app_name %><%= " - #{@page_title}" if @page_title %></title>
+    <title><%= page_title @page_title %></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
@@ -9,41 +9,12 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-    <style>
-      html, body {
-        height: 100%;
-      }
-
-      .form {
-        max-width: 350px;
-        padding: 1rem;
-      }
-
-      .form .form-floating:focus-within {
-        z-index: 2;
-      }
-
-      .form input[type="email"] {
-        margin-bottom: -1px;
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
-      }
-
-      .form input[type="password"] {
-        margin-bottom: 10px;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-      }
-    </style>
+    <%= yield(:head) %>
   </head>
-
   <body class="bg-body-tertiary">
     <%= render "messages" %>
-    <div class="d-flex align-items-center py-4">
-      <main class="form w-100 m-auto">
-          <%= yield %>
-      </main>
-    </div>
-    <%= render 'color_modes' %>
+    <%= content_for?(:header) ? yield(:header) : render("shared/header") %>
+    <%= yield(:content) %>
+    <%= render 'shared/color_modes' %>
   </body>
 </html>

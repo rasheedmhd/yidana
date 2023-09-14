@@ -4,6 +4,11 @@ module Dashboard
   class OrganisationsController < BaseController
     def index
       @pagy, @organisations = pagy(Organisation.all)
+      @table_builder = Pu::Table::Builder.new(Organisation)
+                                         .with_records(@organisations)
+                                         .with_pagination(@pagy)
+                                         .with_columns(Organisation.columns.map(&:name))
+      customize_table
     end
 
     def show
@@ -45,6 +50,21 @@ module Dashboard
       redirect_to organisations_url, notice: 'Organisation was successfully deleted.', status: :see_other
     rescue ActiveRecord::InvalidForeignKey => e
       redirect_to @organisation, alert: 'Organisation cannot be deleted.'
+    end
+
+    private
+
+    def customize_table
+      @table_builder.except_columns :id, :entity_id
+
+      %i[industry company_size company_type joel_test country].each do |name|
+        @table_builder.with_column(
+          name,
+          transformer: lambda { |value|
+                         helpers.display_name_of value
+                       }
+        )
+      end
     end
   end
 end
