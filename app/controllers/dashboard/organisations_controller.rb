@@ -4,11 +4,9 @@ module Dashboard
   class OrganisationsController < BaseController
     def index
       @pagy, @organisations = pagy(Organisation.all)
-      @table_builder = Pu::Table::Builder.new(Organisation)
-                                         .with_records(@organisations)
-                                         .with_pagination(@pagy)
-                                         .with_columns(Organisation.columns.map(&:name))
-      customize_table
+      build_table.with_records(@organisations)
+                 .with_pagination(@pagy)
+                 .except!(:id, :entity_id, :description, :benefits)
     end
 
     def show
@@ -19,10 +17,6 @@ module Dashboard
       @organisation = Organisation.new
     end
 
-    def edit
-      @organisation = Organisation.find params.require(:id)
-    end
-
     def create
       @organisation = Organisation.new(entity: current_entity, **params.require(:organisation).permit!)
 
@@ -31,6 +25,10 @@ module Dashboard
       else
         render :new, status: :unprocessable_entity
       end
+    end
+
+    def edit
+      @organisation = Organisation.find params.require(:id)
     end
 
     def update
@@ -54,9 +52,9 @@ module Dashboard
 
     private
 
-    def customize_table
-      @table_builder.except_columns :id, :entity_id
-
+    def build_table
+      @table_builder = Pu::Table::Builder.new(Organisation)
+      # apply custom transformation
       %i[industry company_size company_type joel_test country].each do |name|
         @table_builder.with_column(
           name,
@@ -65,6 +63,8 @@ module Dashboard
                        }
         )
       end
+
+      @table_builder
     end
   end
 end

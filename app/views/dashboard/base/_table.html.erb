@@ -37,7 +37,7 @@
 
             <% builder.columns.each do |name, column| %>
               <% column[:value] = resource.send(name) %>
-              <%= render partial: 'table_cell', locals: { column: } %>
+              <%= render 'table_cell', column: %>
             <% end  %>
 
             <td style="white-space: nowrap;">
@@ -52,7 +52,7 @@
     </div>
     <% if builder.pagination.present?  %>
       <div class="col-12">
-        <%= pagination builder.pagination %>
+        <%= render 'pagination', pagination: builder.pagination %>
       </div>
     <% end  %>
   <% end %>

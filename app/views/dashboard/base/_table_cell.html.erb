@@ -1,19 +1,17 @@
-<%#
-  locals: {
-    column: {
-      name: "field name",
-      value: "field value",
-      type: "field type",
-      transformer: "proc that transforms the value"
-    }
-  }
-%>
 <%
+  # locals: {
+  #   column: {
+  #     name: "field name",
+  #     value: "field value",
+  #     type: "field type",
+  #     transformer: "proc that transforms the value"
+  #   }
+  # }
+
   value = column[:value]
   transformer = column[:transformer]
   max_width = column[:options][:max_width]
 %>
-
 
 <td class="text-truncate" style="max-width: <%= max_width %>px;">
   <% if value.respond_to?(:each)  %>

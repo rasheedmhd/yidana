@@ -13,6 +13,8 @@ module Pu
         @model = model
         @records = []
         @columns = {}
+        # initialize with all columns except id
+        with_columns(Organisation.columns.map(&:name) - [:id])
       end
 
       def with_records(records)
@@ -41,8 +43,13 @@ module Pu
         self
       end
 
-      def except_columns(*names)
-        @columns.except!(*names.flatten)
+      def only!(*columns)
+        @columns.slice!(*columns.flatten)
+        self
+      end
+
+      def except!(*columns)
+        @columns.except!(*columns.flatten)
         self
       end
 
