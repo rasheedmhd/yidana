@@ -1,10 +1,7 @@
 <% content_for :toolbar do %>
   <%= render partial: 'toolbar',
               locals: { resource_class: Organisation,
-                        resource: @organisation,
-                        actions: 'toolbar_actions_single'} %>
+                        resource: @organisation } %>
 <% end %>
 
-<turbo-frame id="<%= dom_id @organisation %>" data-turbo-action="advance">
-  <%= render "form", organisation: @organisation %>
-</turbo-frame>
+<%= render "form", form: @form %>

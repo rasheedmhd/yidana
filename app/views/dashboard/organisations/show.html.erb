@@ -5,9 +5,7 @@
 <% end  %>
 
 <% content_for :tab_content do %>
-  <turbo-frame id="<%= dom_id @organisation %>" data-turbo-action="advance">
-    <%= render @organisation %>
-  </turbo-frame>
+  <%= render @organisation %>
 <% end %>
 
 <% content_for :tab_menu do %>

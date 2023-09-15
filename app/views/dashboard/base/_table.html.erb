@@ -1,17 +1,16 @@
-<%#
-  locals: {
-    builder: "instance of Pu::Builders::Table"
-  }
-%>
 <%
-  resource_class = builder.model
-  resources = builder.records
+  # locals: {
+  #   table: "instance of Pu::Builders::Table"
+  # }
+
+  resource_class = table.model
+  resources = table.records
 %>
 <div class="row">
   <% unless resources.any? %>
     <div class="col-12">
       <%=
-        render 'empty_card', message: "You have no #{resources_name(resource_class).downcase}" do
+        render 'empty_card', message: "You have no #{resource_name_plural(resource_class).downcase}" do
           next unless can_perform?(resource_class, :create)
 
           link_to "Create #{resource_name(resource_class)}", path_for(resource_class, :new), class: 'btn btn-outline-primary'
@@ -24,7 +23,7 @@
         <thead class="sticky-top">
           <tr>
             <th scope="col" style="min-width: 40px">#</th>
-            <% builder.column_names.each do |name| %>
+            <% table.column_names.each do |name| %>
               <th scope="col" style="min-width: 150px;"><%= name %></th>
             <% end  %>
             <th scope="col"style="min-width: 150px;">Actions</th>
@@ -35,7 +34,7 @@
           <tr class="align-middle">
             <td><%= link_to resource.to_param, resource, class: "text-decoration-none" %></td>
 
-            <% builder.columns.each do |name, column| %>
+            <% table.columns.each do |name, column| %>
               <% column[:value] = resource.send(name) %>
               <%= render 'table_cell', column: %>
             <% end  %>
@@ -50,9 +49,9 @@
         </tbody>
       </table>
     </div>
-    <% if builder.pagination.present?  %>
+    <% if table.pagination.present?  %>
       <div class="col-12">
-        <%= render 'pagination', pagination: builder.pagination %>
+        <%= render 'pagination', pagination: table.pagination %>
       </div>
     <% end  %>
   <% end %>

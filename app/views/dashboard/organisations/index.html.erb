@@ -3,9 +3,4 @@
                                            actions: 'toolbar_actions_multiple' } %>
 <% end  %>
 
-<%=
-  render(
-    partial: 'table',
-    locals: { builder: @table_builder }
-  )
-%>
+<%= render 'table', table: @table %>

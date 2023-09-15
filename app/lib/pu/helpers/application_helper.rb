@@ -35,7 +35,7 @@ module Pu
         resource_class.to_s.demodulize.pluralize(count).titleize
       end
 
-      def resources_name(resource_class)
+      def resource_name_plural(resource_class)
         resource_name resource_class, 2
       end
 

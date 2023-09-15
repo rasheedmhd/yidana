@@ -3,9 +3,10 @@
 module Dashboard
   class OrganisationsController < BaseController
     def index
-      @pagy, @organisations = pagy(Organisation.all)
-      build_table.with_records(@organisations)
-                 .with_pagination(@pagy)
+      pagy, organisations = pagy(Organisation.all)
+      @table = build_table
+               .with_records(organisations)
+               .with_pagination(pagy)
     end
 
     def show
@@ -14,6 +15,7 @@ module Dashboard
 
     def new
       @organisation = Organisation.new
+      @form = build_form.with_record(@organisation)
     end
 
     def create
@@ -22,12 +24,14 @@ module Dashboard
       if @organisation.save
         redirect_to @organisation, notice: 'Organisation was successfully created.'
       else
+        @form = build_form.with_record(@organisation)
         render :new, status: :unprocessable_entity
       end
     end
 
     def edit
       @organisation = Organisation.find params.require(:id)
+      @form = build_form.with_record(@organisation)
     end
 
     def update
@@ -36,28 +40,29 @@ module Dashboard
       if @organisation.update(params.require(:organisation).permit!)
         redirect_to @organisation, notice: 'Organisation was successfully updated.', status: :see_other
       else
+        @form = build_form.with_record(@organisation)
         render :edit, status: :unprocessable_entity
       end
     end
 
     def destroy
-      @organisation = Organisation.find params.require(:id)
-      @organisation.destroy
+      organisation = Organisation.find params.require(:id)
+      organisation.destroy
 
       redirect_to organisations_url, notice: 'Organisation was successfully deleted.', status: :see_other
     rescue ActiveRecord::InvalidForeignKey => e
-      redirect_to @organisation, alert: 'Organisation cannot be deleted.'
+      redirect_to organisation, alert: 'Organisation cannot be deleted.'
     end
 
     private
 
     def build_table
-      @table_builder = Pu::Builders::Table.new(Organisation)
-                                          .with_columns(:name, :headline, :company_type, :company_size, :country)
+      table = Pu::Builders::Table.new(Organisation)
+                                 .with_columns(:name, :headline, :company_type, :company_size, :country)
 
       # apply custom transformations
       %i[industry company_size company_type joel_test country].each do |name|
-        @table_builder.define_column(
+        table.define_column(
           name,
           transformer: lambda { |value|
                          helpers.display_name_of value
@@ -65,7 +70,17 @@ module Dashboard
         )
       end
 
-      @table_builder
+      table
+    end
+
+    def build_form
+      Pu::Builders::Form.new(Organisation)
+                        .define_input(:company_type, type: :collection, collection: CompanyType.collection, as: :radio_buttons)
+                        .define_input(:company_size, type: :collection, collection: CompanySize.collection, as: :radio_buttons)
+                        .define_input(:industry, type: :collection, collection: Industry.collection, as: :check_boxes, wrapper: :vertical_collection_inline)
+                        .define_input(:country, type: :collection, collection: Country.collection)
+                        .define_input(:joel_test, type: :collection, collection: JoelTest.collection, as: :check_boxes)
+                        .with_inputs(:name, :headline, :description, :website_url, :company_type, :company_size, :industry, :country, :joel_test)
     end
   end
 end
