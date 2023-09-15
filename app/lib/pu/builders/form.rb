@@ -28,10 +28,7 @@ module Pu
 
       def define_input(name, type: nil, **options)
         name = name.to_sym
-        type ||= model.columns_hash[name.to_s]&.type
-
-        custom_definition = { **options }.compact
-        @definitions[name] = build_definition(name, type).deep_merge custom_definition
+        @definitions[name] = build_definition(name, type, options)
         self
       end
 
@@ -63,15 +60,44 @@ module Pu
 
       protected
 
-      def build_definition(_name, type)
-        options = {}
+      def build_definition(name, type, options = {})
+        return options if options[:as].present?
+
+        definition = {}
+        column = model.columns_hash[name.to_s]
+
+        type ||= :slim_select if options.key? :collection
+        type ||= column&.type
+        multiple = column&.array?
 
         case type
         when :string, :text, :citext
-          options[:input_html] = { data: { controller: 'textarea-autogrow' } }
+          definition = {
+            input_html: {
+              data: { controller: 'textarea-autogrow' }
+            }
+          }
+        when :slim_select
+          definition = {
+            wrapper: :slim_select,
+            input_html: {
+              data: { controller: 'slim-select' },
+              multiple:
+            }
+          }
+
+          if multiple
+            definition[:input_html][:data][:slim_select_placeholder_value] =
+              "Select #{name.to_s.humanize(capitalize: false).pluralize}"
+          else
+            definition.deep_merge! include_blank: "Select #{name.to_s.humanize(capitalize: false)}",
+                                   input_html: {
+                                     data: { slim_select_allow_deselect_value: true }
+                                   }
+          end
         end
 
-        options
+        definition.deep_merge options
       end
     end
   end

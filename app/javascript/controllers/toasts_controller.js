@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="toast"
+// Connects to data-controller="toasts"
 export default class extends Controller {
   connect() {
     const elList = document.querySelectorAll('.toast')

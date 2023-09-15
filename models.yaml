@@ -58,7 +58,7 @@ EntityUser:
 # = Talent (TBD)
 
 
-Job:
+JobDescription:
   entity: belongs_to_through :organisation
   organisation: belongs_to
   name: text

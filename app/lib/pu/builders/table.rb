@@ -98,7 +98,7 @@ module Pu
         {
           name:,
           type:,
-          label: name.to_s.titleize,
+          label: name.to_s.titleize(keep_id_suffix: true),
           transformer:,
           options:
         }

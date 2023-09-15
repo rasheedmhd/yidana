@@ -42,10 +42,10 @@ class Organisation < ApplicationRecord
   validates :headline, presence: true, length: { maximum: 500 }
   validates :description, length: { maximum: 3000 }
   validates :website_url, url: true, allow_blank: true
-  validates :company_type, presence: true, inclusion: { in: CompanyType.collection }, allow_blank: true
-  validates :company_size, presence: true, inclusion: { in: CompanySize.collection }, allow_blank: true
-  validates :country, presence: true, inclusion: { in: Country.collection }, allow_blank: true
-  validates :industry, length: { maximum: 3, too_long: 'has too many items (maximum is %<count>s items)' },
+  validates :company_type, presence: true, inclusion: { in: CompanyType.collection }
+  validates :company_size, presence: true, inclusion: { in: CompanySize.collection }
+  validates :country, presence: true, inclusion: { in: Country.collection }
+  validates :industry, presence: true, length: { maximum: 3, too_long: 'has too many items (maximum is %<count>s items)' },
                        array: { presence: true, inclusion: { in: Industry.collection } }
   validates :benefits, length: { maximum: 10, too_long: 'has too many items (maximum is %<count>s items)' }
   validates :joel_test, array: { presence: true, inclusion: { in: JoelTest.collection } }

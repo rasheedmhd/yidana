@@ -348,6 +348,16 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: { class: 'form-text' }
   end
 
+  # slim-select input
+  config.wrappers :slim_select, class: 'mb-3' do |b|
+    b.optional :placeholder
+    b.optional :readonly
+    b.use :label, class: 'form-label'
+    b.use :input, error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :full_error, wrap_with: { class: 'invalid-feedback' }
+    b.use :hint, wrap_with: { class: 'form-text' }
+  end
+
   # The default wrapper to be used by the FormBuilder.
   config.default_wrapper = :vertical_form
 

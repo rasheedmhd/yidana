@@ -60,7 +60,7 @@ module Dashboard
       table = Pu::Builders::Table.new(Organisation)
                                  .with_columns(:name, :headline, :company_type, :company_size, :country)
 
-      # apply custom transformations
+      # define custom transformations
       %i[industry company_size company_type joel_test country].each do |name|
         table.define_column(
           name,
@@ -75,11 +75,11 @@ module Dashboard
 
     def build_form
       Pu::Builders::Form.new(Organisation)
-                        .define_input(:company_type, type: :collection, collection: CompanyType.collection, as: :radio_buttons)
-                        .define_input(:company_size, type: :collection, collection: CompanySize.collection, as: :radio_buttons)
-                        .define_input(:industry, type: :collection, collection: Industry.collection, as: :check_boxes, wrapper: :vertical_collection_inline)
-                        .define_input(:country, type: :collection, collection: Country.collection)
-                        .define_input(:joel_test, type: :collection, collection: JoelTest.collection, as: :check_boxes)
+                        .define_input(:company_type, collection: CompanyType.collection, as: :radio_buttons)
+                        .define_input(:company_size, collection: CompanySize.collection, as: :radio_buttons)
+                        .define_input(:industry, collection: Industry.collection)
+                        .define_input(:country, collection: Country.collection)
+                        .define_input(:joel_test, collection: JoelTest.collection, as: :check_boxes)
                         .with_inputs(:name, :headline, :description, :website_url, :company_type, :company_size, :industry, :country, :joel_test)
     end
   end
