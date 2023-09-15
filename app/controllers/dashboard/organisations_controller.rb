@@ -6,7 +6,6 @@ module Dashboard
       @pagy, @organisations = pagy(Organisation.all)
       build_table.with_records(@organisations)
                  .with_pagination(@pagy)
-                 .except!(:id, :entity_id, :description, :benefits)
     end
 
     def show
@@ -53,10 +52,12 @@ module Dashboard
     private
 
     def build_table
-      @table_builder = Pu::Table::Builder.new(Organisation)
-      # apply custom transformation
+      @table_builder = Pu::Builders::Table.new(Organisation)
+                                          .with_columns(:name, :headline, :company_type, :company_size, :country)
+
+      # apply custom transformations
       %i[industry company_size company_type joel_test country].each do |name|
-        @table_builder.with_column(
+        @table_builder.define_column(
           name,
           transformer: lambda { |value|
                          helpers.display_name_of value

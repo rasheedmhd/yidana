@@ -1,20 +1,19 @@
 # frozen_string_literal: true
 
 module Pu
-  module Table
-    class Builder
+  module Builders
+    class Table
       include ActionView::Helpers::NumberHelper
       include Pu::Helpers::ContentHelper
       include ActionView::Helpers::TagHelper
 
-      attr_reader :model, :records, :columns, :pagination
+      attr_reader :model, :records, :pagination
 
       def initialize(model)
         @model = model
         @records = []
-        @columns = {}
-        # initialize with all columns except id
-        with_columns(Organisation.columns.map(&:name) - [:id])
+        @columns = {} # using hash since keys act as an ordered set
+        @definitions = {}
       end
 
       def with_records(records)
@@ -29,17 +28,18 @@ module Pu
 
       def with_columns(*names)
         names.flatten.each do |name|
-          with_column name
+          define_column name unless column_defined? name
+          @columns[name] = true
         end
         self
       end
 
-      def with_column(name, type: nil, label: nil, transformer: nil, options: {})
+      def define_column(name, type: nil, label: nil, transformer: nil, options: {})
         name = name.to_sym
         type ||= model.columns_hash[name.to_s]&.type
 
-        column = { label:, transformer:, options: }.compact
-        @columns[name] = build_column(name, type).deep_merge column
+        custom_definition = { label:, transformer:, options: }.compact
+        @definitions[name] = build_definition(name, type).deep_merge custom_definition
         self
       end
 
@@ -54,12 +54,24 @@ module Pu
       end
 
       def column_names
-        @columns.values.pluck(:label)
+        columns.values.pluck(:label)
+      end
+
+      def columns
+        @definitions.slice(*@columns.keys)
+      end
+
+      def column?(name)
+        @columns.key? name
+      end
+
+      def column_defined?(name)
+        @definitions.key? name
       end
 
       protected
 
-      def build_column(name, type)
+      def build_definition(name, type)
         options = {
           max_width: 250
         }
