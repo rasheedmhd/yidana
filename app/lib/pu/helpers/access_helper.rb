@@ -23,12 +23,12 @@ module Pu
         block_given? ? yield : can
       end
 
-      def can_write_field?(_record, _field)
-        can = true # TODO
-        return false unless can
+      # def can_write_field?(_record, _field)
+      #   can = true # TODO
+      #   return false unless can
 
-        block_given? ? yield : can
-      end
+      #   block_given? ? yield : can
+      # end
     end
   end
 end
