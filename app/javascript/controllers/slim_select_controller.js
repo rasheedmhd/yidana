@@ -5,6 +5,7 @@ export default class extends Controller {
   static values = {
     placeholder: String,
     allowDeselect: Boolean,
+    closeOnSelect: { type: Boolean, default: true },
   }
 
   connect() {
@@ -13,6 +14,7 @@ export default class extends Controller {
       settings: {
         placeholderText: this.placeholderValue,
         allowDeselect: this.allowDeselectValue,
+        closeOnSelect: this.closeOnSelectValue,
       }
     })
   }

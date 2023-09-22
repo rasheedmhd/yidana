@@ -85,7 +85,12 @@ module Pu
 
           if multiple
             placeholder = options[:placeholder] || "Select #{name.to_s.humanize(capitalize: false).pluralize}"
-            definition.deep_merge! input_html: { data: { slim_select_placeholder_value: placeholder } }
+            definition.deep_merge! input_html: {
+              data: {
+                slim_select_placeholder_value: placeholder,
+                slim_select_close_on_select_value: false
+              }
+            }
           else
             placeholder = options[:placeholder] || "Select #{name.to_s.humanize(capitalize: false)}"
             definition.deep_merge! include_blank: placeholder,
