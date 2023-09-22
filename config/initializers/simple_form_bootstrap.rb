@@ -348,13 +348,29 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: { class: 'form-text' }
   end
 
-  # slim-select input
+  # slim-select
   config.wrappers :slim_select, class: 'mb-3' do |b|
     b.optional :placeholder
     b.optional :readonly
     b.use :label, class: 'form-label'
-    b.use :input, error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :input, error_class: 'is-invalid', valid_class: 'is-valid', data: { controller: 'slim-select' }
     b.use :full_error, wrap_with: { class: 'invalid-feedback' }
+    b.use :hint, wrap_with: { class: 'form-text' }
+  end
+
+  # quill
+  config.wrappers :quill, class: 'mb-3' do |b|
+    b.use :label, class: 'form-label'
+    b.wrapper tag: :div, html: { data: { controller: 'quill-editor' } } do |quill|
+      quill.wrapper(tag: :div,
+                    html: {
+                      data: { quill_editor_target: 'editor' },
+                      style: 'max-height: 50vh;overflow-y: scroll;'
+                    }) {}
+      quill.use :input, error_class: 'is-invalid', valid_class: 'is-valid', class: 'd-none',
+                        data: { quill_editor_target: 'input' }
+      quill.use :full_error, wrap_with: { class: 'invalid-feedback' }
+    end
     b.use :hint, wrap_with: { class: 'form-text' }
   end
 

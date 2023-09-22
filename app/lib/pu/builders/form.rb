@@ -80,21 +80,21 @@ module Pu
         when :slim_select
           definition = {
             wrapper: :slim_select,
-            input_html: {
-              data: { controller: 'slim-select' },
-              multiple:
-            }
+            input_html: { multiple: }
           }
 
           if multiple
-            definition[:input_html][:data][:slim_select_placeholder_value] =
-              "Select #{name.to_s.humanize(capitalize: false).pluralize}"
+            placeholder = options[:placeholder] || "Select #{name.to_s.humanize(capitalize: false).pluralize}"
+            definition.deep_merge! input_html: { data: { slim_select_placeholder_value: placeholder } }
           else
-            definition.deep_merge! include_blank: "Select #{name.to_s.humanize(capitalize: false)}",
+            placeholder = options[:placeholder] || "Select #{name.to_s.humanize(capitalize: false)}"
+            definition.deep_merge! include_blank: placeholder,
                                    input_html: {
                                      data: { slim_select_allow_deselect_value: true }
                                    }
           end
+        when :quill
+          definition = { wrapper: :quill }
         end
 
         definition.deep_merge options

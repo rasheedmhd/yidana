@@ -75,6 +75,7 @@ module Dashboard
 
     def build_form
       Pu::Builders::Form.new(Organisation)
+                        .define_input(:description, type: :quill)
                         .define_input(:company_type, collection: CompanyType.collection, as: :radio_buttons)
                         .define_input(:company_size, collection: CompanySize.collection, as: :radio_buttons)
                         .define_input(:industry, collection: Industry.collection)

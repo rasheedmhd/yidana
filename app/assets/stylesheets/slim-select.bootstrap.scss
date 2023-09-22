@@ -1,0 +1,49 @@
+:root {
+  // Colors
+  --ss-disabled-color: #{$input-disabled-color};
+  // --ss-highlight-color: #fffb8c; # Not sure what this does yet
+
+  --ss-primary-color: #{$primary};
+}
+
+.ss-value {
+  color: white;
+}
+
+[data-bs-theme="light"] {
+  // Colors
+  --ss-primary-color: #{$primary};
+  --ss-bg-color: #{$body-bg};
+  --ss-font-color: #{$body-color};
+  --ss-font-placeholder-color: #{$body-color};
+  --ss-border-color: #{$border-color-dark};
+  --ss-success-color: #{$form-valid-color};
+  --ss-error-color: #{$form-invalid-color};
+
+  .ss-main.is-valid {
+    border-color: #{$form-valid-border-color};
+  }
+
+  .ss-main.is-invalid {
+    border-color: #{$form-invalid-border-color};
+  }
+}
+
+[data-bs-theme="dark"] {
+  // Colors
+  --ss-primary-color: #{$primary};
+  --ss-bg-color: #{$body-bg-dark};
+  --ss-font-color: #{$body-color-dark};
+  --ss-font-placeholder-color: #{$body-color-dark};
+  --ss-border-color: #{$border-color-dark};
+  --ss-success-color: #{$form-valid-color-dark};
+  --ss-error-color: #{$form-invalid-color-dark};
+
+  .ss-main.is-valid {
+    border-color: #{$form-valid-border-color-dark};
+  }
+
+  .ss-main.is-invalid {
+    border-color: #{$form-invalid-border-color-dark};
+  }
+}

@@ -1,0 +1,83 @@
+.ql-container {
+  font-size: inherit !important;
+}
+
+[data-bs-theme="dark"] {
+  .ql-toolbar {
+    .ql-stroke,
+    .ql-fill {
+      stroke: #{$body-color-dark} !important;
+    }
+
+    .ql-formats > button:hover {
+      .ql-stroke,
+      .ql-fill {
+        stroke: #{$primary} !important;
+      }
+    }
+
+    .ql-active {
+      .ql-stroke,
+      .ql-fill {
+        stroke: #{$primary} !important;
+      }
+    }
+
+    .ql-picker,
+    .ql-picker-item.ql-selected,
+    .ql-picker.ql-expanded .ql-picker-label {
+      color: #{$body-color-dark} !important;
+    }
+
+    .ql-picker-label:hover,
+    .ql-picker-label.ql-active,
+    .ql-picker-item:hover {
+      color: #{$primary} !important;
+      stroke: #{$primary} !important;
+    }
+  }
+
+  .ql-picker-options {
+    background-color: #{$body-bg-dark} !important;
+  }
+}
+
+[data-bs-theme="light"] {
+  .ql-toolbar {
+    .ql-stroke,
+    .ql-fill {
+      stroke: #{$body-color} !important;
+    }
+
+    .ql-formats > button:hover {
+      .ql-stroke,
+      .ql-fill {
+        stroke: #{$primary} !important;
+      }
+    }
+
+    .ql-active {
+      .ql-stroke,
+      .ql-fill {
+        stroke: #{$primary} !important;
+      }
+    }
+
+    .ql-picker,
+    .ql-picker-item.ql-selected,
+    .ql-picker.ql-expanded .ql-picker-label {
+      color: #{$body-color} !important;
+    }
+
+    .ql-picker-label:hover,
+    .ql-picker-label.ql-active,
+    .ql-picker-item:hover {
+      color: #{$primary} !important;
+      stroke: #{$primary} !important;
+    }
+  }
+
+  .ql-picker-options {
+    background-color: #{$body-bg} !important;
+  }
+}

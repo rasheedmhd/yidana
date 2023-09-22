@@ -45,6 +45,17 @@ module Pu
                             data: { action: 'read-more#toggle' })
         end
       end
+
+      def quill(content)
+        return if content.blank?
+
+        tag.div(
+          content,
+          data: {
+            controller: 'quill-viewer'
+          }
+        )
+      end
     end
   end
 end

@@ -7,11 +7,17 @@ import { application } from "./application"
 import ColorModesController from "./color_modes_controller"
 application.register("color-modes", ColorModesController)
 
+import QuillEditorController from "./quill_editor_controller"
+application.register("quill-editor", QuillEditorController)
+
+import QuillViewerController from "./quill_viewer_controller"
+application.register("quill-viewer", QuillViewerController)
+
 import SlimSelectController from "./slim_select_controller"
 application.register("slim-select", SlimSelectController)
 
 import ToastsController from "./toasts_controller"
-application.register("toast", ToastsController)
+application.register("toasts", ToastsController)
 
 import TooltipController from "./tooltip_controller"
 application.register("tooltip", TooltipController)
