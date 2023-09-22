@@ -3,7 +3,8 @@
 module Dashboard
   class OrganisationsController < BaseController
     def index
-      pagy, organisations = pagy(Organisation.all)
+      @q = Organisation.ransack(params[:q])
+      pagy, organisations = pagy @q.result(distinct: true)
       @table = build_table
                .with_records(organisations)
                .with_pagination(pagy)

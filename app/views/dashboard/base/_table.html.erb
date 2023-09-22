@@ -10,7 +10,7 @@
   <% unless resources.any? %>
     <div class="col-12">
       <%=
-        render 'empty_card', message: "You have no #{resource_name_plural(resource_class).downcase}" do
+        render 'shared/empty_card', message: "You have no #{resource_name_plural(resource_class).downcase}" do
           next unless can_perform?(resource_class, :create)
 
           link_to "Create #{resource_name(resource_class)}", path_for(resource_class, :new), class: 'btn btn-outline-primary'

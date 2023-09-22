@@ -110,6 +110,9 @@ GEM
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
+    bullet (7.0.7)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     capybara (3.39.2)
       addressable
       matrix
@@ -235,6 +238,10 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
+    ransack (4.0.0)
+      activerecord (>= 6.1.5)
+      activesupport (>= 6.1.5)
+      i18n
     rbs (2.8.4)
     redis (4.8.1)
     redis-client (0.16.0)
@@ -353,6 +360,8 @@ GEM
       sprockets (>= 3.0.0)
     stimulus-rails (1.2.2)
       railties (>= 6.0.0)
+    strong_migrations (1.6.3)
+      activerecord (>= 5.2)
     thor (1.2.2)
     tilt (2.2.0)
     timeout (0.4.0)
@@ -363,6 +372,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
+    uniform_notifier (1.16.0)
     web-console (4.2.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -394,6 +404,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootsnap
+  bullet
   capybara
   cssbundling-rails
   database_cleaner-active_record
@@ -407,6 +418,7 @@ DEPENDENCIES
   plutonium_generators!
   puma (~> 5.0)
   rails (~> 7.0.7, >= 7.0.7.2)
+  ransack
   redis
   rodauth-rails!
   rspec-rails
@@ -425,6 +437,7 @@ DEPENDENCIES
   solargraph
   sprockets-rails
   stimulus-rails
+  strong_migrations
   turbo-rails
   tzinfo-data
   web-console

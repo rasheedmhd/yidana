@@ -47,8 +47,12 @@ class Organisation < ApplicationRecord
   validates :country, presence: true, inclusion: { in: Country.collection }
   validates :industry, presence: true, length: { maximum: 3, too_long: 'has too many items (maximum is %<count>s items)' },
                        array: { presence: true, inclusion: { in: Industry.collection } }
-  validates :benefits, length: { maximum: 10, too_long: 'has too many items (maximum is %<count>s items)' }
+  # validates :benefits, length: { maximum: 10, too_long: 'has too many items (maximum is %<count>s items)' }
   validates :joel_test, array: { presence: true, inclusion: { in: JoelTest.collection } }
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[name headline company_type company_size country industry] + super
+  end
 
   private
 

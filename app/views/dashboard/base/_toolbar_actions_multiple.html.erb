@@ -3,9 +3,10 @@
     resource_class: "Class of resources being rendered",
   }
 %>
-<form class="d-inline">
+<%= search_form_for @q, class: "d-inline" do |f| %>
   <label for="search" class="visually-hidden">Search</label>
-  <input type="text" class="form-control form-control-sm d-inline w-auto" id="search" placeholder="search...">
-</form>
+  <%= f.search_field :name_cont, class: "form-control form-control-sm d-inline w-auto", id: "search", placeholder: "search..." %>
+<% end %>
+
 <%= toolbar_icon_button '#', :filter %>
 <%= create_button_for resource_class %>
