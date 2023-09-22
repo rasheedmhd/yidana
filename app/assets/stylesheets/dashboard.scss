@@ -59,3 +59,23 @@
   padding-top: 3px;
   padding-bottom: 3px;
 }
+
+// Clamped Content
+
+.clamped-content {
+  max-height: 50vh;
+  overflow-y: auto;
+  // -webkit-mask-image: linear-gradient(180deg, #000 85%, transparent);
+  // mask-image: linear-gradient(180deg, #000 85%, transparent);
+  padding-bottom: 12px;
+}
+
+.clamped-content::-webkit-scrollbar-thumb {
+  background: #aaa !important;
+  border-radius: 5px !important;
+}
+
+.clamped-content::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
