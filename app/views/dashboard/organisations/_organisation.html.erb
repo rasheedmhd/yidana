@@ -23,7 +23,7 @@
     <% if organisation.description.present? %>
       <dt class="col-md-3">Description</dt>
       <dd class="col-md-9">
-        <%= quill organisation.description %>
+        <%= quill organisation.description, clamp: true %>
       </dd>
     <% end %>
   <% end %>

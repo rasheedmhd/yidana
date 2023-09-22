@@ -12,8 +12,9 @@ export default class extends Controller {
 
       [{ 'list': 'ordered' }, { 'list': 'bullet' }],
       [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+      [{ 'align': [] }],
+      [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
 
-      // [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
       [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
 
       [{ 'color': [] }],          // dropdown with defaults from theme
@@ -28,7 +29,30 @@ export default class extends Controller {
       theme: 'snow',
       modules: {
         toolbar: toolbarOptions
-      }
+      },
+      formats: [
+        // 'background',
+        'bold',
+        'color',
+        'font',
+        'code',
+        'italic',
+        'link',
+        'size',
+        'strike',
+        'script',
+        'underline',
+        'blockquote',
+        'header',
+        'indent',
+        'list',
+        'align',
+        'direction',
+        'code-block',
+        'formula'
+        // 'image'
+        // 'video'
+      ]
     });
 
     if (this.inputTarget.value) {

@@ -364,8 +364,7 @@ SimpleForm.setup do |config|
     b.wrapper tag: :div, html: { data: { controller: 'quill-editor' } } do |quill|
       quill.wrapper(tag: :div,
                     html: {
-                      data: { quill_editor_target: 'editor' },
-                      style: 'max-height: 50vh;overflow-y: scroll;'
+                      data: { quill_editor_target: 'editor' }
                     }) {}
       quill.use :input, error_class: 'is-invalid', valid_class: 'is-valid', class: 'd-none',
                         data: { quill_editor_target: 'input' }

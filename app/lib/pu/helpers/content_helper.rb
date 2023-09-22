@@ -46,11 +46,15 @@ module Pu
         end
       end
 
-      def quill(content)
+      def quill(content, clamp: false)
         return if content.blank?
+
+        classes = ['ql-viewer']
+        classes << 'ql-clamped' if clamp
 
         tag.div(
           content,
+          class: classes,
           data: {
             controller: 'quill-viewer'
           }
