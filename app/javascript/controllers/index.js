@@ -7,6 +7,9 @@ import { application } from "./application"
 import ColorModesController from "./color_modes_controller"
 application.register("color-modes", ColorModesController)
 
+import FormController from "./form_controller"
+application.register("form", FormController)
+
 import QuillEditorController from "./quill_editor_controller"
 application.register("quill-editor", QuillEditorController)
 

@@ -59,7 +59,7 @@ module Dashboard
 
     def build_table
       table = Pu::Builders::Table.new(Organisation)
-                                 .with_columns(:name, :headline, :company_type, :company_size, :country)
+                                 .with_columns(:name, :headline, :company_type, :company_size, :country, :created_at, :updated_at)
 
       # define custom transformations
       %i[industry company_size company_type joel_test country].each do |name|

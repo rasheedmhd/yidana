@@ -23,8 +23,14 @@
         <thead class="sticky-top">
           <tr>
             <th scope="col" style="min-width: 40px">#</th>
-            <% table.column_names.each do |name| %>
-              <th scope="col" style="min-width: 150px;"><%= name %></th>
+            <% table.columns.each do |name, column| %>
+              <th scope="col" style="min-width: 150px;">
+                <% if resource_class.ransortable_attributes.include? name.to_s %>
+                  <%= sort_link(@q, name, column[:label], class: "text-decoration-none") %>
+                <% else %>
+                  <%= column[:label] %>
+                <% end %>
+              </th>
             <% end  %>
             <th scope="col"style="min-width: 150px;">Actions</th>
           </tr>

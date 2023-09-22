@@ -3,10 +3,15 @@
     resource_class: "Class of resources being rendered",
   }
 %>
-<%= search_form_for @q, class: "d-inline" do |f| %>
+<%= search_form_for @q, class: "d-inline", html: { data: { controller: "form" } } do |f| %>
   <label for="search" class="visually-hidden">Search</label>
-  <%= f.search_field :name_cont, class: "form-control form-control-sm d-inline w-auto", id: "search", placeholder: "search..." %>
+  <%=
+    f.search_field :name_cont, id: "search",
+                               class: "form-control form-control-sm d-inline w-auto",
+                               placeholder: "search...",
+                               data: { action: "change->form#submit" }
+  %>
 <% end %>
 
-<%= toolbar_icon_button '#', :filter %>
+<%#= toolbar_icon_button '#', :filter %>
 <%= create_button_for resource_class %>
