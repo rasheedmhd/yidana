@@ -16,6 +16,9 @@ application.register("quill-editor", QuillEditorController)
 import QuillViewerController from "./quill_viewer_controller"
 application.register("quill-viewer", QuillViewerController)
 
+import ScrollPreserverController from "./scroll_preserver_controller"
+application.register("scroll-preserver", ScrollPreserverController)
+
 import SlimSelectController from "./slim_select_controller"
 application.register("slim-select", SlimSelectController)
 
