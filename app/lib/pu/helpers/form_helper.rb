@@ -5,7 +5,7 @@ module Pu
     module FormHelper
       include ActionView::Helpers::FormHelper
 
-      alias rails_default_form_for form_for
+      alias pu_overridden_form_for form_for
 
       #
       # Override the original form_for helper to disable turbo forms by default if not
@@ -20,7 +20,7 @@ module Pu
           }
         }.deep_merge! options
 
-        rails_default_form_for(record, options, &block)
+        pu_overridden_form_for(record, options, &block)
       end
     end
   end
