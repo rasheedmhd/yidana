@@ -8,9 +8,7 @@
 # - Allow talent profiles
 # -
 
-
 # PU Schema
-
 
 #
 #          (owner)
@@ -39,7 +37,6 @@ EntityUser:
   role: enum
 # rails g model entity_user entity:belongs_to user:belongs_to role: integer
 
-
 # User: tied to a single person. used to authenticate to the app
 # Entity: this represents an object we intract with. it could be a customer, a business etc
 #         1. Has a single owner
@@ -54,15 +51,17 @@ EntityUser:
 #   + GigDescription
 #     + Listing
 
-
 # = Talent (TBD)
 
+# rails g model job_position organisation:belongs_to title:string job_role:string experience_level:string job_type:string description:text \
+#                            minimum_annual_salary:integer maximum_annual_salary:integer offers_equity:boolean technologies:string \
+#                            visa_sponsorship:boolean relocation_assistance:boolean
 
-JobDescription:
+job_position:
   entity: belongs_to_through :organisation
   organisation: belongs_to
-  name: text
-  job_role: Text[]
+  title: string
+  job_role:
     - Backend Developer
     - Data Scientist
     - Database Administrator
@@ -77,14 +76,14 @@ JobDescription:
     - Product Manager
     - QA/Test Developer
     - System Administrator
-  experience_level: ExperienceLevel[]
-    0: Student
-    1: Junior
-    2: Mid-Level
-    3: Senior
-    4: Lead
-    5: Manager
-  job_type: JobTypeEnum[]
+  experience_level:
+    - 0: Student
+    - 1: Junior
+    - 2: Mid-Level
+    - 3: Senior
+    - 4: Lead
+    - 5: Manager
+  job_type:
     full_time: Full-time
     contract: Contract
     internship: Internship
@@ -94,7 +93,7 @@ JobDescription:
   offers_equity: Boolean
   technologies: Text[]
   how_to_apply: text
-  application_channels: Hash
+  application_channels:
     - url
     - email
     - devcongress
@@ -147,8 +146,6 @@ Company:
     - Do you have testers?
     - Do new candidates write code during their interview?
     - Do you do hallway usability testing?
-
-
 # About this job
 # Job type: Full-time
 # Experience level: Junior, Mid-Level, Senior

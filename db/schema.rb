@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_09_125747) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_15_185311) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -37,6 +37,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_125747) do
     t.index ["entity_id"], name: "unique_owner_role_in_entity", unique: true, where: "(role = 0)"
     t.index ["user_id", "entity_id"], name: "index_entity_users_on_user_id_and_entity_id", unique: true
     t.index ["user_id"], name: "index_entity_users_on_user_id"
+  end
+
+  create_table "job_positions", force: :cascade do |t|
+    t.bigint "organisation_id", null: false
+    t.string "title", null: false
+    t.string "job_role", default: [], null: false, array: true
+    t.string "experience_level", default: [], null: false, array: true
+    t.string "job_type", null: false
+    t.text "description", null: false
+    t.integer "minimum_annual_salary", null: false
+    t.integer "maximum_annual_salary", null: false
+    t.boolean "offers_equity", default: false, null: false
+    t.string "technologies", default: [], null: false, array: true
+    t.boolean "visa_sponsorship", default: false, null: false
+    t.boolean "relocation_assistance", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organisation_id"], name: "index_job_positions_on_organisation_id"
   end
 
   create_table "organisations", force: :cascade do |t|
@@ -89,6 +107,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_125747) do
   add_foreign_key "entities", "users"
   add_foreign_key "entity_users", "entities"
   add_foreign_key "entity_users", "users"
+  add_foreign_key "job_positions", "organisations"
   add_foreign_key "organisations", "entities"
   add_foreign_key "user_login_change_keys", "users", column: "id"
   add_foreign_key "user_password_reset_keys", "users", column: "id"

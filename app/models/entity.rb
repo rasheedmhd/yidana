@@ -30,6 +30,7 @@ class Entity < ApplicationRecord
   has_many :entity_users
   has_many :users, through: :entity_users
   has_many :organisations
+  has_many :job_positions, through: :organisations
 
   before_validation :maybe_set_slug
 

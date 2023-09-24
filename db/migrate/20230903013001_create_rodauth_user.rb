@@ -5,7 +5,7 @@ class CreateRodauthUser < ActiveRecord::Migration[7.0]
     enable_extension 'citext'
 
     create_table :users do |t|
-      t.integer :status, null: false, default: 1
+      t.integer :status, limit: 1, null: false, default: 1
       t.citext :email, null: false
       t.index :email, unique: true, where: 'status IN (1, 2)'
       t.string :password_hash
