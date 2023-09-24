@@ -1,7 +1,10 @@
 <% content_for :toolbar do %>
-  <%= render partial: 'toolbar',
-              locals: { resource_class: Organisation,
-                        resource: @organisation } %>
+  <%=
+    render partial: 'toolbar', locals: {
+      resource_class: Organisation,
+      resource: @organisation
+    }
+  %>
 <% end %>
 
 <%= render "form", form: @form %>

@@ -4,24 +4,16 @@ module Dashboard
   class OrganisationsController < BaseController
     before_action :set_organisation, only: %i[show edit update destroy]
 
-    # GET /organisations or /organisations.json
+    # GET /organisations(.{format})
     def index
       authorize Organisation
 
       @q = policy_scope(Organisation).ransack(params[:q])
       @pagy, @organisations = pagy @q.result
-      @table = build_table
-               .with_records(@organisations)
-               .with_pagination(@pagy)
-               .with_columns(policy(Organisation).permitted_attributes_for_index)
-
-      # respond_to do |format|
-      #   format.html
-      #   format.json
-      # end
+      @table = build_table.with_records(@organisations).with_pagination(@pagy)
     end
 
-    # GET /organisations/1 or /organisations/1.json
+    # GET /organisations/1(.{format})
     def show
       authorize @organisation
     end
@@ -31,81 +23,80 @@ module Dashboard
       authorize Organisation
 
       @organisation = Organisation.new
-      @form = build_form
-              .with_record(@organisation)
-              .with_inputs(policy(Organisation).permitted_attributes_for_create)
+      @form = build_form.with_record(@organisation)
     end
 
     # GET /organisations/1/edit
     def edit
       authorize @organisation
 
-      @form = build_form
-              .with_record(@organisation)
-              .with_inputs(policy(Organisation).permitted_attributes_for_update)
+      @form = build_form.with_record(@organisation)
     end
 
-    # POST /organisations or /organisations.json
+    # POST /organisations(.{format})
     def create
       authorize Organisation
 
-      @organisation = Organisation.new(entity: current_entity, **params.require(:organisation).permit!)
+      respond_to do |format|
+        @organisation = Organisation.new(entity: current_entity, **params.require(:organisation).permit!)
 
-      if @organisation.save
-        redirect_to @organisation, notice: 'Organisation was successfully created.'
-      else
-        @form = build_form
-                .with_record(@organisation)
-                .with_inputs(policy(Organisation).permitted_attributes_for_create)
-        render :new, status: :unprocessable_entity
+        if @organisation.save
+          format.html { redirect_to @organisation, notice: 'Organisation was successfully created.' }
+          format.any { render :show, status: :created, location: @organisation }
+        else
+          format.html do
+            @form = build_form.with_record(@organisation)
+            render :new, status: :unprocessable_entity
+          end
+          format.any do
+            @errors = @organisation.errors
+            render 'errors', status: :unprocessable_entity
+          end
+        end
       end
-
-      # respond_to do |format|
-      #   if @organisation.save
-      #     format.html { redirect_to @organisation, notice: "Article was successfully created." }
-      #     format.json { render :show, status: :created, location: @organisation }
-      #     format.js
-      #   else
-      #     format.html { render :new, status: :unprocessable_entity }
-      #     format.json { render json: @organisation.errors, status: :unprocessable_entity }
-      #   end
-      # end
     end
 
-    # PATCH/PUT /organisations/1 or /organisations/1.json
+    # PATCH/PUT /organisations/1(.{format})
     def update
       authorize @organisation
 
-      if @organisation.update(params.require(:organisation).permit!)
-        redirect_to @organisation, notice: 'Organisation was successfully updated.', status: :see_other
-      else
-        @form = build_form
-                .with_record(@organisation)
-                .with_inputs(policy(Organisation).permitted_attributes_for_update)
-        render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        if @organisation.update(params.require(:organisation).permit!)
+          format.html do
+            redirect_to @organisation, notice: 'Organisation was successfully updated.', status: :see_other
+          end
+          format.any { render :show, status: :ok, location: @organisation }
+        else
+          format.html do
+            @form = build_form.with_record(@organisation)
+            render :edit, status: :unprocessable_entity
+          end
+          format.any do
+            @errors = @organisation.errors
+            render 'errors', status: :unprocessable_entity
+          end
+        end
       end
-
-      # if @organisation.update(organisation_params)
-      #   format.html { redirect_to @organisation, notice: "Article was successfully updated." }
-      #   format.json { render :show, status: :ok, location: @organisation }
-      #   format.js
-      # else
-      #   format.html { render :edit, status: :unprocessable_entity }
-      #   format.json { render json: @organisation.errors, status: :unprocessable_entity }
-      # end
     end
 
-    # DELETE /organisations/1 or /organisations/1.json
+    # DELETE /organisations/1(.{format})
     def destroy
       authorize @organisation
 
-      @organisation.destroy
       respond_to do |format|
+        @organisation.destroy
+
         format.html { redirect_to organisations_url, notice: 'Article was successfully destroyed.' }
         format.json { head :no_content }
+      rescue ActiveRecord::InvalidForeignKey => e
+        format.html { redirect_to @organisation, alert: 'Organisation cannot be deleted.' }
+        format.any do
+          @errors = ActiveModel::Errors.new @organisation
+          @errors.add :base, :existing_references, message: 'is referenced by other records'
+
+          render 'errors', status: :unprocessable_entity
+        end
       end
-    rescue ActiveRecord::InvalidForeignKey => e
-      redirect_to(organisation, alert: 'Organisation cannot be deleted.') and return
     end
 
     private

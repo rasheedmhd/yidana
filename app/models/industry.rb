@@ -41,5 +41,5 @@ class Industry
     sports: 'Sports',
     telecom: 'Telecom Services & Equipment',
     transport: 'Transport'
-  }.sort.to_h.stringify_keys.freeze
+  }.stringify_keys.sort.to_h.freeze
 end

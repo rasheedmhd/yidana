@@ -14,10 +14,6 @@ module InMemoryHashCollection
     self.class::HASH[id]
   end
 
-  def to_s
-    id
-  end
-
   def ==(other)
     case other
     when self.class
@@ -27,6 +23,14 @@ module InMemoryHashCollection
     else
       super
     end
+  end
+
+  def to_s
+    id
+  end
+
+  def to_hash
+    { id:, name: }
   end
 
   module ClassMethods

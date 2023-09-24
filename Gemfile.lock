@@ -195,6 +195,7 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.15.4-x86_64-darwin)
       racc (~> 1.4)
+    oj (3.16.1)
     pagy (6.0.4)
     parallel (1.23.0)
     parser (3.2.2.3)
@@ -206,6 +207,8 @@ GEM
       nio4r (~> 2.0)
     pundit (2.3.1)
       activesupport (>= 3.0.0)
+    rabl (0.16.1)
+      activesupport (>= 2.3.14)
     racc (1.7.1)
     rack (2.2.8)
     rack-test (2.1.0)
@@ -415,11 +418,13 @@ DEPENDENCIES
   faker
   htmlbeautifier
   jsbundling-rails
+  oj
   pagy
   pg
   plutonium_generators!
   puma (~> 5.0)
   pundit
+  rabl
   rails (~> 7.0.7, >= 7.0.7.2)
   ransack
   redis

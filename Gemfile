@@ -15,8 +15,10 @@ gem 'sidekiq-failures'
 # Custom
 
 gem 'bullet', group: 'development'
+gem 'oj'
 gem 'pagy'
 gem 'pundit'
+gem 'rabl'
 gem 'ransack'
 gem 'rodauth-rails', path: '/Users/stefan/code/plutonium/rodauth-rails'
 gem 'simple_form'

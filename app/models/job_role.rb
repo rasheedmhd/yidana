@@ -19,5 +19,5 @@ class JobRole
     product_manager: 'Product Manager',
     qa: 'QA/Test Developer',
     system_admin: 'System Administrator'
-  }.sort.to_h.stringify_keys.freeze
+  }.stringify_keys.sort.to_h.freeze
 end

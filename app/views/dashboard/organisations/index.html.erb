@@ -1,6 +1,10 @@
 <% content_for :toolbar do %>
-  <%= render partial: 'toolbar', locals: { resource_class: Organisation,
-                                           actions: 'toolbar_actions_multiple' } %>
+  <%=
+    render partial: 'toolbar', locals: {
+      resource_class: Organisation,
+      actions: 'toolbar_actions_multiple'
+    }
+  %>
 <% end  %>
 
 <%= render 'table', table: @table %>
