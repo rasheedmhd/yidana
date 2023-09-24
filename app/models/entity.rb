@@ -27,14 +27,15 @@ class Entity < ApplicationRecord
 
   belongs_to :user
 
+  has_many :entity_users
+  has_many :users, through: :entity_users
+  has_many :organisations
+
   before_validation :maybe_set_slug
 
   validates :name, presence: true, length: { minimum: 3, maximum: 80 }
   validates :slug, presence: true, uniqueness: { scope: :type, case_sensitive: true, if: :will_save_change_to_slug? },
                    length: { minimum: 3, maximum: 100 }
-
-  has_many :entity_users
-  has_many :users, through: :entity_users
 
   private
 

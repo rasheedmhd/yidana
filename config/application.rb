@@ -45,5 +45,8 @@ module MyApp
     config.active_job.queue_adapter = :sidekiq
 
     config.action_mailer.deliver_later_queue_name = 'mailers'
+
+    # https://github.com/varvet/pundit#rescuing-a-denied-authorization-in-rails
+    config.action_dispatch.rescue_responses['Pundit::NotAuthorizedError'] = :forbidden
   end
 end

@@ -79,4 +79,14 @@
     </dd>
   <% end %>
 
+  <% can_read_field? organisation, :created_at do %>
+    <dt class="col-md-3">Created At</dt>
+    <dd class="col-md-9"><%= timeago organisation.created_at %></dd>
+  <% end %>
+
+  <% can_read_field? organisation, :updated_at do %>
+    <dt class="col-md-3">Updated At</dt>
+    <dd class="col-md-9"><%= timeago organisation.updated_at %></dd>
+  <% end %>
+
 </div>

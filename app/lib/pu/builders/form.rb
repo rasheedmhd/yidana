@@ -20,6 +20,7 @@ module Pu
 
       def with_inputs(*names)
         names.flatten.each do |name|
+          name = name.to_sym
           define_input name unless input_defined? name
           @inputs[name] = true
         end
@@ -33,12 +34,12 @@ module Pu
       end
 
       def only!(*inputs)
-        @inputs.slice!(*inputs.flatten)
+        @inputs.slice!(*inputs.flatten.map(&:to_sym))
         self
       end
 
       def except!(*inputs)
-        @inputs.except!(*inputs.flatten)
+        @inputs.except!(*inputs.flatten.map(&:to_sym))
         self
       end
 
@@ -51,11 +52,11 @@ module Pu
       end
 
       def input?(name)
-        @inputs.key? name
+        @inputs.key? name.to_sym
       end
 
       def input_defined?(name)
-        @definitions.key? name
+        @definitions.key? name.to_sym
       end
 
       protected

@@ -26,28 +26,28 @@ module Pu
       end
 
       def show_button_for(record, button_class = :primary, variant: :toolbar)
-        return unless can_perform?(record, :show)
+        return unless can_perform?(record, :show?)
 
         path = path_for record, :show
         __button__render_button_variant path, 'box-arrow-up-right', button_class, variant
       end
 
       def create_button_for(resource_class, button_class = :primary, variant: :toolbar)
-        return unless can_perform?(resource_class, :create)
+        return unless can_perform?(resource_class, :create?)
 
         path = path_for resource_class, :create
         __button__render_button_variant path, 'plus-lg', button_class, variant
       end
 
       def edit_button_for(record, button_class = :primary, variant: :toolbar)
-        return unless can_perform?(record, :edit)
+        return unless can_perform?(record, :edit?)
 
         path = path_for record, :edit
         __button__render_button_variant path, :pencil, button_class, variant
       end
 
       def delete_button_for(record, button_class = :danger, variant: :toolbar)
-        return unless can_perform?(record, :delete)
+        return unless can_perform?(record, :destroy?)
 
         button_class = case variant
                        when :toolbar
