@@ -13,6 +13,9 @@ module Dashboard
     after_action :verify_authorized
     after_action :verify_policy_scoped, except: %i[new create]
 
+    # https://github.com/ddnexus/pagy/blob/master/docs/extras/headers.md#headers
+    after_action { pagy_headers_merge(@pagy) if @pagy }
+
     layout 'dashboard'
 
     private
