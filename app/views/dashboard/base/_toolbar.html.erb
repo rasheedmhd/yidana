@@ -6,15 +6,12 @@
   # }
 
   resource = nil unless local_assigns[:resource].present?
-  actions = nil unless local_assigns[:actions].present?
 %>
 <div class="row justify-content-between py-2 mb-3 border-bottom">
   <div class="col-sm-6">
     <%= render partial: "toolbar_breadcrumbs", locals: { resource: resource, resource_class: resource_class } %>
   </div>
-  <% if actions.present? %>
-    <div class="col-sm-6 text-end">
-      <%= render partial: actions, locals: { resource: resource, resource_class: resource_class } %>
-    </div>
-  <% end %>
+  <div class="col-sm-6 text-end">
+    <%= yield %>
+  </div>
 </div>

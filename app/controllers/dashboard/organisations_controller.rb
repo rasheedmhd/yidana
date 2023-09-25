@@ -10,7 +10,12 @@ module Dashboard
 
       @q = policy_scope(Organisation).ransack(params[:q])
       @pagy, @organisations = pagy @q.result
-      @table = build_table.with_records(@organisations).with_pagination(@pagy)
+      @table = build_table
+               .with_records(@organisations)
+               .with_pagination(@pagy)
+               .with_record_actions(build_actions.only!(:show, :edit, :destroy))
+               .with_toolbar_actions(build_actions.only!(:create))
+               .search_with(@q, :name_cont)
     end
 
     # GET /organisations/1(.{format})
@@ -141,6 +146,10 @@ module Dashboard
                         .define_input(:country, collection: Country.collection)
                         .define_input(:joel_test, collection: JoelTest.collection, as: :check_boxes)
                         .with_inputs(@permitted_attributes)
+    end
+
+    def build_actions
+      Pu::Builders::Actions.new.with_standard_actions
     end
   end
 end

@@ -7,7 +7,7 @@ module Pu
       include Pu::Helpers::ContentHelper
       include ActionView::Helpers::TagHelper
 
-      attr_reader :model, :records, :pagination
+      attr_reader :model, :records, :pagination, :record_actions, :toolbar_actions, :search_object, :search_field
 
       def initialize(model)
         @model = model
@@ -26,8 +26,25 @@ module Pu
         self
       end
 
+      def with_record_actions(record_actions)
+        @record_actions = record_actions
+        self
+      end
+
+      def with_toolbar_actions(toolbar_actions)
+        @toolbar_actions = toolbar_actions
+        self
+      end
+
+      def search_with(object, field)
+        @search_object = object
+        @search_field = field
+        self
+      end
+
       def with_columns(*names)
         names.flatten.each do |name|
+          name = name.to_sym
           define_column name unless column_defined? name
           @columns[name] = true
         end
@@ -44,12 +61,12 @@ module Pu
       end
 
       def only!(*columns)
-        @columns.slice!(*columns.flatten)
+        @columns.slice!(*columns.flatten.map(&:to_sym))
         self
       end
 
       def except!(*columns)
-        @columns.except!(*columns.flatten)
+        @columns.except!(*columns.flatten.map(&:to_sym))
         self
       end
 
@@ -62,11 +79,11 @@ module Pu
       end
 
       def column?(name)
-        @columns.key? name
+        @columns.key? name.to_sym
       end
 
       def column_defined?(name)
-        @definitions.key? name
+        @definitions.key? name.to_sym
       end
 
       protected

@@ -17,3 +17,15 @@ body {
   vertical-align: -0.125em;
   fill: currentColor;
 }
+
+.resource-table-col-id {
+  min-width: 40px !important;
+}
+
+.resource-table-col-attr {
+  min-width: 150px !important;
+}
+
+.resource-table-cell-actions {
+  white-space: nowrap !important;
+}

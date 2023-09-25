@@ -9,34 +9,36 @@ module Pu
         toolbar_icon_button url, 'box-arrow-right' if url.present?
       end
 
-      def toolbar_icon_button(url, icon, button_class = :secondary)
+      def toolbar_icon_button(url, icon:, button_class: 'secondary', method: :get, confirm: nil)
         button_class = __button__toolbar_icon_button_class(button_class)
 
-        link_to url, class: button_class do
-          tag.i class: "bi bi-#{icon}"
+        if method == :get
+          link_to url, class: button_class do
+            tag.i class: "bi bi-#{icon}"
+          end
+        else
+          form_for url, method:, html: { class: 'd-inline-block', data: { turbo_confirm: confirm } } do
+            tag.button class: button_class do
+              tag.i class: "bi bi-#{icon}"
+            end
+          end
         end
       end
 
-      def table_icon_button(url, icon, button_class = :secondary)
+      def table_icon_button(url, icon:, button_class: 'secondary', method: :get, confirm: nil)
         button_class = __button__table_icon_button_class(button_class)
 
-        link_to url, class: button_class do
-          tag.i class: "bi bi-#{icon}"
+        if method == :get
+          link_to url, class: button_class do
+            tag.i class: "bi bi-#{icon}"
+          end
+        else
+          form_for url, method:, html: { class: 'd-inline-block', data: { turbo_confirm: confirm } } do
+            tag.button class: button_class do
+              tag.i class: "bi bi-#{icon}"
+            end
+          end
         end
-      end
-
-      def show_button_for(record, button_class = :primary, variant: :toolbar)
-        return unless can_perform?(record, :show?)
-
-        path = adapt_route_args record
-        __button__render_button_variant path, 'box-arrow-up-right', button_class, variant
-      end
-
-      def create_button_for(resource_class, button_class = :primary, variant: :toolbar)
-        return unless can_perform?(resource_class, :create?)
-
-        path = adapt_route_args resource_class, action: :new
-        __button__render_button_variant path, 'plus-lg', button_class, variant
       end
 
       def edit_button_for(record, button_class = :primary, variant: :toolbar)

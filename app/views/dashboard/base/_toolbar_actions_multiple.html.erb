@@ -22,6 +22,3 @@
   <%# preserve sorting %>
   <%= f.hidden_field :s, value: params[:q].try(:[], :s) %>
 <% end %>
-
-<%#= toolbar_icon_button '#', :filter %>
-<%= create_button_for resource_class %>

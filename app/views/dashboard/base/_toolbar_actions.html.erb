@@ -1,0 +1,18 @@
+<%
+  # locals: {
+  #   resource: "the resource to generate actions for",
+  #   actions: "list of actions to generate",
+  # }
+%>
+
+<% actions.each do |action| %>
+  <% if action.is_a? Pu::Builders::Action::IconButton %>
+    <%=
+      toolbar_icon_button adapt_route_args(resource, action: action.action),
+                          icon: action.icon,
+                          button_class: action.button_class,
+                          method: action.method,
+                          confirm: action.confirm
+    %>
+  <% end %>
+<% end %>
