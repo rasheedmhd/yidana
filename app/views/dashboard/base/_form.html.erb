@@ -3,7 +3,7 @@
     form: "instance of Pu::Builders::Form"
   }
 %>
-<%= simple_form_for form.record do |f| %>
+<%= simple_form_for adapt_route_args(form.record) do |f| %>
   <div class="row py-2">
     <div class="col-12 text-end">
       <%= f.button :submit, class: "btn btn-sm btn-outline-primary" %>

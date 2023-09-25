@@ -4,7 +4,7 @@ module Dashboard
   class BaseController < ApplicationController
     include Pundit::Authorization
     include CurrentEntity
-    include EntityUrlHelpers
+    include UrlPathRouteAdapter
 
     before_action :set_page_title
     before_action :set_sidebar_menu
@@ -28,11 +28,7 @@ module Dashboard
       @sidebar_menu = {
         dashboard: {
           home: entity_path(current_entity),
-          organisations: entity_organisations_path(current_entity),
-          users: entity_users_path(current_entity)
-        },
-        reports: {
-          'All': edit_user_path(current_entity)
+          organisations: entity_organisations_path(current_entity)
         },
         separated: {
           settings: ''

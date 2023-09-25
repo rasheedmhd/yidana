@@ -41,7 +41,9 @@ module Dashboard
         @organisation = Organisation.new(entity: current_entity, **params.require(:organisation).permit!)
 
         if @organisation.save
-          format.html { redirect_to @organisation, notice: 'Organisation was successfully created.' }
+          format.html do
+            redirect_to adapt_route_args(@organisation), notice: 'Organisation was successfully created.'
+          end
           format.any { render :show, status: :created, location: @organisation }
         else
           format.html do
@@ -63,9 +65,10 @@ module Dashboard
       respond_to do |format|
         if @organisation.update(params.require(:organisation).permit!)
           format.html do
-            redirect_to @organisation, notice: 'Organisation was successfully updated.', status: :see_other
+            redirect_to adapt_route_args(@organisation), notice: 'Organisation was successfully updated.',
+                                                         status: :see_other
           end
-          format.any { render :show, status: :ok, location: @organisation }
+          format.any { render :show, status: :ok, location: adapt_route_args(@organisation) }
         else
           format.html do
             @form = build_form.with_record(@organisation)
@@ -86,10 +89,12 @@ module Dashboard
       respond_to do |format|
         @organisation.destroy
 
-        format.html { redirect_to organisations_url, notice: 'Article was successfully destroyed.' }
+        format.html { redirect_to adapt_route_args(Organisation), notice: 'Organisation was successfully deleted.' }
         format.json { head :no_content }
       rescue ActiveRecord::InvalidForeignKey => e
-        format.html { redirect_to @organisation, alert: 'Organisation cannot be deleted.' }
+        format.html do
+          redirect_to adapt_route_args(@organisation), alert: 'Organisation is referenced by other records.'
+        end
         format.any do
           @errors = ActiveModel::Errors.new @organisation
           @errors.add :base, :existing_references, message: 'is referenced by other records'

@@ -42,31 +42,6 @@ module Pu
       def attribute_name(_resource_class, name)
         name.to_s.titleize
       end
-
-      def path_for(resource, action, *args)
-        if resource.is_a?(Class)
-          resource_class = resource
-        else
-          resource_class = resource.class
-          args.unshift resource
-        end
-        resource_class = resource_class.to_s.underscore
-
-        path_helper = case action.to_sym
-                      when :index
-                        "#{resource_class.pluralize}_path"
-                      when :show
-                        "#{resource_class}_path"
-                      when :new, :create
-                        "new_#{resource_class}_path"
-                      when :edit, :update
-                        "edit_#{resource_class}_path"
-                      else
-                        "#{action}_#{resource_class}_path"
-                      end
-
-        send path_helper.to_sym, *args
-      end
     end
   end
 end

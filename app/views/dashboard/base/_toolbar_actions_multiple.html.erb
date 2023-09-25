@@ -3,7 +3,7 @@
     resource_class: "Class of resources being rendered",
   }
 %>
-<%= search_form_for @q, class: "d-inline", html: { data: { controller: "form", turbo_frame: nil } } do |f| %>
+<%= search_form_for adapt_route_args(@q), class: "d-inline", html: { data: { controller: "form", turbo_frame: nil } } do |f| %>
   <label for="search" class="visually-hidden">Search</label>
   <%=
     f.search_field :name_cont, id: "search",
