@@ -39,10 +39,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_185311) do
     t.index ["user_id"], name: "index_entity_users_on_user_id"
   end
 
-  create_table "job_positions", force: :cascade do |t|
+  create_table "job_descriptions", force: :cascade do |t|
     t.bigint "organisation_id", null: false
     t.string "title", null: false
-    t.string "job_role", default: [], null: false, array: true
+    t.string "job_role", null: false
     t.string "experience_level", default: [], null: false, array: true
     t.string "job_type", null: false
     t.text "description", null: false
@@ -54,24 +54,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_185311) do
     t.boolean "relocation_assistance", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["organisation_id"], name: "index_job_positions_on_organisation_id"
+    t.index ["organisation_id"], name: "index_job_descriptions_on_organisation_id"
   end
 
   create_table "organisations", force: :cascade do |t|
     t.bigint "entity_id", null: false
     t.string "name", null: false
+    t.citext "slug", null: false
     t.text "headline", null: false
     t.text "description"
     t.string "website_url"
     t.string "industry", default: [], null: false, array: true
     t.string "company_size", null: false
     t.string "company_type", null: false
-    t.string "benefits", default: [], null: false, array: true
     t.string "joel_test", default: [], null: false, array: true
     t.string "country", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["entity_id"], name: "index_organisations_on_entity_id"
+    t.index ["slug"], name: "index_organisations_on_slug"
   end
 
   create_table "user_login_change_keys", force: :cascade do |t|
@@ -98,7 +99,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_185311) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.integer "status", default: 1, null: false
+    t.integer "status", limit: 2, default: 1, null: false
     t.citext "email", null: false
     t.string "password_hash"
     t.index ["email"], name: "index_users_on_email", unique: true, where: "(status = ANY (ARRAY[1, 2]))"
@@ -107,7 +108,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_185311) do
   add_foreign_key "entities", "users"
   add_foreign_key "entity_users", "entities"
   add_foreign_key "entity_users", "users"
-  add_foreign_key "job_positions", "organisations"
+  add_foreign_key "job_descriptions", "organisations"
   add_foreign_key "organisations", "entities"
   add_foreign_key "user_login_change_keys", "users", column: "id"
   add_foreign_key "user_password_reset_keys", "users", column: "id"

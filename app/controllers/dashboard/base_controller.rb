@@ -20,6 +20,23 @@ module Dashboard
 
     private
 
+    class << self
+      attr_reader :resource_class
+
+      def controller_for(resource_class)
+        @resource_class = resource_class
+      end
+    end
+
+    def resource_class
+      self.class.resource_class
+    end
+    helper_method :resource_class
+
+    def requires_auth?
+      @requires_auth.nil? ? true : @requires_auth
+    end
+
     def set_page_title
       @page_title = 'Dashboard'
     end
@@ -28,7 +45,8 @@ module Dashboard
       @sidebar_menu = {
         dashboard: {
           home: entity_path(current_entity),
-          organisations: entity_organisations_path(current_entity)
+          organisations: entity_organisations_path(current_entity),
+          job_descriptions: entity_job_descriptions_path(current_entity)
         },
         separated: {
           settings: ''
@@ -37,14 +55,7 @@ module Dashboard
     end
 
     def set_permitted_attributes
-      @permitted_attributes ||= begin
-        action = {
-          new: :create,
-          edit: :update
-        }[action_name.to_sym] || action_name
-
-        policy(Organisation).send "permitted_attributes_for_#{action}".to_sym
-      end
+      @permitted_attributes ||= policy(resource_class).send "permitted_attributes_for_#{action_name}".to_sym
     end
 
     def pundit_user

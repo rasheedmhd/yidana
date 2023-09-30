@@ -2,7 +2,7 @@
 
 # Company sizez
 class CompanySize
-  include ::InMemoryHashCollection
+  include InMemoryHashCollection
 
   HASH = {
     A: '1-10',

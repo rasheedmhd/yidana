@@ -30,7 +30,7 @@ class Entity < ApplicationRecord
   has_many :entity_users
   has_many :users, through: :entity_users
   has_many :organisations
-  has_many :job_positions, through: :organisations
+  has_many :job_descriptions, through: :organisations
 
   before_validation :maybe_set_slug
 
@@ -41,8 +41,6 @@ class Entity < ApplicationRecord
   private
 
   def maybe_set_slug
-    return unless slug.blank? && name.present?
-
-    self.slug = name.parameterize
+    self.slug ||= name&.parameterize
   end
 end

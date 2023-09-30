@@ -3,6 +3,8 @@
 class OnboardingController < ApplicationController
   include CurrentUser
 
+  layout 'onboarding'
+
   def new; end
 
   def create

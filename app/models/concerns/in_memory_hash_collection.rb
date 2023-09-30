@@ -34,6 +34,20 @@ module InMemoryHashCollection
   end
 
   module ClassMethods
+    def collection
+      @collection ||= ids.map { |id| new id }
+    end
+
+    def ids
+      @ids ||= self::HASH.keys.freeze
+    end
+
+    def [](key)
+      self::HASH[key]
+    end
+
+    # used for serialize
+
     def dump(obj)
       return if obj.nil?
 
@@ -64,18 +78,6 @@ module InMemoryHashCollection
       elsif Rails.env.development? || Rails.env.test?
         raise "Attribute was supposed to be a #{self}, but was a:\n\n#{obj.class} -- #{obj.inspect}"
       end
-    end
-
-    def collection
-      @collection ||= ids.map { |id| new id }
-    end
-
-    def ids
-      @ids ||= self::HASH.keys.freeze
-    end
-
-    def [](key)
-      self::HASH[key]
     end
   end
 end

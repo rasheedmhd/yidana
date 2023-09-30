@@ -34,17 +34,17 @@
                 <% end %>
               </th>
             <% end  %>
-            <th scope="col" class="text-center resource-table-col-attr">Actions</th>
+            <th scope="col" class="text-center resource-table-col-actions">Actions</th>
           </tr>
         </thead>
         <tbody>
           <% resources.each do |resource| %>
           <tr class="align-middle">
-            <td class="text-center">
+            <td class="text-center text-truncate resource-table-cell-id">
               <% if policy(resource).show? %>
-                <%= link_to resource.id, adapt_route_args(resource), class: "text-decoration-none" %>
+                <%= link_to resource.to_param, adapt_route_args(resource), class: "text-decoration-none" %>
               <% else %>
-                <%= resource.id %>
+                <%= resource.to_param %>
               <% end %>
             </td>
 
@@ -56,7 +56,7 @@
 
                 options = column[:options]
               %>
-              <td class='text-truncate' style="max-width: <%= options[:max_width] %>px;">
+              <td class='text-truncate resource-table-cell-attr' style="max-width: <%= options[:max_width] %>px;">
                 <%= display_field value:, display_helper:, options: %>
               </td>
             <% end  %>

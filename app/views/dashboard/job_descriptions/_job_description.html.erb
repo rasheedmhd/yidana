@@ -1,0 +1,3 @@
+<% raise NotImplementedError, "Only Builders::Details is supported" unless job_description.is_a? ::Pu::Builders::Details %>
+
+<%= render 'details', details: job_description %>

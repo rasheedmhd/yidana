@@ -4,6 +4,8 @@ module Dashboard
   class OrganisationsController < BaseController
     before_action :set_organisation, only: %i[show edit update destroy]
 
+    controller_for Organisation
+
     # GET /organisations(.{format})
     def index
       authorize Organisation
@@ -47,7 +49,8 @@ module Dashboard
       authorize Organisation
 
       respond_to do |format|
-        @organisation = Organisation.new(entity: current_entity, **params.require(:organisation).permit!)
+        @organisation = Organisation.new(**params.require(:organisation).permit!)
+        @organisation.entity = current_entity
 
         if @organisation.save
           format.html do
@@ -121,7 +124,7 @@ module Dashboard
     end
 
     def set_organisation
-      @organisation = policy_scope(Organisation).find params.require(:id)
+      @organisation = policy_scope(Organisation).where(slug: params.require(:id)).first!
     end
 
     def build_table

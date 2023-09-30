@@ -12,7 +12,7 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def self.ransortable_attributes(auth_object = nil)
-    ransackable_attributes(auth_object) + %w[created_at updated_at]
+    ransackable_attributes(auth_object) + %w[id created_at updated_at]
   end
 
   def self.ransackable_scopes(_auth_object = nil)

@@ -2,11 +2,7 @@
 
 # Technology list
 class Technology
-  class << self
-    def collection
-      LIST
-    end
-  end
+  include InMemoryListCollection
 
   LIST = %w[
     .net

@@ -2,7 +2,7 @@
 
 # Job types
 class JobType
-  include ::InMemoryHashCollection
+  include InMemoryHashCollection
 
   HASH = {
     full_time: 'Full-time',

@@ -2,7 +2,7 @@
 
 # Industries
 class Industry
-  include ::InMemoryHashCollection
+  include InMemoryHashCollection
 
   HASH = {
     accounting: 'Accounting',

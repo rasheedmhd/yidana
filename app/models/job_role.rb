@@ -2,7 +2,7 @@
 
 # Job roles
 class JobRole
-  include ::InMemoryHashCollection
+  include InMemoryHashCollection
 
   HASH = {
     backend: 'Backend Developer',

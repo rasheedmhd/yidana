@@ -2,7 +2,7 @@
 
 # Company types
 class CompanyType
-  include ::InMemoryHashCollection
+  include InMemoryHashCollection
 
   HASH = {
     private: 'Private',

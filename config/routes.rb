@@ -23,12 +23,12 @@ Rails.application.routes.draw do
     get '', to: 'index#index'
     # pu:routes:entity
 
-    resources :users do
-      # pu:routes:entity:users
-    end
-
     resources :organisations do
       # pu:routes:entity:organisations
+    end
+
+    resources :job_descriptions do
+      # pu:routes:entity:job_descriptions
     end
   end
 

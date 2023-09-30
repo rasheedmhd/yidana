@@ -12,7 +12,6 @@ class CreateOrganisations < ActiveRecord::Migration[7.0]
       t.string :industry, array: true, null: false, default: []
       t.string :company_size, null: false
       t.string :company_type, null: false
-      # t.string :benefits, array: true, null: false, default: []
       t.string :joel_test, array: true, null: false, default: []
       t.string :country, null: false
 

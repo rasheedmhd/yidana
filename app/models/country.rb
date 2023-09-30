@@ -2,7 +2,7 @@
 
 # Countries
 class Country
-  include ::InMemoryHashCollection
+  include InMemoryHashCollection
 
   HASH = {
     GH: 'Ghana',

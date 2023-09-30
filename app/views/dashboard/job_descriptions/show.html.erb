@@ -1,0 +1,12 @@
+<% content_for :toolbar do  %>
+  <%= render 'toolbar', resource_class: JobDescription, resource: @job_description do %>
+    <%=
+      render partial: 'toolbar_actions', locals: {
+        actions: @details.actions.permitted_actions_for(policy(@job_description)),
+        resource: @job_description
+      }
+    %>
+  <% end %>
+<% end  %>
+
+<%= render @details %>

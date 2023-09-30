@@ -2,7 +2,7 @@
 
 # Joel Test
 class JoelTest
-  include ::InMemoryHashCollection
+  include InMemoryHashCollection
 
   HASH = {
     source_control: 'Do you use source control?',

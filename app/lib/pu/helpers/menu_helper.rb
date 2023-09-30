@@ -16,7 +16,7 @@ module Pu
             concat begin
               tag.li class: 'mb-1' do
                 concat(
-                  tag.button(name.capitalize,
+                  tag.button(name.to_s.titleize,
                              class: 'btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed',
                              data: { bs_toggle: 'collapse', bs_target: "##{id}-collapse" },
                              aria: { expanded: active })
@@ -29,7 +29,7 @@ module Pu
                         submenu.each do |name, link|
                           concat(
                             tag.li(
-                              link_to(name.capitalize, link.to_s,
+                              link_to(name.to_s.titleize, link.to_s,
                                       class: 'link-body-emphasis d-inline-flex text-decoration-none rounded',
                                       data: { turbo_frame: }),
                               class: 'mb-1'
@@ -53,7 +53,7 @@ module Pu
               tag.ul class: 'btn-toggle-nav list-unstyled fw-normal pb-1 small' do
                 concat(
                   tag.li(
-                    link_to(name.capitalize, link.to_s,
+                    link_to(name.to_s.titleize, link.to_s,
                             class: 'link-body-emphasis d-inline-flex text-decoration-none rounded',
                             data: { turbo_frame: }),
                     class: 'mb-1'

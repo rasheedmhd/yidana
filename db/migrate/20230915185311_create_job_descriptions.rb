@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class CreateJobPositions < ActiveRecord::Migration[7.0]
+class CreateJobDescriptions < ActiveRecord::Migration[7.0]
   def change
-    create_table :job_positions do |t|
+    create_table :job_descriptions do |t|
       t.belongs_to :organisation, null: false, foreign_key: true
       t.string :title, null: false
-      t.string :job_role, array: true, null: false, default: []
+      t.string :job_role, null: false
       t.string :experience_level, array: true, null: false, default: []
       t.string :job_type, null: false
       t.text :description, null: false

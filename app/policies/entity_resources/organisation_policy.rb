@@ -4,41 +4,13 @@ module EntityResources
   class OrganisationPolicy
     include Concerns::ResourcePolicy
 
-    def index?
-      true
-    end
-
-    def show?
-      @record.entity.id == context.entity.id
-    end
-
-    def create?
-      true
-    end
-
-    def new?
-      create?
-    end
-
-    def update?
-      @record.entity.id == context.entity.id
-    end
-
-    def edit?
-      update?
-    end
-
-    def destroy?
-      true
-    end
-
     def permitted_attributes_for_index
       %i[name headline country created_at updated_at]
     end
 
     def permitted_attributes_for_show
-      %i[name headline description website_url company_type company_size industry country joel_test created_at
-         updated_at]
+      %i[name headline description website_url company_type company_size industry country joel_test
+         created_at updated_at]
     end
 
     def permitted_attributes_for_create
@@ -50,7 +22,7 @@ module EntityResources
     end
 
     class Scope
-      include Concerns::ResourcePolicy
+      include Concerns::ResourcePolicyInitializer
 
       def resolve
         @context.parent.organisations

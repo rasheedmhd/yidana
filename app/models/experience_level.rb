@@ -2,7 +2,7 @@
 
 # Experience levels
 class ExperienceLevel
-  include ::InMemoryHashCollection
+  include InMemoryHashCollection
 
   HASH = {
     '10': 'Student',

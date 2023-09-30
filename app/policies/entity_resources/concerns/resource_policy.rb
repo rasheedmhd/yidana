@@ -3,19 +3,42 @@
 module EntityResources
   module Concerns
     module ResourcePolicy
-      def initialize(context, record)
-        authorize!(context)
+      include Concerns::ResourcePolicyInitializer
 
-        @context = context
-        @record = record
+      def index?
+        true
       end
 
-      private
+      def show?
+        @record.entity.id == context.entity.id
+      end
 
-      attr_reader :context, :record
+      def create?
+        true
+      end
 
-      def authorize!(context)
-        raise Pundit::NotAuthorizedError, 'must be logged in' unless context && context.entity && context.user
+      def new?
+        create?
+      end
+
+      def update?
+        @record.entity.id == context.entity.id
+      end
+
+      def edit?
+        update?
+      end
+
+      def destroy?
+        true
+      end
+
+      def permitted_attributes_for_new
+        permitted_attributes_for_create
+      end
+
+      def permitted_attributes_for_edit
+        permitted_attributes_for_update
       end
     end
   end
