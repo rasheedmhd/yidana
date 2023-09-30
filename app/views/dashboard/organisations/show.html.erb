@@ -1,14 +1,16 @@
 <% content_for :toolbar do  %>
-  <%=
-    render partial: 'toolbar', locals: {
-      resource_class: Organisation,
-      resource: @organisation, actions: 'toolbar_actions_single'
-    }
-  %>
+  <%= render 'toolbar', resource_class: Organisation, resource: @organisation do %>
+    <%=
+      render partial: 'toolbar_actions', locals: {
+        actions: @details.actions.permitted_actions_for(policy(@organisation)),
+        resource: @organisation
+      }
+    %>
+  <% end %>
 <% end  %>
 
 <% content_for :tab_content do %>
-  <%= render @organisation %>
+  <%= render @details %>
 <% end %>
 
 <% content_for :tab_menu do %>

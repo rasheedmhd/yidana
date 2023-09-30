@@ -21,6 +21,10 @@ module Dashboard
     # GET /organisations/1(.{format})
     def show
       authorize @organisation
+
+      @details = build_details
+                 .with_record(@organisation)
+                 .with_actions(build_actions.except!(:create, :show))
     end
 
     # GET /organisations/new
@@ -126,15 +130,24 @@ module Dashboard
 
       # define custom transformations
       %i[industry company_size company_type joel_test country].each do |name|
-        table.define_column(
-          name,
-          transformer: lambda { |value|
-                         helpers.display_name_of value
-                       }
-        )
+        table.define_column(name, display_helper: :display_name_of)
       end
 
       table
+    end
+
+    def build_details
+      details = Pu::Builders::Details.new(Organisation)
+                                     .with_fields(@permitted_attributes)
+                                     .define_field(:description, display_helper: :display_clamped_quill)
+                                     .define_field(:joel_test, display_helper: :joel_test_details, options: { stack: false })
+
+      # define custom transformations
+      %i[industry company_size company_type country].each do |name|
+        details.define_field(name, display_helper: :display_name_of)
+      end
+
+      details
     end
 
     def build_form

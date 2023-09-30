@@ -6,8 +6,8 @@
 #
 module CurrentUser
   def self.included(base)
-    base.send :helper_method, :current_user
     base.send :before_action, :authenticate
+    base.send :helper_method, :current_user
   end
 
   private

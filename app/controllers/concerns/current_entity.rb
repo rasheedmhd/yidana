@@ -6,11 +6,11 @@
 #
 module CurrentEntity
   def self.included(base)
-    base.send :helper_method, :current_entity
+    base.send :include, CurrentUser
+
     base.send :before_action, :current_entity
     base.send :before_action, :require_current_entity
-
-    base.send :include, CurrentUser
+    base.send :helper_method, :current_entity
   end
 
   private

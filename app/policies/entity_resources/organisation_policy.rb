@@ -33,11 +33,12 @@ module EntityResources
     end
 
     def permitted_attributes_for_index
-      %i[name headline company_type company_size country created_at updated_at]
+      %i[name headline country created_at updated_at]
     end
 
     def permitted_attributes_for_show
-      %i[name headline description website_url company_type company_size country created_at updated_at]
+      %i[name headline description website_url company_type company_size industry country joel_test created_at
+         updated_at]
     end
 
     def permitted_attributes_for_create

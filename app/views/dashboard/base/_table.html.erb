@@ -4,7 +4,7 @@
   # }
 
   resource_class = table.model
-  resources = table.records
+  resources = table.records.to_a
   record_actions = table.record_actions
   search_object = table.search_object
 %>
@@ -13,7 +13,7 @@
     <div class="col-12">
       <%=
         render 'shared/empty_card', message: "You have no #{resource_name_plural(resource_class).downcase}" do
-          can_perform?(resource_class, :create?) do
+          if policy(resource_class).create?
             link_to "Create #{resource_name(resource_class)}", adapt_route_args(resource_class, action: :new), class: 'btn btn-outline-primary'
           end
         end
@@ -49,8 +49,16 @@
             </td>
 
             <% table.columns.each do |name, column| %>
-              <% column[:value] = resource.send(name) %>
-              <%= render 'table_cell', column: %>
+              <%
+                value = resource.send(name)
+                type = column[:type]
+                display_helper = column[:display_helper]
+
+                options = column[:options]
+              %>
+              <td class='text-truncate' style="max-width: <%= options[:max_width] %>px;">
+                <%= display_field value:, display_helper:, options: %>
+              </td>
             <% end  %>
 
             <td class="text-center resource-table-cell-actions">

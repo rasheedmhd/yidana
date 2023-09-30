@@ -25,7 +25,7 @@ module Pu
             new icon:, button_class:, action: nil, method: :get, confirm: nil
           end
 
-          def edit(icon: 'pencil', button_class: 'warning-emphasis')
+          def edit(icon: 'pencil', button_class: 'warning')
             new icon:, button_class:, action: :edit, method: :get, confirm: nil
           end
 

@@ -51,12 +51,13 @@ module Pu
         self
       end
 
-      def define_column(name, type: nil, label: nil, transformer: nil, options: {})
+      def define_column(name, type: nil, label: nil, display_helper: nil, options: {})
         name = name.to_sym
-        type ||= model.columns_hash[name.to_s]&.type
+        column = model.columns_hash[name.to_s]
+        type ||= column&.type
 
-        custom_definition = { label:, transformer:, options: }.compact
-        @definitions[name] = build_definition(name, type).deep_merge custom_definition
+        custom_definition = { label:, display_helper:, options: }.compact
+        @definitions[name] = build_definition(name, type, column).deep_merge custom_definition
         self
       end
 
@@ -88,35 +89,34 @@ module Pu
 
       protected
 
-      def build_definition(name, type)
+      def build_definition(name, type, column)
         options = {
-          max_width: 250
+          max_width: 250,
+          stack: column&.array?
         }
 
-        transformer = ->(value) { value }
+        display_helper = nil
         case type
         when :string, :text, :citext
           options[:max_width] = 400
         when :integer, :float, :decimal
-          transformer = ->(value) { number_with_delimiter value }
+          display_helper = :number_with_delimiter
         when :datetime, :timestamp, :time, :date
-          transformer = ->(value) { timeago value }
+          display_helper = :timeago
         when :boolean
-          transformer = ->(value) { tag.input(class: 'form-check-input', type: 'checkbox', checked: value) }
+          display_helper = :display_boolean
         end
         # binary:      { name: "blob" },
         # blob:        { name: "blob" },
         # json:        { name: "json" },
 
-        if name.ends_with? '_url'
-          transformer = ->(value) { tag.a value, href: value, class: 'text-decoration-none', target: :blank }
-        end
+        display_helper = :display_external_url if name.ends_with? '_url'
 
         {
           name:,
           type:,
           label: name.to_s.titleize(keep_id_suffix: true),
-          transformer:,
+          display_helper:,
           options:
         }
       end
