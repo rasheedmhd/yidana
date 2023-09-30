@@ -21,7 +21,7 @@ class DashboardController < ApplicationController
       if session[:current_entity].present?
         # be lenient when retrieving from the session
         # the user might have lost access between when the session var was set and now
-        current_entity = current_user.entities.where(slug: session[:current_entity]).first
+        current_entity = current_user.entities.where(id: session[:current_entity]).first
       end
       # default to their first entity if one isn't set
       current_entity = current_user.entities.first unless current_entity.present?

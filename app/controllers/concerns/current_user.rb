@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 #
+# Makes the current user available via #current_user
+#
 # Requires the current user in the :authenticate before action
-# Current user is available via #current_user
 #
 module CurrentUser
   def self.included(base)
