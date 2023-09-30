@@ -32,14 +32,16 @@ module UrlPathRouteAdapter
   #
   # @return [Array[Class, ApplicationRecord, Symbol]] args to pass to `url_for`
   #
-  def adapt_route_args(*args, action: nil)
+  def adapt_route_args(*args, action: nil, use_parent: true)
     # If the last item is a class and an action is passed e.g. `adapt_route_args User, action: :new`,
     # it must be converted into a symbol to generate the appropriate helper i.e `new_entity_user_*`
     resource = args.pop
     resource = resource.to_s.underscore.to_sym if action.present? && resource.is_a?(Class)
     args.push resource
 
+    parent = use_parent ? current_parent : nil
+
     # rails compacts this list. no need to handle nils
-    [action, current_entity.becomes(Entity)] + args
+    [action, current_entity.becomes(Entity), parent] + args
   end
 end

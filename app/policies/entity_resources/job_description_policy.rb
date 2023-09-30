@@ -5,7 +5,8 @@ module EntityResources
     include Concerns::ResourcePolicy
 
     def permitted_attributes_for_index
-      %i[organisation title job_role experience_level job_type minimum_annual_salary]
+      %i[organisation title job_role experience_level job_type minimum_annual_salary
+         created_at updated_at]
     end
 
     def permitted_attributes_for_show

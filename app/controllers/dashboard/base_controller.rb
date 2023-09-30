@@ -3,7 +3,7 @@
 module Dashboard
   class BaseController < ApplicationController
     include Pundit::Authorization
-    include CurrentEntity
+    include CurrentParent
     include UrlPathRouteAdapter
 
     before_action :set_page_title
@@ -59,7 +59,7 @@ module Dashboard
     end
 
     def pundit_user
-      EntityResources::PolicyContext.new current_entity, current_user
+      EntityResources::PolicyContext.new user: current_user, entity: current_entity, parent: current_parent
     end
 
     def policy(scope)

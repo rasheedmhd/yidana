@@ -1,5 +1,6 @@
 <%
   # locals: {
+  #   parent?: "parent of the resource to render toolbar for",
   #   resource?: "resource to render toolbar for",
   #   resource_class: "Class of resource being rendered",
   # }
@@ -8,7 +9,11 @@
 %>
 <div class="row justify-content-between py-2 mb-3 border-bottom">
   <div class="col-sm-6">
-    <%= render partial: "toolbar_breadcrumbs", locals: { resource: resource, resource_class: resource_class } %>
+    <%= render partial: 'toolbar_breadcrumbs', locals: {
+                                                  resource: resource,
+                                                  resource_class: resource_class,
+                                                  parent: parent
+                                                } %>
   </div>
   <div class="col-sm-6 text-end">
     <%= yield %>

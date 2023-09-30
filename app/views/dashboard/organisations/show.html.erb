@@ -1,5 +1,7 @@
 <% content_for :toolbar do  %>
-  <%= render 'toolbar', resource_class: Organisation, resource: @organisation do %>
+  <%= render 'toolbar', resource_class: Organisation,
+                        resource: @organisation,
+                        parent: current_parent do %>
     <%=
       render partial: 'toolbar_actions', locals: {
         actions: @details.actions.permitted_actions_for(policy(@organisation)),
@@ -16,3 +18,5 @@
 <% content_for :tab_menu do %>
     <%= render 'tab_menu', resource: @organisation %>
 <% end %>
+
+<%= render @details %>

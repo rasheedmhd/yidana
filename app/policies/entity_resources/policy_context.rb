@@ -4,7 +4,7 @@ module EntityResources
   class PolicyContext
     attr_reader :entity, :user
 
-    def initialize(entity, user, parent: nil)
+    def initialize(user:, entity:, parent: nil)
       @entity = entity
       @user = user
       @parent = parent

@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
     resources :organisations do
       # pu:routes:entity:organisations
+      resources :job_descriptions
     end
 
     resources :job_descriptions do

@@ -1,5 +1,6 @@
 <% content_for :toolbar do %>
-  <%= render 'toolbar', resource_class: Organisation do %>
+  <%= render 'toolbar', resource_class: Organisation,
+                        parent: current_parent do %>
     <%=
       render partial: 'toolbar_search_input', locals: {
         search_object: @table.search_object,
