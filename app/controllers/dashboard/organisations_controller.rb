@@ -45,7 +45,7 @@ module Dashboard
       authorize Organisation
 
       respond_to do |format|
-        @organisation = Organisation.new(**params.require(:organisation).permit!)
+        @organisation = Organisation.new(organisation_params)
         @organisation.entity = current_entity
 
         if @organisation.save
@@ -71,7 +71,7 @@ module Dashboard
       authorize @organisation
 
       respond_to do |format|
-        if @organisation.update(params.require(:organisation).permit!)
+        if @organisation.update(organisation_params)
           format.html do
             redirect_to adapt_route_args(@organisation), notice: 'Organisation was successfully updated.',
                                                          status: :see_other
@@ -114,9 +114,9 @@ module Dashboard
 
     private
 
-    # Only allow a list of trusted parameters through.
     def organisation_params
-      params.require(:organisation).permit(@permitted_attributes)
+      # we don't care much about strong parameters since we have our own whitelist
+      params.require(:organisation).permit!.slice(*@permitted_attributes)
     end
 
     def set_organisation
