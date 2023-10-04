@@ -4,17 +4,15 @@ module EntityResources
   class OrganisationPolicy
     include Concerns::ResourcePolicy
 
-    def permitted_attributes_for_index
-      %i[name headline country created_at updated_at]
-    end
-
-    def permitted_attributes_for_show
-      %i[name headline description website_url company_type company_size industry country joel_test
+    def permitted_attributes_for_read
+      %i[id name headline description website_url
+         company_type company_size industry country joel_test
          created_at updated_at]
     end
 
     def permitted_attributes_for_create
-      %i[name headline description website_url company_type company_size industry country joel_test]
+      %i[name headline description website_url
+         company_type company_size industry country joel_test]
     end
 
     def permitted_attributes_for_update

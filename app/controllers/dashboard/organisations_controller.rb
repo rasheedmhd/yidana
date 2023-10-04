@@ -15,8 +15,6 @@ module Dashboard
       @table = build_table
                .with_records(@organisations)
                .with_pagination(@pagy)
-               .with_record_actions(build_actions.only!(:show, :edit, :destroy))
-               .with_toolbar_actions(build_actions.only!(:create))
                .search_with(@q, :name_cont)
     end
 
@@ -24,9 +22,7 @@ module Dashboard
     def show
       authorize @organisation
 
-      @details = build_details
-                 .with_record(@organisation)
-                 .with_actions(build_actions.except!(:create, :show))
+      @details = build_details.with_record(@organisation)
     end
 
     # GET /organisations/new
@@ -128,44 +124,19 @@ module Dashboard
     end
 
     def build_table
-      table = Pu::Builders::Table.new(Organisation)
-                                 .with_columns(@permitted_attributes)
-
-      # define custom transformations
-      %i[industry company_size company_type joel_test country].each do |name|
-        table.define_column(name, display_helper: :display_name_of)
-      end
-
-      table
+      EntityResources::OrganisationPresenter.new.build_table(@permitted_attributes)
     end
 
     def build_details
-      details = Pu::Builders::Details.new(Organisation)
-                                     .with_fields(@permitted_attributes)
-                                     .define_field(:description, display_helper: :display_clamped_quill)
-                                     .define_field(:joel_test, display_helper: :joel_test_details, options: { stack: false })
-
-      # define custom transformations
-      %i[industry company_size company_type country].each do |name|
-        details.define_field(name, display_helper: :display_name_of)
-      end
-
-      details
+      EntityResources::OrganisationPresenter.new.build_details(@permitted_attributes)
     end
 
     def build_form
-      Pu::Builders::Form.new(Organisation)
-                        .define_input(:description, type: :quill)
-                        .define_input(:company_type, collection: CompanyType.collection, as: :radio_buttons)
-                        .define_input(:company_size, collection: CompanySize.collection, as: :radio_buttons)
-                        .define_input(:industry, collection: Industry.collection)
-                        .define_input(:country, collection: Country.collection)
-                        .define_input(:joel_test, collection: JoelTest.collection, as: :check_boxes)
-                        .with_inputs(@permitted_attributes)
+      EntityResources::OrganisationPresenter.new.build_form(@permitted_attributes)
     end
 
     def build_actions
-      Pu::Builders::Actions.new.with_standard_actions
+      EntityResources::OrganisationPresenter.new.build_actions
     end
   end
 end

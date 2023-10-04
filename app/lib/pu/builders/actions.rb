@@ -13,7 +13,9 @@ module Pu
       end
 
       def with_standard_actions
-        %i[create show edit destroy].each { |action| with_action action, Action::IconButton.send(action) }
+        %i[create show edit destroy].each do |action|
+          with_action action, Action::IconButton.send(action)
+        end
         self
       end
 
