@@ -6,7 +6,7 @@ export default class extends Controller {
   static targets = ["focus"]
 
   connect() {
-    this.submit = debounce(this.submit, 500).bind(this)
+    this.submit = debounce(this.submit, 1000).bind(this)
 
     this._maybeFocusTarget()
   }
