@@ -24,11 +24,11 @@ module Pu
         tag.span rendered, title:
       end
 
-      def display_boolean(value)
-        tag.input type: :checkbox, class: 'form-check-input', checked: value
+      def display_boolean_value(value)
+        tag.input type: :checkbox, class: 'form-check-input', checked: value, disabled: true
       end
 
-      def display_external_url(value)
+      def display_url_value(value)
         link_to nil, value, class: 'text-decoration-none', target: :blank
       end
 
