@@ -6,8 +6,8 @@ module EntityResources
       columns = permitted_attributes & table_columns
       table = Pu::Builders::Table.new(Organisation)
                                  .with_columns(columns)
-                                 .with_record_actions(build_actions.only!(:show, :edit, :destroy))
-                                 .with_toolbar_actions(build_actions.only!(:create))
+                                 .with_record_actions(actions.only!(:show, :edit, :destroy))
+                                 .with_toolbar_actions(actions.only!(:create))
 
       # define custom transformations
       %i[industry company_size company_type joel_test country].each do |name|
@@ -33,7 +33,7 @@ module EntityResources
       fields = permitted_attributes & detail_fields
       details = Pu::Builders::Details.new(Organisation)
                                      .with_fields(fields)
-                                     .with_actions(build_actions.except!(:create, :show))
+                                     .with_actions(actions.except!(:create, :show))
                                      .define_field(:description, display_helper: :display_clamped_quill)
                                      .define_field(:joel_test, display_helper: :joel_test_details, options: { stack: false })
 
@@ -45,8 +45,10 @@ module EntityResources
       details
     end
 
-    def build_actions
-      Pu::Builders::Actions.new.with_standard_actions
+    def build_associations(permitted_associations)
+      associations = associations_list & permitted_associations
+      Pu::Builders::Associations.new
+                                .with_associations(associations)
     end
 
     private
@@ -62,6 +64,14 @@ module EntityResources
     def detail_fields
       %i[name headline description website_url company_type company_size industry country joel_test
          created_at updated_at]
+    end
+
+    def associations_list
+      [JobDescription]
+    end
+
+    def actions
+      Pu::Builders::Actions.new.with_standard_actions
     end
   end
 end

@@ -6,6 +6,7 @@ class ResourceController < ApplicationController
 
   before_action :set_page_title
   before_action :set_sidebar_menu
+  before_action :set_associations
 
   after_action :verify_authorized
   after_action :verify_policy_scoped, except: %i[new create]
@@ -152,7 +153,7 @@ class ResourceController < ApplicationController
   def resource_record
     return unless params[:id].present?
 
-    @resource_record = policy_scope(resource_class).from_path_param(params[:id]).first!
+    @resource_record ||= policy_scope(resource_class).from_path_param(params[:id]).first!
   end
 
   def resource_params
@@ -196,6 +197,14 @@ class ResourceController < ApplicationController
     @page_title = 'Dashboard'
   end
 
+  def set_associations
+    @associations = if current_parent.present?
+                      resource_presenter(current_parent.class).build_associations(parent_policy.permitted_associations).with_record(current_parent)
+                    elsif action_name == 'show'
+                      current_presenter.build_associations(current_policy.permitted_associations).with_record(resource_record)
+                    end
+  end
+
   # Authorisation
 
   def permitted_attributes(policy_subject = nil)
@@ -207,5 +216,11 @@ class ResourceController < ApplicationController
   def current_policy
     policy_subject = resource_record || resource_class
     policy(policy_subject)
+  end
+
+  def parent_policy
+    return unless current_parent.present?
+
+    policy(current_parent)
   end
 end

@@ -19,6 +19,10 @@ module EntityResources
       permitted_attributes_for_create
     end
 
+    def permitted_associations
+      [JobDescription]
+    end
+
     class Scope
       include Concerns::ResourcePolicyInitializer
 

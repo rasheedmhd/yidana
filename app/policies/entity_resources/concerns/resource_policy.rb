@@ -48,6 +48,10 @@ module EntityResources
       def permitted_attributes_for_edit
         permitted_attributes_for_update
       end
+
+      def permitted_associations
+        []
+      end
     end
   end
 end

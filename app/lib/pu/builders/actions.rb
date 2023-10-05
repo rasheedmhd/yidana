@@ -36,10 +36,6 @@ module Pu
         self
       end
 
-      def action_names
-        actions.values.pluck(:label)
-      end
-
       def permitted_actions_for(policy)
         actions = @actions.keys.select { |name| policy.send "#{name}?".to_sym }
         @definitions.slice(*actions).values

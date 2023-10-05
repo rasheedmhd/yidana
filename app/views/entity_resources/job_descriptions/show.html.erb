@@ -11,19 +11,11 @@
   <% end %>
 <% end  %>
 
-<div class="mb-4">
-  <ul class="nav nav-underline justify-content-end">
-    <li class="nav-item">
-      <%= link_to 'Details', adapt_route_args(@details.record), class: "nav-link active" %>
-    </li>
-
-    <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-    </li>
-  </ul>
-</div>
+<%=
+  render partial: 'associations_bar', locals: {
+    associations: @associations,
+    resource_class: resource_class
+  }
+%>
 
 <%= render @details %>

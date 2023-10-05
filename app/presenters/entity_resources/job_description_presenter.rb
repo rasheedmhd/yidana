@@ -6,8 +6,8 @@ module EntityResources
       columns = permitted_attributes & table_columns
       table = Pu::Builders::Table.new(JobDescription)
                                  .with_columns(columns)
-                                 .with_record_actions(build_actions.only!(:show, :edit, :destroy))
-                                 .with_toolbar_actions(build_actions.only!(:create))
+                                 .with_record_actions(actions.only!(:show, :edit, :destroy))
+                                 .with_toolbar_actions(actions.only!(:create))
 
       # define custom transformations
       %i[organisation job_type job_role experience_level technologies].each do |name|
@@ -33,7 +33,7 @@ module EntityResources
       fields = permitted_attributes & detail_fields
       details = Pu::Builders::Details.new(JobDescription)
                                      .with_fields(fields)
-                                     .with_actions(build_actions.except!(:create, :show))
+                                     .with_actions(actions.except!(:create, :show))
                                      .define_field(:description, display_helper: :display_clamped_quill)
 
       # define custom transformations
@@ -44,8 +44,8 @@ module EntityResources
       details
     end
 
-    def build_actions
-      Pu::Builders::Actions.new.with_standard_actions
+    def build_associations(_permitted_associations)
+      Pu::Builders::Associations.new
     end
 
     private
@@ -66,6 +66,14 @@ module EntityResources
          minimum_annual_salary maximum_annual_salary technologies
          offers_equity visa_sponsorship relocation_assistance
          created_at updated_at]
+    end
+
+    def associations_list
+      []
+    end
+
+    def actions
+      Pu::Builders::Actions.new.with_standard_actions
     end
   end
 end
