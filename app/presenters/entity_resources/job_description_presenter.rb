@@ -2,7 +2,12 @@
 
 module EntityResources
   class JobDescriptionPresenter
-    def initialize; end
+    attr_reader :entity, :user
+
+    def initialize(entity:, user:)
+      @entity = entity
+      @user = user
+    end
 
     def build_table(permitted_attributes)
       columns = permitted_attributes & table_columns
@@ -21,10 +26,10 @@ module EntityResources
 
     def build_form(permitted_attributes)
       inputs = permitted_attributes & form_inputs
-      Pu::Builders::Form.new(Organisation)
+      Pu::Builders::Form.new(JobDescription)
                         .with_inputs(inputs)
                         .define_input(:description, type: :quill)
-                        # .define_input(:organisation_id, collection: current_entity.organisations.all)
+                        .define_input(:organisation_id, collection: organisations_selection)
                         .define_input(:job_type, collection: JobType.collection, as: :radio_buttons)
                         .define_input(:job_role, collection: JobRole.collection)
                         .define_input(:experience_level, collection: ExperienceLevel.collection)
@@ -33,7 +38,7 @@ module EntityResources
 
     def build_details(permitted_attributes)
       fields = permitted_attributes & detail_fields
-      details = Pu::Builders::Details.new(Organisation)
+      details = Pu::Builders::Details.new(JobDescription)
                                      .with_fields(fields)
                                      .with_actions(build_actions.except!(:create, :show))
                                      .define_field(:description, display_helper: :display_clamped_quill)
@@ -58,7 +63,7 @@ module EntityResources
     end
 
     def form_inputs
-      %i[organisation title description job_role experience_level job_type
+      %i[organisation_id title description job_role experience_level job_type
          minimum_annual_salary maximum_annual_salary technologies
          offers_equity visa_sponsorship relocation_assistance]
     end
@@ -68,6 +73,10 @@ module EntityResources
          minimum_annual_salary maximum_annual_salary technologies
          offers_equity visa_sponsorship relocation_assistance
          created_at updated_at]
+    end
+
+    def organisations_selection
+      entity.organisations.all
     end
   end
 end

@@ -12,7 +12,7 @@ module EntityResources
     end
 
     def permitted_attributes_for_create
-      %i[organisation title description job_role experience_level job_type
+      %i[organisation_id title description job_role experience_level job_type
          minimum_annual_salary maximum_annual_salary technologies
          offers_equity visa_sponsorship relocation_assistance]
     end

@@ -11,7 +11,7 @@ module EntityResources
     end
 
     def permitted_attributes_for_create
-      %i[name headline description website_url
+      %i[entity_id name headline description website_url
          company_type company_size industry country joel_test]
     end
 

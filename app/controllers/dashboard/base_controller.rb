@@ -166,11 +166,10 @@ module Dashboard
       form_params = params.require(resource_param_key).permit!.slice(*permitted_attributes)
 
       # ensure that we override params with values set from the url
-      if respond_to?(:current_entity, true) && current_entity.present? && resource_class.columns_hash.key?('entity_id')
+      if current_entity.present? && resource_class.columns_hash.key?('entity_id')
         form_params[:entity_id] = current_entity.id
       end
-
-      form_params[parent_param_key] = current_parent.id if respond_to?(:current_parent, true) && current_parent.present?
+      form_params[parent_param_key] = current_parent.id if current_parent.present?
 
       form_params
     end
@@ -183,7 +182,7 @@ module Dashboard
 
     def resource_presenter
       @resource_presenter ||= "EntityResources::#{resource_class}Presenter".constantize
-      @resource_presenter.new
+      @resource_presenter.new(entity: current_entity, user: current_user)
     end
 
     def build_table
@@ -195,11 +194,12 @@ module Dashboard
     end
 
     def build_form
-      resource_presenter.build_form(permitted_attributes)
-    end
+      form = resource_presenter.build_form(permitted_attributes)
 
-    def build_actions
-      resource_presenter.new.build_actions
+      form.except!(:entity_id) if current_entity.present?
+      form.except!(parent_param_key) if current_parent.present?
+
+      form
     end
 
     # Layout
