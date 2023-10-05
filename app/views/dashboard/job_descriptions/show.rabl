@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-object @job_description
+object @record
 
 extends 'dashboard/job_descriptions/_job_description'

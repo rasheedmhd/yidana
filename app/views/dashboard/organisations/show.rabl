@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-object @organisation
+object @record
 
 extends 'dashboard/organisations/_organisation'

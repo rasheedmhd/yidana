@@ -1,14 +1,29 @@
 <% content_for :toolbar do  %>
-  <%= render 'toolbar', resource_class: JobDescription,
-                        resource: @job_description,
+  <%= render 'toolbar', resource_class: resource_class,
+                        resource: @details.record,
                         parent: current_parent do %>
     <%=
       render partial: 'toolbar_actions', locals: {
-        actions: @details.actions.permitted_actions_for(policy(@job_description)),
-        resource: @job_description
+        actions: @details.actions.permitted_actions_for(policy(@details.record)),
+        resource: @details.record
       }
     %>
   <% end %>
 <% end  %>
+
+<div class="mb-4">
+  <ul class="nav nav-underline justify-content-end">
+    <li class="nav-item">
+      <%= link_to 'Details', adapt_route_args(@details.record), class: "nav-link active" %>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+    </li>
+  </ul>
+</div>
 
 <%= render @details %>

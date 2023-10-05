@@ -1,22 +1,31 @@
 <% content_for :toolbar do  %>
-  <%= render 'toolbar', resource_class: Organisation,
-                        resource: @organisation,
+  <%= render 'toolbar', resource_class: resource_class,
+                        resource: @details.record,
                         parent: current_parent do %>
     <%=
       render partial: 'toolbar_actions', locals: {
-        actions: @details.actions.permitted_actions_for(policy(@organisation)),
-        resource: @organisation
+        actions: @details.actions.permitted_actions_for(policy(@details.record)),
+        resource: @details.record
       }
     %>
   <% end %>
 <% end  %>
 
-<% content_for :tab_content do %>
-  <%= render @details %>
-<% end %>
-
-<% content_for :tab_menu do %>
-    <%= render 'tab_menu', resource: @organisation %>
-<% end %>
+<div class="mb-4">
+  <ul class="nav nav-underline justify-content-end">
+    <li class="nav-item">
+      <%= link_to 'Details', adapt_route_args(@details.record), class: "nav-link active" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to resource_name_plural(JobDescription), adapt_route_args(@details.record, JobDescription), class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+    </li>
+  </ul>
+</div>
 
 <%= render @details %>

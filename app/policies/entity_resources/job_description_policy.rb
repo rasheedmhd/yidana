@@ -14,8 +14,7 @@ module EntityResources
     def permitted_attributes_for_create
       %i[organisation title description job_role experience_level job_type
          minimum_annual_salary maximum_annual_salary technologies
-         offers_equity visa_sponsorship relocation_assistance
-         created_at updated_at]
+         offers_equity visa_sponsorship relocation_assistance]
     end
 
     def permitted_attributes_for_update

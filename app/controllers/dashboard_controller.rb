@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DashboardController < ApplicationController
-  include CurrentEntity
+  include CurrentUser
 
   #
   # Redirects the logged in user to an entity specific dashboard

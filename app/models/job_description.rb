@@ -52,7 +52,7 @@ class JobDescription < ApplicationRecord
   validates :technologies, length: { maximum: 5, too_long: 'has too many items (maximum is %<count>s items)' },
                            array: { presence: true, inclusion: { in: Technology.collection } }
 
-  def self.ransackable_attributes(_auth_object = nil)
-    %w[title] + super
-  end
+  # def self.ransackable_attributes(_auth_object = nil)
+  #   %w[title] + super
+  # end
 end

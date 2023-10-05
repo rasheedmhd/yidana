@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get 'dashboard', to: 'dashboard#index' # pu:routes:dashboard
 
   # Entity specific dashboard route
-  scope ':entity/dashboard', module: :dashboard, as: :entity do
+  scope ':entity_id/dashboard', module: :dashboard, as: :entity do
     get '', to: 'index#index'
     # pu:routes:entity
 

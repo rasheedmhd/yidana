@@ -1,5 +1,5 @@
 <% content_for :toolbar do %>
-  <%= render 'toolbar', resource_class: Organisation,
+  <%= render 'toolbar', resource_class: resource_class,
                         parent: current_parent do %>
     <%=
       render partial: 'toolbar_search_input', locals: {
@@ -10,8 +10,8 @@
 
     <%=
       render partial: 'toolbar_actions', locals: {
-        actions: @table.toolbar_actions.permitted_actions_for(policy(Organisation)),
-        resource: Organisation
+        actions: @table.toolbar_actions.permitted_actions_for(policy(resource_class)),
+        resource: resource_class
       }
     %>
   <% end %>

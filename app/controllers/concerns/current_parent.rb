@@ -7,33 +7,28 @@
 #
 module CurrentParent
   def self.included(base)
-    base.send :include, CurrentEntity
-
-    base.send :before_action, :detect_current_parent
     base.send :helper_method, :current_parent
   end
 
   private
 
-  #
-  # Detects if a parent is set in route and sets it to an instance variable
-  #
-  def detect_current_parent
-    parent_key = (params.keys.last(3) - %w[controller action entity id]).first
+  def current_parent
+    return unless parent_param_key.present?
 
-    return unless parent_key.present?
+    @current_parent ||= begin
+      parent_name = parent_param_key.gsub(/_id$/, '')
 
-    parent_name = parent_key.gsub(/_id$/, '')
-    parent_association = parent_name.pluralize.to_sym
-
-    slugged = parent_name.classify.constantize.include? Slugged
-    find_key = slugged ? :slug : :id
-    find_value = params[parent_key]
-
-    @current_parent = current_entity.send(parent_association).where(find_key => find_value).first!
+      if respond_to?(:current_entity, true)
+        parent_association = parent_name.pluralize.to_sym
+        current_entity.send(parent_association).from_path_param(params[parent_param_key]).first!
+      end
+    end
   end
 
-  def current_parent
-    @current_parent
+  def parent_param_key
+    @parent_param_key ||= begin
+      path_param_keys = params.keys.last(4) - %w[controller action entity_id id format]
+      path_param_keys.select { |key| /_id$/.match? key }.last
+    end
   end
 end

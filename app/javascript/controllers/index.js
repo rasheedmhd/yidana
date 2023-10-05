@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import ActiveLinkController from "./active_link_controller"
+application.register("active-link", ActiveLinkController)
+
 import ColorModesController from "./color_modes_controller"
 application.register("color-modes", ColorModesController)
 
