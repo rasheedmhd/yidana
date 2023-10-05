@@ -1,14 +1,7 @@
 # frozen_string_literal: true
 
 module EntityResources
-  class JobDescriptionPresenter
-    attr_reader :entity, :user
-
-    def initialize(entity:, user:)
-      @entity = entity
-      @user = user
-    end
-
+  class JobDescriptionPresenter < Presenter
     def build_table(permitted_attributes)
       columns = permitted_attributes & table_columns
       table = Pu::Builders::Table.new(JobDescription)
@@ -73,10 +66,6 @@ module EntityResources
          minimum_annual_salary maximum_annual_salary technologies
          offers_equity visa_sponsorship relocation_assistance
          created_at updated_at]
-    end
-
-    def organisations_selection
-      entity.organisations.all
     end
   end
 end

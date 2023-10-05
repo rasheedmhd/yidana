@@ -1,14 +1,7 @@
 # frozen_string_literal: true
 
 module EntityResources
-  class OrganisationPresenter
-    attr_reader :entity, :user
-
-    def initialize(entity:, user:)
-      @entity = entity
-      @user = user
-    end
-
+  class OrganisationPresenter < Presenter
     def build_table(permitted_attributes)
       columns = permitted_attributes & table_columns
       table = Pu::Builders::Table.new(Organisation)
@@ -28,7 +21,6 @@ module EntityResources
       inputs = permitted_attributes & form_inputs
       Pu::Builders::Form.new(Organisation)
                         .with_inputs(inputs)
-                        .define_input(:entity_id, collection: entities_selection)
                         .define_input(:description, type: :quill)
                         .define_input(:company_type, collection: CompanyType.collection, as: :radio_buttons)
                         .define_input(:company_size, collection: CompanySize.collection, as: :radio_buttons)
@@ -70,10 +62,6 @@ module EntityResources
     def detail_fields
       %i[name headline description website_url company_type company_size industry country joel_test
          created_at updated_at]
-    end
-
-    def entities_selection
-      user.entities.all
     end
   end
 end

@@ -25,7 +25,7 @@ module EntityResources
       include Concerns::ResourcePolicyInitializer
 
       def resolve
-        @context.parent.job_descriptions
+        @context.parent.job_descriptions.includes(:entity)
       end
     end
   end

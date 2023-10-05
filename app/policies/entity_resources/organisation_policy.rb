@@ -23,7 +23,7 @@ module EntityResources
       include Concerns::ResourcePolicyInitializer
 
       def resolve
-        @context.parent.organisations
+        @context.parent.organisations.includes(:entity)
       end
     end
   end
