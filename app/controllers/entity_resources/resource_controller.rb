@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Dashboard
-  class BaseController < ResourceController
-    include CurrentEntity
-    include CurrentParent
-    include UrlPathRouteAdapter
+module EntityResources
+  class ResourceController < ::ResourceController
+    include Concerns::CurrentEntity
+    include Concerns::CurrentParent
+    include Concerns::RouteArgsAdapter
 
     private
 
@@ -17,23 +17,20 @@ module Dashboard
       if current_entity.present? && resource_class.columns_hash.key?('entity_id')
         form_params[:entity_id] = current_entity.id
       end
-      form_params[parent_param_key] = current_parent.id if current_parent.present?
 
       form_params
     end
 
     # Presentation
 
-    def resource_presenter
-      @resource_presenter ||= "EntityResources::#{resource_class}Presenter".constantize
-      @resource_presenter.new(entity: current_entity, user: current_user)
+    def resource_presenter(resource_class)
+      entity_resource_presenter = "EntityResources::#{resource_class.to_s.classify}Presenter".constantize
+      entity_resource_presenter.new(entity: current_entity, user: current_user)
     end
 
     def build_form
       form = super
-
       form.except!(:entity_id) if current_entity.present?
-      form.except!(parent_param_key) if current_parent.present?
 
       form
     end

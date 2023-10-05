@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Dashboard
-  class OrganisationsController < BaseController
+module EntityResources
+  class OrganisationsController < ResourceController
     controller_for Organisation, :name_cont
   end
 end

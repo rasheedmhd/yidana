@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Dashboard
-  class IndexController < BaseController
+module EntityResources
+  class IndexController < ResourceController
     skip_after_action :verify_authorized
     skip_after_action :verify_policy_scoped
 

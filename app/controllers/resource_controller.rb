@@ -13,7 +13,7 @@ class ResourceController < ApplicationController
   # https://github.com/ddnexus/pagy/blob/master/docs/extras/headers.md#headers
   after_action { pagy_headers_merge(@pagy) if @pagy }
 
-  layout 'dashboard'
+  layout 'resource'
 
   # GET /resources(.{format})
   def index
@@ -159,7 +159,10 @@ class ResourceController < ApplicationController
     # we don't care much about strong parameters since we have our own whitelist
     # strong params and pundit permitted_attributes don't support array/hash params without a convoluted
     # attribute list
-    params.require(resource_param_key).permit!.slice(*permitted_attributes)
+    form_params = params.require(resource_param_key).permit!.slice(*permitted_attributes)
+    form_params[parent_param_key] = current_parent.id if current_parent.present?
+
+    form_params
   end
 
   def resource_param_key
@@ -168,16 +171,23 @@ class ResourceController < ApplicationController
 
   # Presentation
 
+  def current_presenter
+    resource_presenter resource_class
+  end
+
   def build_table
-    resource_presenter.build_table(permitted_attributes)
+    current_presenter.build_table(permitted_attributes)
   end
 
   def build_details
-    resource_presenter.build_details(permitted_attributes)
+    current_presenter.build_details(permitted_attributes)
   end
 
   def build_form
-    form = resource_presenter.build_form(permitted_attributes)
+    form = current_presenter.build_form(permitted_attributes)
+    form.except!(parent_param_key) if current_parent.present?
+
+    form
   end
 
   # Layout
