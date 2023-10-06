@@ -137,7 +137,7 @@ class ResourceController < ApplicationController
 
     def controller_for(resource_class, resource_search_field)
       @resource_class = resource_class
-      @search_field = resource_search_field
+      @resource_search_field = resource_search_field
     end
   end
 
