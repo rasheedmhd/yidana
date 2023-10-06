@@ -10,7 +10,7 @@ module EntityResources
                                  .with_toolbar_actions(actions.only!(:create))
 
       # define custom transformations
-      %i[organisation job_type job_role experience_level technologies].each do |name|
+      %i[job_type job_role experience_level technologies].each do |name|
         table.define_column(name, display_helper: :display_name_of)
       end
 
@@ -37,7 +37,7 @@ module EntityResources
                                      .define_field(:description, display_helper: :display_clamped_quill)
 
       # define custom transformations
-      %i[organisation job_type job_role experience_level technologies].each do |name|
+      %i[job_type job_role experience_level technologies].each do |name|
         details.define_field(name, display_helper: :display_name_of)
       end
 

@@ -111,6 +111,8 @@ module Pu
         # json:        { name: "json" },
 
         display_helper = :display_url_value if name.ends_with? '_url'
+        display_helper = :display_association if %i[belongs_to
+                                                    has_one].include?(model.reflect_on_association(name)&.macro)
 
         {
           name:,

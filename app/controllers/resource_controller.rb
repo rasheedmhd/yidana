@@ -177,11 +177,17 @@ class ResourceController < ApplicationController
   end
 
   def build_table
-    current_presenter.build_table(permitted_attributes)
+    table = current_presenter.build_table(permitted_attributes)
+    table.except!(parent_param_key.to_s.gsub(/_id$/, '')) if current_parent.present?
+
+    table
   end
 
   def build_details
-    current_presenter.build_details(permitted_attributes)
+    details = current_presenter.build_details(permitted_attributes)
+    details.except!(parent_param_key.to_s.gsub(/_id$/, '')) if current_parent.present?
+
+    details
   end
 
   def build_form
