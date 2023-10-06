@@ -71,6 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_185311) do
     t.string "country", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["entity_id", "slug"], name: "index_organisations_on_entity_id_and_slug", unique: true
     t.index ["entity_id"], name: "index_organisations_on_entity_id"
     t.index ["slug"], name: "index_organisations_on_slug"
   end

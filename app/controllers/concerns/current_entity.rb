@@ -21,7 +21,7 @@ module CurrentEntity
   # @see Dashboard#current_entity
   #
   def remember_current_entity
-    session[:current_entity] = current_entity.id
+    session[:current_entity] = current_entity&.id
   end
 
   def current_entity

@@ -21,8 +21,9 @@
 #
 # Indexes
 #
-#  index_organisations_on_entity_id  (entity_id)
-#  index_organisations_on_slug       (slug)
+#  index_organisations_on_entity_id           (entity_id)
+#  index_organisations_on_entity_id_and_slug  (entity_id,slug) UNIQUE
+#  index_organisations_on_slug                (slug)
 #
 # Foreign Keys
 #

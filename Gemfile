@@ -20,7 +20,7 @@ gem 'pagy'
 gem 'pundit'
 gem 'rabl'
 gem 'ransack'
-gem 'rodauth-rails', path: '/Users/stefan/code/plutonium/rodauth-rails'
+gem 'rodauth-rails'
 gem 'simple_form'
 gem 'strong_migrations'
 
@@ -77,7 +77,8 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'htmlbeautifier'
-  gem 'plutonium_generators', path: '/Users/stefan/code/plutonium/plutonium_generators'
+  # gem 'plutonium_generators'
+  # path: '/Users/stefan/code/plutonium/plutonium_generators'
   gem 'rubocop', require: false
   gem 'rubocop-capybara', require: false
   gem 'rubocop-factory_bot', require: false
