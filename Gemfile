@@ -14,6 +14,7 @@ gem 'sidekiq-failures'
 
 # Custom
 
+gem 'active_interaction'
 gem 'bullet', group: 'development'
 gem 'oj'
 gem 'pagy'

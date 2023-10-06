@@ -13,7 +13,9 @@ module Pu
       end
 
       def with_standard_actions
-        %i[create show edit destroy].each { |action| with_action action, Action::IconButton.send(action) }
+        %i[create show edit destroy].each do |action|
+          with_action action, Action::IconButton.send(action)
+        end
         self
       end
 
@@ -32,10 +34,6 @@ module Pu
       def except!(*actions)
         @actions.except!(*actions.flatten.map(&:to_sym))
         self
-      end
-
-      def action_names
-        actions.values.pluck(:label)
       end
 
       def permitted_actions_for(policy)

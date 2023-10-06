@@ -24,11 +24,16 @@ module Pu
         tag.span rendered, title:
       end
 
-      def display_boolean(value)
-        tag.input type: :checkbox, class: 'form-check-input', checked: value
+      def display_association(association)
+        link_to display_name_of(association), adapt_route_args(association, use_parent: false),
+                class: 'text-decoration-none'
       end
 
-      def display_external_url(value)
+      def display_boolean_value(value)
+        tag.input type: :checkbox, class: 'form-check-input', checked: value, disabled: true
+      end
+
+      def display_url_value(value)
         link_to nil, value, class: 'text-decoration-none', target: :blank
       end
 

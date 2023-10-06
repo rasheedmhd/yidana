@@ -104,13 +104,15 @@ module Pu
         when :datetime, :timestamp, :time, :date
           display_helper = :timeago
         when :boolean
-          display_helper = :display_boolean
+          display_helper = :display_boolean_value
         end
         # binary:      { name: "blob" },
         # blob:        { name: "blob" },
         # json:        { name: "json" },
 
-        display_helper = :display_external_url if name.ends_with? '_url'
+        display_helper = :display_url_value if name.ends_with? '_url'
+        display_helper = :display_association if %i[belongs_to
+                                                    has_one].include?(model.reflect_on_association(name)&.macro)
 
         {
           name:,

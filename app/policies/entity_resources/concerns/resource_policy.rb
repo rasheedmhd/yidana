@@ -33,12 +33,24 @@ module EntityResources
         true
       end
 
+      def permitted_attributes_for_index
+        permitted_attributes_for_read
+      end
+
+      def permitted_attributes_for_show
+        permitted_attributes_for_read
+      end
+
       def permitted_attributes_for_new
         permitted_attributes_for_create
       end
 
       def permitted_attributes_for_edit
         permitted_attributes_for_update
+      end
+
+      def permitted_associations
+        []
       end
     end
   end

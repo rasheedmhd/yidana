@@ -7,22 +7,22 @@ export default class extends Controller {
   connect() {
     // https://codepen.io/anon/pen/rrzpGx
     const toolbarOptions = [
-      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+      ['bold', 'italic', 'underline', 'strike'],
       ['blockquote', 'code-block'],
 
       [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-      [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+      [{ 'script': 'sub' }, { 'script': 'super' }],
       [{ 'align': [] }],
-      [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+      [{ 'indent': '-1' }, { 'indent': '+1' }],
 
       [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
 
-      [{ 'color': [] }],          // dropdown with defaults from theme
+      [{ 'color': [] }],
       [{ 'font': [] }],
 
       ['link'],
 
-      ['clean'],                                         // remove formatting button
+      ['clean'], // remove formatting button
     ];
 
     this.quill = new Quill(this.editorTarget, {
