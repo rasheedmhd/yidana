@@ -2,7 +2,7 @@
 
 module EntityResources
   class JobDescriptionPolicy
-    include Concerns::ResourcePolicy
+    include Pu::Policy::EntityResourcePolicy
 
     def permitted_attributes_for_read
       %i[id organisation title description job_role experience_level job_type
@@ -22,7 +22,7 @@ module EntityResources
     end
 
     class Scope
-      include Concerns::ResourcePolicyInitializer
+      include Pu::Policy::Initializer
 
       def resolve
         @context.parent.job_descriptions.includes(:entity)

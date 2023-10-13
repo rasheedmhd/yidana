@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module EntityResources
-  module Concerns
-    module ResourcePolicyInitializer
+module Pu
+  module Policy
+    module Initializer
       def initialize(context, record)
         authorize!(context)
 

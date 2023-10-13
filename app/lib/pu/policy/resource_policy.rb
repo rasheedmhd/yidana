@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-module EntityResources
-  module Concerns
+module Pu
+  module Policy
     module ResourcePolicy
-      include Concerns::ResourcePolicyInitializer
+      include Initializer
 
       def index?
         true
       end
 
       def show?
-        @record.entity.id == context.entity.id
+        true
       end
 
       def create?
@@ -22,7 +22,7 @@ module EntityResources
       end
 
       def update?
-        @record.entity.id == context.entity.id
+        true
       end
 
       def edit?

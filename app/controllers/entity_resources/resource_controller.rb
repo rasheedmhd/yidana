@@ -25,7 +25,7 @@ module EntityResources
 
     def resource_presenter(resource_class)
       entity_resource_presenter = "EntityResources::#{resource_class.to_s.classify}Presenter".constantize
-      entity_resource_presenter.new(entity: current_entity, user: current_user)
+      entity_resource_presenter.new resource_context
     end
 
     def build_form
@@ -65,7 +65,15 @@ module EntityResources
     end
 
     def pundit_user
-      EntityResources::PolicyContext.new user: current_user, entity: current_entity, parent: current_parent
+      resource_context
+    end
+
+    def resource_context
+      @resource_context ||= Pu::ResourceContext.new(
+        user: current_user,
+        entity: current_entity,
+        parent: current_parent
+      )
     end
   end
 end
