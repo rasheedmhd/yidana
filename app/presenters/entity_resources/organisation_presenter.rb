@@ -2,19 +2,21 @@
 
 module EntityResources
   class OrganisationPresenter < Presenter
-    def build_table(permitted_attributes)
-      columns = permitted_attributes & table_columns
-      table = Pu::Builders::Table.new(Organisation)
-                                 .with_columns(columns)
-                                 .with_record_actions(actions.only!(:show, :edit, :destroy))
-                                 .with_toolbar_actions(actions.only!(:create))
+    def build_collection(permitted_attributes)
+      fields = permitted_attributes & collection_fields
 
-      # define custom transformations
-      %i[industry company_size company_type joel_test country].each do |name|
-        table.define_column(name, display_helper: :display_name_of)
-      end
+      customize_fields(Pu::UI::Builder::Collection.new(Organisation))
+        .with_record_actions(actions.only!(:show, :edit, :destroy))
+        .with_actions(actions.only!(:create))
+        .with_fields(fields)
+    end
 
-      table
+    def build_detail(permitted_attributes)
+      fields = permitted_attributes & detail_fields
+
+      customize_fields(Pu::UI::Builder::Detail.new(Organisation))
+        .with_actions(actions.except!(:create, :show))
+        .with_fields(fields)
     end
 
     def build_form(permitted_attributes)
@@ -29,22 +31,6 @@ module EntityResources
                         .define_input(:joel_test, collection: JoelTest.collection, as: :check_boxes)
     end
 
-    def build_details(permitted_attributes)
-      fields = permitted_attributes & detail_fields
-      details = Pu::Builders::Details.new(Organisation)
-                                     .with_fields(fields)
-                                     .with_actions(actions.except!(:create, :show))
-                                     .define_field(:description, display_helper: :display_clamped_quill)
-                                     .define_field(:joel_test, display_helper: :joel_test_details, options: { stack: false })
-
-      # define custom transformations
-      %i[industry company_size company_type country].each do |name|
-        details.define_field(name, display_helper: :display_name_of)
-      end
-
-      details
-    end
-
     def build_associations(permitted_associations)
       associations = associations_list & permitted_associations
       Pu::Builders::Associations.new
@@ -53,17 +39,17 @@ module EntityResources
 
     private
 
-    def table_columns
+    def collection_fields
       %i[name headline country created_at updated_at]
-    end
-
-    def form_inputs
-      %i[entity_id name headline description website_url company_type company_size industry country joel_test]
     end
 
     def detail_fields
       %i[name headline description website_url company_type company_size industry country joel_test
          created_at updated_at]
+    end
+
+    def form_inputs
+      %i[entity_id name headline description website_url company_type company_size industry country joel_test]
     end
 
     def associations_list
@@ -72,6 +58,17 @@ module EntityResources
 
     def actions
       Pu::Builders::Actions.new.with_standard_actions
+    end
+
+    def customize_fields(builder)
+      %i[industry company_size company_type country].each do |name|
+        builder.define_field(Pu::UI::Field.new(name, display_helper: :display_name_of))
+      end
+
+      builder.define_field(Pu::UI::Field.new(:description, display_helper: :display_clamped_quill))
+      builder.define_field(Pu::UI::Field.new(:joel_test, display_helper: :joel_test_details, options: { stack: false }))
+
+      builder
     end
   end
 end

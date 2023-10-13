@@ -1,9 +1,9 @@
 <%
   # locals: {
-  #   table: "instance of Pu::Builders::Table"
+  #   table: "instance of Pu::UI::Builder::Collection"
   # }
 
-  resource_class = table.model
+  resource_class = table.model_class
   resources = table.records.to_a
   record_actions = table.record_actions
   search_object = table.search_object
@@ -25,12 +25,12 @@
         <thead class="sticky-top">
           <tr>
             <th scope="col" class="text-center resource-table-col-id"><%= sort_link(search_object, :id, '#', class: "text-decoration-none") %></th>
-            <% table.columns.each do |name, column| %>
+            <% table.fields.each do |name, field| %>
               <th scope="col" class="resource-table-col-attr">
                 <% if resource_class.ransortable_attributes.include? name.to_s %>
-                  <%= sort_link(search_object, name, column[:label], class: "text-decoration-none") %>
+                  <%= sort_link(search_object, name, field.label, class: "text-decoration-none") %>
                 <% else %>
-                  <%= column[:label] %>
+                  <%= field.label %>
                 <% end %>
               </th>
             <% end  %>
@@ -48,13 +48,11 @@
               <% end %>
             </td>
 
-            <% table.columns.each do |name, column| %>
+            <% table.fields.each do |name, field| %>
               <%
                 value = resource.send(name)
-                type = column[:type]
-                display_helper = column[:display_helper]
-
-                options = column[:options]
+                display_helper = field.display_helper
+                options = field.options
               %>
               <td class='text-truncate resource-table-cell-attr' style="max-width: <%= options[:max_width] %>px;">
                 <%= display_field value:, display_helper:, options: %>

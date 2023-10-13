@@ -22,7 +22,7 @@ class ResourceController < ApplicationController
 
     q = policy_scope(resource_class).ransack(params[:q])
     pagy, @resource_records = pagy q.result
-    @table = build_table
+    @table = build_collection
              .with_records(@resource_records)
              .with_pagination(pagy)
              .search_with(q, resource_search_field)
@@ -33,7 +33,7 @@ class ResourceController < ApplicationController
     authorize resource_record
 
     @record = resource_record
-    @details = build_details.with_record(@record)
+    @detail = build_detail.with_record(@record)
   end
 
   # GET /resources/new
@@ -176,18 +176,18 @@ class ResourceController < ApplicationController
     resource_presenter resource_class
   end
 
-  def build_table
-    table = current_presenter.build_table(permitted_attributes)
+  def build_collection
+    table = current_presenter.build_collection(permitted_attributes)
     table.except!(parent_param_key.to_s.gsub(/_id$/, '')) if current_parent.present?
 
     table
   end
 
-  def build_details
-    details = current_presenter.build_details(permitted_attributes)
-    details.except!(parent_param_key.to_s.gsub(/_id$/, '')) if current_parent.present?
+  def build_detail
+    detail = current_presenter.build_detail(permitted_attributes)
+    detail.except!(parent_param_key.to_s.gsub(/_id$/, '')) if current_parent.present?
 
-    details
+    detail
   end
 
   def build_form
