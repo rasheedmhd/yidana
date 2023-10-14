@@ -4,12 +4,12 @@ module Pu
   module UI
     module Builder
       class Form
-        include Concerns::DefinesInputs
+        include Pu::UI::Concerns::DefinesInputs
 
         attr_reader :record
 
         def initialize(model_class)
-          super(model_class)
+          initialize_inputs_definer(model_class)
         end
 
         def with_record(record)

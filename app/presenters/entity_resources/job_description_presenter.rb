@@ -6,8 +6,8 @@ module EntityResources
       fields = permitted_attributes & collection_fields
 
       customize_fields(Pu::UI::Builder::Collection.new(JobDescription))
-        .with_record_actions(actions.only!(:show, :edit, :destroy))
-        .with_actions(actions.only!(:create))
+        .with_record_actions(build_actions.only!(:show, :edit, :destroy))
+        .with_actions(build_actions.only!(:create))
         .with_fields(fields)
     end
 
@@ -22,12 +22,16 @@ module EntityResources
       fields = permitted_attributes & detail_fields
 
       customize_fields(Pu::UI::Builder::Detail.new(JobDescription))
-        .with_actions(actions.except!(:create, :show))
+        .with_actions(build_actions.except!(:create, :show))
         .with_fields(fields)
     end
 
     def build_associations(_permitted_associations)
       Pu::Builders::Associations.new
+    end
+
+    def build_actions
+      Pu::UI::Builder::Actions.new.with_standard_actions
     end
 
     private
@@ -54,10 +58,6 @@ module EntityResources
       []
     end
 
-    def actions
-      Pu::UI::Builder::Actions.new.with_standard_actions
-    end
-
     def customize_fields(builder)
       %i[job_type job_role].each do |name|
         builder.define_field(Pu::UI::Field.new(name, display_helper: :display_name_of))
@@ -73,15 +73,15 @@ module EntityResources
     def customize_inputs(builder)
       builder
         .define_input(Pu::UI::Input.build(:description, type: :quill))
-        .define_input(Pu::UI::Input.from_model_field(JobDescription, :organisation_id,
-                                                     options: { collection: organisations_selection }))
+        .define_input(Pu::UI::Input.for_attribute(JobDescription, :organisation_id,
+                                                  options: { collection: organisations_selection }))
         .define_input(Pu::UI::Input.new(:job_type, options: { collection: JobType.collection, as: :radio_buttons }))
-        .define_input(Pu::UI::Input.from_model_field(JobDescription, :job_role,
-                                                     options: { collection: JobRole.collection }))
-        .define_input(Pu::UI::Input.from_model_field(JobDescription, :experience_level,
-                                                     options: { collection: ExperienceLevel.collection }))
-        .define_input(Pu::UI::Input.from_model_field(JobDescription, :technologies,
-                                                     options: { collection: Technology.collection }))
+        .define_input(Pu::UI::Input.for_attribute(JobDescription, :job_role,
+                                                  options: { collection: JobRole.collection }))
+        .define_input(Pu::UI::Input.for_attribute(JobDescription, :experience_level,
+                                                  options: { collection: ExperienceLevel.collection }))
+        .define_input(Pu::UI::Input.for_attribute(JobDescription, :technologies,
+                                                  options: { collection: Technology.collection }))
     end
   end
 end

@@ -23,6 +23,14 @@ module EntityResources
       [JobDescription]
     end
 
+    def simple_action?
+      true
+    end
+
+    def advanced_action?
+      true
+    end
+
     class Scope
       include Pu::Policy::Initializer
 

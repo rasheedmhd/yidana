@@ -34,7 +34,7 @@ module EntityResources
       #
       # @return [Array[Class, ApplicationRecord, Symbol]] args to pass to `url_for`
       #
-      def adapt_route_args(*args, action: nil, use_parent: true)
+      def adapt_route_args(*args, action: nil, use_parent: true, **kwargs)
         # If the last item is a class and an action is passed e.g. `adapt_route_args User, action: :new`,
         # it must be converted into a symbol to generate the appropriate helper i.e `new_entity_user_*`
         resource = args.pop
@@ -44,7 +44,7 @@ module EntityResources
         parent = use_parent ? current_parent : nil
 
         # rails compacts this list. no need to handle nils
-        [action, current_entity.becomes(Entity), parent] + args
+        [action, current_entity.becomes(Entity), parent] + args + [**kwargs]
       end
     end
   end

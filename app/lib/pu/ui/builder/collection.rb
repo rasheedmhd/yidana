@@ -4,12 +4,12 @@ module Pu
   module UI
     module Builder
       class Collection
-        include Concerns::DefinesFields
+        include Pu::UI::Concerns::DefinesFields
 
         attr_reader :records, :actions, :record_actions, :pagination, :search_object, :search_field
 
         def initialize(model_class)
-          super(model_class)
+          initialize_fields_definer(model_class)
 
           @records = []
         end

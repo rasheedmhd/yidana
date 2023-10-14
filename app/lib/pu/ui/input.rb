@@ -51,12 +51,12 @@ module Pu
         new name, options:
       end
 
-      def self.from_model_field(model_class, name, type: nil, options: {})
-        column = model_class.columns_hash[name.to_s]
+      def self.for_attribute(model_class, name, type: nil, options: {})
+        column = model_class.column_for_attribute name
 
         type ||= :slim_select if options.key? :collection
         type ||= column.type
-        options[:multiple] ||= column.array?
+        options[:multiple] ||= column.array? if column.respond_to? :array?
 
         build name, type:, options:
       end

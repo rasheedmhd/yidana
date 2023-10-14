@@ -25,6 +25,10 @@ Rails.application.routes.draw do
 
     resources :organisations do
       # pu:routes:entity:organisations
+      member do
+        get 'action/:custom_action', action: :begin_custom_action, as: :custom_action
+        post 'action/:custom_action', action: :commit_custom_action
+      end
       resources :job_descriptions
     end
 

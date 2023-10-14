@@ -16,7 +16,7 @@ module Pu
         @label ||= name.to_s.titleize(keep_id_suffix: true)
       end
 
-      def self.from_model_field(model_class, name, label: nil, options: {})
+      def self.for_attribute(model_class, name, label: nil, options: {})
         column = model_class.columns_hash[name.to_s]
 
         display_helper = nil

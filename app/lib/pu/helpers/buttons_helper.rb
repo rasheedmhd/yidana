@@ -9,7 +9,7 @@ module Pu
             tag.i class: "bi bi-#{icon}"
           end
         else
-          form_for url, method:, html: { class: 'd-inline-block', data: { turbo_confirm: confirm } } do
+          form_for :action, url:, method:, html: { class: 'd-inline-block', data: { turbo_confirm: confirm } } do
             tag.button class: button_class do
               tag.i class: "bi bi-#{icon}"
             end

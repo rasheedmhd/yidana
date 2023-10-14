@@ -7,6 +7,7 @@ class ResourceController < ApplicationController
   before_action :set_page_title
   before_action :set_sidebar_menu
   before_action :set_associations
+  before_action :authorize_custom_action, only: %i[custom_action commit_custom_action]
 
   after_action :verify_authorized
   after_action :verify_policy_scoped, except: %i[new create]
@@ -128,7 +129,54 @@ class ResourceController < ApplicationController
     end
   end
 
+  # GET /resources/1/:custom_action
+  def custom_action
+    @action = custom_actions[params[:custom_action]&.to_sym]
+    @interaction = @action.interaction.new resource: resource_record
+  end
+
+  # POST /resources/1/:custom_action(.{format})
+  def commit_custom_action
+    @action = custom_actions[params[:custom_action]&.to_sym]
+
+    respond_to do |format|
+      inputs = (params[:resource] || {}).merge(resource: resource_record)
+      @interaction = @action.interaction.run(inputs)
+
+      if @interaction.valid?
+        format.html do
+          redirect_to adapt_route_args(@interaction.result),
+                      notice: "#{helpers.resource_name(resource_class)} was successfully updated.",
+                      status: :see_other
+        end
+        format.any { render :show, status: :ok, location: adapt_route_args(@interaction.result) }
+      else
+        format.html do
+          render :custom_action, status: :unprocessable_entity
+        end
+        format.any do
+          @errors = @interaction.errors
+          render 'errors', status: :unprocessable_entity
+        end
+      end
+    end
+  end
+
   private
+
+  def custom_actions
+    @custom_actions ||= current_presenter.build_actions.action_definitions.except :create, :show, :edit, :destroy
+  end
+
+  def authorize_custom_action
+    custom_action = params[:custom_action]&.to_sym
+
+    unless custom_actions.key?(custom_action)
+      raise ::AbstractController::ActionNotFound, "Undefined action #{custom_action}'"
+    end
+
+    authorize resource_record, "#{custom_action}?".to_sym
+  end
 
   # Resource
 

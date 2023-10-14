@@ -52,6 +52,14 @@ module Pu
       def permitted_associations
         []
       end
+
+      def begin_resource_action?
+        true
+      end
+
+      def commit_resource_action?
+        true
+      end
     end
   end
 end
