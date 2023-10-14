@@ -55,7 +55,7 @@ module EntityResources
     end
 
     def actions
-      Pu::Builders::Actions.new.with_standard_actions
+      Pu::UI::Builder::Actions.new.with_standard_actions
     end
 
     def customize_fields(builder)
