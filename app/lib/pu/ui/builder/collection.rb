@@ -4,7 +4,7 @@ module Pu
   module UI
     module Builder
       class Collection
-        include Concerns::FieldBuilder
+        include Concerns::DefinesFields
 
         attr_reader :records, :actions, :record_actions, :pagination, :search_object, :search_field
 

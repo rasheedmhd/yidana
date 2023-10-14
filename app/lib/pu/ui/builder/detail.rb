@@ -4,7 +4,7 @@ module Pu
   module UI
     module Builder
       class Detail
-        include Concerns::FieldBuilder
+        include Concerns::DefinesFields
 
         attr_reader :record, :actions
 

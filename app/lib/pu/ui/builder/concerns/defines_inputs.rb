@@ -4,7 +4,7 @@ module Pu
   module UI
     module Builder
       module Concerns
-        module InputBuilder
+        module DefinesInputs
           def self.included(base)
             base.send :attr_reader, :model_class
           end

@@ -4,7 +4,7 @@ module Pu
   module UI
     module Builder
       class Form
-        include Concerns::InputBuilder
+        include Concerns::DefinesInputs
 
         attr_reader :record
 

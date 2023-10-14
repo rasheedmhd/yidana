@@ -4,7 +4,7 @@ module Pu
   module UI
     module Builder
       class Actions
-        include Concerns::ActionBuilder
+        include Concerns::DefinesActions
 
         def with_standard_actions
           %i[create_action show_action edit_action destroy_action].each do |action|

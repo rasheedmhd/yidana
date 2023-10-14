@@ -4,7 +4,7 @@ module Pu
   module UI
     module Builder
       module Concerns
-        module FieldBuilder
+        module DefinesFields
           def self.included(base)
             base.send :attr_reader, :model_class
           end

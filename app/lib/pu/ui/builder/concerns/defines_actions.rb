@@ -4,7 +4,7 @@ module Pu
   module UI
     module Builder
       module Concerns
-        module ActionBuilder
+        module DefinesActions
           def initialize
             @enabled_actions = {} # using hash since keys act as an ordered set
             @action_definitions = {}
