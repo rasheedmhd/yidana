@@ -21,14 +21,9 @@ module EntityResources
 
     def build_form(permitted_attributes)
       inputs = permitted_attributes & form_inputs
-      Pu::Builders::Form.new(Organisation)
-                        .with_inputs(inputs)
-                        .define_input(:description, type: :quill)
-                        .define_input(:company_type, collection: CompanyType.collection, as: :radio_buttons)
-                        .define_input(:company_size, collection: CompanySize.collection, as: :radio_buttons)
-                        .define_input(:industry, collection: Industry.collection)
-                        .define_input(:country, collection: Country.collection)
-                        .define_input(:joel_test, collection: JoelTest.collection, as: :check_boxes)
+
+      customize_inputs(Pu::UI::Builder::Form.new(Organisation))
+        .with_inputs(inputs)
     end
 
     def build_associations(permitted_associations)
@@ -65,10 +60,23 @@ module EntityResources
         builder.define_field(Pu::UI::Field.new(name, display_helper: :display_name_of))
       end
 
-      builder.define_field(Pu::UI::Field.new(:description, display_helper: :display_clamped_quill))
-      builder.define_field(Pu::UI::Field.new(:joel_test, display_helper: :joel_test_details, options: { stack: false }))
-
       builder
+        .define_field(Pu::UI::Field.new(:description, display_helper: :display_clamped_quill))
+        .define_field(Pu::UI::Field.new(:joel_test, display_helper: :joel_test_details, options: { stack: false }))
+    end
+
+    def customize_inputs(builder)
+      builder
+        .define_input(Pu::UI::Input.build(:description, type: :quill))
+        .define_input(Pu::UI::Input.from_model_field(Organisation, :industry,
+                                                     options: { collection: Industry.collection }))
+        .define_input(Pu::UI::Input.from_model_field(Organisation, :country,
+                                                     options: { collection: Country.collection }))
+        .define_input(Pu::UI::Input.new(:joel_test, options: { collection: JoelTest.collection, as: :check_boxes }))
+        .define_input(Pu::UI::Input.new(:company_type,
+                                        options: { collection: CompanyType.collection, as: :radio_buttons }))
+        .define_input(Pu::UI::Input.new(:company_size,
+                                        options: { collection: CompanySize.collection, as: :radio_buttons }))
     end
   end
 end

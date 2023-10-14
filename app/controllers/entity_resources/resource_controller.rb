@@ -30,7 +30,7 @@ module EntityResources
 
     def build_form
       form = super
-      form.except!(:entity_id) if current_entity.present?
+      form.except_inputs!(:entity_id) if current_entity.present?
 
       form
     end

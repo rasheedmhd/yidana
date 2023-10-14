@@ -178,21 +178,21 @@ class ResourceController < ApplicationController
 
   def build_collection
     table = current_presenter.build_collection(permitted_attributes)
-    table.except!(parent_param_key.to_s.gsub(/_id$/, '')) if current_parent.present?
+    table.except_fields!(parent_param_key.to_s.gsub(/_id$/, '').to_sym) if current_parent.present?
 
     table
   end
 
   def build_detail
     detail = current_presenter.build_detail(permitted_attributes)
-    detail.except!(parent_param_key.to_s.gsub(/_id$/, '')) if current_parent.present?
+    detail.except_fields!(parent_param_key.to_s.gsub(/_id$/, '').to_sym) if current_parent.present?
 
     detail
   end
 
   def build_form
     form = current_presenter.build_form(permitted_attributes)
-    form.except!(parent_param_key) if current_parent.present?
+    form.except_inputs!(parent_param_key) if current_parent.present?
 
     form
   end

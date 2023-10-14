@@ -1,6 +1,6 @@
 <%#
   locals: {
-    form: "instance of Pu::Builders::Form"
+    form: "instance of Pu::UI::Builder::Form"
   }
 %>
 <%= simple_form_for adapt_route_args(form.record) do |f| %>
@@ -22,8 +22,8 @@
     </div>
 
     <div class="form-inputs">
-      <% form.inputs.each do |name, options| %>
-        <%= f.input name, **options %>
+      <% form.inputs.values.each do |input| %>
+        <%= f.input input.name, **input.options %>
       <% end %>
     </div>
 

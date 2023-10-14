@@ -11,47 +11,43 @@ module Pu
 
           def initialize(model_class)
             @model_class = model_class
-            @fields = {} # using hash since keys act as an ordered set
-            @definitions = {}
+            @enabled_fields = {} # using hash since keys act as an ordered set
+            @field_definitions = {}
           end
 
           def with_fields(*names)
             names.flatten.each do |name|
               define_field(Pu::UI::Field.from_model_field(model_class, name)) unless field_defined?(name)
-              @fields[name] = true
+              @enabled_fields[name] = true
             end
             self
           end
 
           def define_field(definition)
-            @definitions[definition.name] = definition
+            @field_definitions[definition.name] = definition
             self
           end
 
-          def only!(*fields)
-            @fields.slice!(*fields.flatten.map(&:to_sym))
+          def only_fields!(*fields)
+            @enabled_fields.slice!(*fields.flatten)
             self
           end
 
-          def except!(*fields)
-            @fields.except!(*fields.flatten.map(&:to_sym))
+          def except_fields!(*fields)
+            @enabled_fields.except!(*fields.flatten)
             self
           end
-
-          # def field_names
-          #   fields.values.pluck(:label)
-          # end
 
           def fields
-            @definitions.slice(*@fields.keys)
+            @field_definitions.slice(*@enabled_fields.keys)
           end
 
           def field?(name)
-            @fields.key? name.to_sym
+            @enabled_fields.key? name.to_sym
           end
 
           def field_defined?(name)
-            @definitions.key? name.to_sym
+            @field_definitions.key? name.to_sym
           end
         end
       end

@@ -13,14 +13,9 @@ module EntityResources
 
     def build_form(permitted_attributes)
       inputs = permitted_attributes & form_inputs
-      Pu::Builders::Form.new(JobDescription)
-                        .with_inputs(inputs)
-                        .define_input(:description, type: :quill)
-                        .define_input(:organisation_id, collection: organisations_selection)
-                        .define_input(:job_type, collection: JobType.collection, as: :radio_buttons)
-                        .define_input(:job_role, collection: JobRole.collection)
-                        .define_input(:experience_level, collection: ExperienceLevel.collection)
-                        .define_input(:technologies, collection: Technology.collection)
+
+      customize_inputs(Pu::UI::Builder::Form.new(JobDescription))
+        .with_inputs(inputs)
     end
 
     def build_detail(permitted_attributes)
@@ -73,9 +68,20 @@ module EntityResources
       end
 
       builder.define_field(Pu::UI::Field.new(:description, display_helper: :display_clamped_quill))
-      builder.define_field(Pu::UI::Field.new(:description, display_helper: :display_clamped_quill))
+    end
 
+    def customize_inputs(builder)
       builder
+        .define_input(Pu::UI::Input.build(:description, type: :quill))
+        .define_input(Pu::UI::Input.from_model_field(JobDescription, :organisation_id,
+                                                     options: { collection: organisations_selection }))
+        .define_input(Pu::UI::Input.new(:job_type, options: { collection: JobType.collection, as: :radio_buttons }))
+        .define_input(Pu::UI::Input.from_model_field(JobDescription, :job_role,
+                                                     options: { collection: JobRole.collection }))
+        .define_input(Pu::UI::Input.from_model_field(JobDescription, :experience_level,
+                                                     options: { collection: ExperienceLevel.collection }))
+        .define_input(Pu::UI::Input.from_model_field(JobDescription, :technologies,
+                                                     options: { collection: Technology.collection }))
     end
   end
 end
