@@ -8,7 +8,7 @@
 <% actions.values.each do |action| %>
   <% if action.button.is_a? Pu::UI::Button %>
     <%=
-      table_icon_button adapt_route_args(resource, action: action.route.action, **action.route.options),
+      table_action_button adapt_route_args(resource, action: action.route.action, **action.route.options),
                         icon: action.button.icon,
                         button_class: action.button.button_class,
                         method: action.route.method,

@@ -85,21 +85,17 @@ module EntityResources
 
       builder
         .define_field(Pu::UI::Field.new(:description, display_helper: :display_clamped_quill))
-        .define_field(Pu::UI::Field.new(:joel_test, display_helper: :joel_test_details, options: { stack: false }))
+        .define_field(Pu::UI::Field.new(:joel_test, display_helper: :joel_test_details, stack: false))
     end
 
     def customize_inputs(builder)
       builder
         .define_input(Pu::UI::Input.build(:description, type: :quill))
-        .define_input(Pu::UI::Input.for_attribute(Organisation, :industry,
-                                                  options: { collection: Industry.collection }))
-        .define_input(Pu::UI::Input.for_attribute(Organisation, :country,
-                                                  options: { collection: Country.collection }))
-        .define_input(Pu::UI::Input.new(:joel_test, options: { collection: JoelTest.collection, as: :check_boxes }))
-        .define_input(Pu::UI::Input.new(:company_type,
-                                        options: { collection: CompanyType.collection, as: :radio_buttons }))
-        .define_input(Pu::UI::Input.new(:company_size,
-                                        options: { collection: CompanySize.collection, as: :radio_buttons }))
+        .define_input(Pu::UI::Input.new(:joel_test, collection: JoelTest.collection, as: :check_boxes))
+        .define_input(Pu::UI::Input.new(:company_type, collection: CompanyType.collection, as: :radio_buttons))
+        .define_input(Pu::UI::Input.new(:company_size, collection: CompanySize.collection, as: :radio_buttons))
+        .define_input(Pu::UI::Input.for_attribute(Organisation, :industry, collection: Industry.collection))
+        .define_input(Pu::UI::Input.for_attribute(Organisation, :country, collection: Country.collection))
     end
   end
 end

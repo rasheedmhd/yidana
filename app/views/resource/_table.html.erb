@@ -33,7 +33,7 @@
                   <%= field.label %>
                 <% end %>
               </th>
-            <% end  %>
+            <% end %>
             <th scope="col" class="text-center resource-table-col-actions">Actions</th>
           </tr>
         </thead>
@@ -57,7 +57,7 @@
               <td class='text-truncate resource-table-cell-attr' style="max-width: <%= options[:max_width] %>px;">
                 <%= display_field value:, display_helper:, options: %>
               </td>
-            <% end  %>
+            <% end %>
 
             <td class="text-center resource-table-cell-actions">
               <%=
@@ -72,7 +72,7 @@
         </tbody>
       </table>
     </div>
-    <% if table.pagination.present?  %>
+    <% if table.pagination.present? %>
       <div class="col-12">
         <%= render 'pagination', pagination: table.pagination %>
       </div>

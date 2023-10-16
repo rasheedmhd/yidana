@@ -46,11 +46,12 @@ module Pu
         # Fallback to retrieving the value from a predefined list
         name_method = nil
         %i[display_name name title].each do |method|
-          return obj.send method if obj.respond_to? method
+          name = obj.send(method) if obj.respond_to?(method)
+          return name if name.present?
         end
 
         # Maybe this is a record?
-        return "#{resource_name(obj.class)} ##{obj.id}" if obj.respond_to? :id
+        return "#{resource_name(obj.class)} ##{obj.id}" if obj.respond_to?(:id)
 
         # Oh well. Just convert it to a string.
         obj.to_s

@@ -64,7 +64,7 @@ module EntityResources
       end
 
       %i[experience_level technologies].each do |name|
-        builder.define_field(Pu::UI::Field.new(name, display_helper: :display_name_of, options: { stack: true }))
+        builder.define_field(Pu::UI::Field.new(name, display_helper: :display_name_of, stack: true))
       end
 
       builder.define_field(Pu::UI::Field.new(:description, display_helper: :display_clamped_quill))
@@ -73,15 +73,15 @@ module EntityResources
     def customize_inputs(builder)
       builder
         .define_input(Pu::UI::Input.build(:description, type: :quill))
+        .define_input(Pu::UI::Input.new(:minimum_annual_salary, wrapper: :input_group, prepend: '$'))
+        .define_input(Pu::UI::Input.new(:maximum_annual_salary, wrapper: :input_group, prepend: '$'))
+        .define_input(Pu::UI::Input.new(:job_type, collection: JobType.collection, as: :radio_buttons))
+        .define_input(Pu::UI::Input.for_attribute(JobDescription, :job_role, collection: JobRole.collection))
+        .define_input(Pu::UI::Input.for_attribute(JobDescription, :technologies, collection: Technology.collection))
         .define_input(Pu::UI::Input.for_attribute(JobDescription, :organisation_id,
-                                                  options: { collection: organisations_selection }))
-        .define_input(Pu::UI::Input.new(:job_type, options: { collection: JobType.collection, as: :radio_buttons }))
-        .define_input(Pu::UI::Input.for_attribute(JobDescription, :job_role,
-                                                  options: { collection: JobRole.collection }))
+                                                  collection: organisations_selection))
         .define_input(Pu::UI::Input.for_attribute(JobDescription, :experience_level,
-                                                  options: { collection: ExperienceLevel.collection }))
-        .define_input(Pu::UI::Input.for_attribute(JobDescription, :technologies,
-                                                  options: { collection: Technology.collection }))
+                                                  collection: ExperienceLevel.collection))
     end
   end
 end

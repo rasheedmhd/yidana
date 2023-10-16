@@ -5,7 +5,7 @@ module Pu
     class Field
       attr_reader :name, :label, :display_helper, :options
 
-      def initialize(name, label: nil, display_helper: nil, options: {})
+      def initialize(name, label: nil, display_helper: nil, **options)
         @name = name
         @label = label
         @display_helper = display_helper
@@ -45,7 +45,7 @@ module Pu
 
         options[:max_width] = 250 if options[:max_width].nil?
 
-        new name, label:, display_helper:, options:
+        new name, label:, display_helper:, **options
       end
     end
   end

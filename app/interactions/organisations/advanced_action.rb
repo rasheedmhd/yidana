@@ -5,7 +5,7 @@ module Organisations
     string :name
 
     def execute
-      resource.update(name:)
+      errors.merge!(resource.errors) unless resource.update(name:)
       resource
     end
   end

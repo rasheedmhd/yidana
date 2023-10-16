@@ -4,11 +4,6 @@
   }
 %>
 <%= simple_form_for adapt_route_args(form.record) do |f| %>
-  <div class="row py-2">
-    <div class="col-12 text-end">
-      <%= f.button :submit, class: "btn btn-sm btn-outline-primary" %>
-    </div>
-  </div>
 
   <div class="row row-gap-2">
     <div class="container">
@@ -18,6 +13,12 @@
         <% f.object.errors.full_messages.each do |message|  %>
           <%= f.error_notification message: message  %>
         <% end  %>
+      </div>
+    </div>
+
+    <div class="row py-2">
+      <div class="col-12 text-end">
+        <%= f.button :submit, class: "btn btn-sm btn-outline-primary" %>
       </div>
     </div>
 

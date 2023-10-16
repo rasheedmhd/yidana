@@ -15,19 +15,23 @@ module Pu
           @route.action = :custom_action
           @route.options[:custom_action] = name
 
-          inline = case inline
-                   when nil, true
-                     @enabled_inputs.blank?
-                   else
-                     false
-                   end
+          @inline = case inline
+                    when nil, true
+                      @enabled_inputs.blank?
+                    else
+                      false
+                    end
 
-          if inline
+          if @inline
             @route.method = :post
             with_confirmation "#{name.to_s.titleize}?"
           end
 
           self
+        end
+
+        def turbo_frame
+          'modal'
         end
 
         private

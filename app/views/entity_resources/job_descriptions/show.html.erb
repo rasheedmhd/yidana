@@ -1,4 +1,4 @@
-<% content_for :toolbar do  %>
+<% content_for :toolbar do %>
   <%= render 'toolbar', resource_class: resource_class,
                         resource: @detail.record,
                         parent: current_parent do %>
@@ -9,7 +9,7 @@
       }
     %>
   <% end %>
-<% end  %>
+<% end %>
 
 <%=
   render partial: 'associations_bar', locals: {

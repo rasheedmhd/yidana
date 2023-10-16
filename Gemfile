@@ -86,6 +86,7 @@ group :development do
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'solargraph'
+
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
 

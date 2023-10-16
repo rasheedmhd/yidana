@@ -2,12 +2,10 @@
   <%=
     render partial: 'toolbar', locals: {
       resource_class: resource_class,
-      resource: @interaction.resource,
+      resource: resource_record,
       parent: current_parent,
     }
   %>
 <% end %>
 
-
-
-<%= render "custom_action_form", form: nil  %>
+<%= render "custom_action_form", form: nil %>

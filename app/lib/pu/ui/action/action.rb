@@ -19,6 +19,10 @@ module Pu
           self
         end
 
+        def turbo_frame
+          nil
+        end
+
         class << self
           def create_action(button: nil)
             button ||= Pu::UI::Button.create_button

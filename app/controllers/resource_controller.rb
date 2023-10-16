@@ -154,6 +154,13 @@ class ResourceController < ApplicationController
         format.html do
           render :custom_action, status: :unprocessable_entity
         end
+
+        if helpers.current_turbo_frame == 'modal'
+          format.turbo_stream do
+            render turbo_stream: turbo_stream.replace(:modal, partial: 'custom_action_form')
+          end
+        end
+
         format.any do
           @errors = @interaction.errors
           render 'errors', status: :unprocessable_entity
@@ -163,6 +170,10 @@ class ResourceController < ApplicationController
   end
 
   private
+
+  def current_layout
+    send :_layout, lookup_context, []
+  end
 
   def custom_actions
     @custom_actions ||= current_presenter.build_actions.action_definitions.except :create, :show, :edit, :destroy
@@ -203,6 +214,7 @@ class ResourceController < ApplicationController
 
     @resource_record ||= policy_scope(resource_class).from_path_param(params[:id]).first!
   end
+  helper_method :resource_record
 
   def resource_params
     # we don't care much about strong parameters since we have our own whitelist

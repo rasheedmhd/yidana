@@ -5,7 +5,7 @@ module Pu
     class Input
       attr_reader :name, :options
 
-      def initialize(name, options: {})
+      def initialize(name, **options)
         @name = name
         @options = options
       end
@@ -48,10 +48,10 @@ module Pu
 
         options = definition.deep_merge options
 
-        new name, options:
+        new name, **options
       end
 
-      def self.for_attribute(model_class, name, type: nil, options: {})
+      def self.for_attribute(model_class, name, type: nil, **options)
         column = model_class.column_for_attribute name
 
         type ||= :slim_select if options.key? :collection
