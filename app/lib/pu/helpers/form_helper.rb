@@ -12,7 +12,7 @@ module Pu
       # explicitly opted into
       #
       def form_for(record, options = {}, &block)
-        turbo_frame = options.delete(:turbo_frame) || '_top'
+        turbo_frame = options.key?(:turbo_frame) ? options[:turbo_frame] : '_top'
         options = {
           html: {
             data: {

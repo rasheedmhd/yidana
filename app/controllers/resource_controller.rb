@@ -133,6 +133,12 @@ class ResourceController < ApplicationController
   def custom_action
     @action = custom_actions[params[:custom_action]&.to_sym]
     @interaction = @action.interaction.new resource: resource_record
+
+    if helpers.current_turbo_frame == 'modal'
+      render layout: false
+    else
+      render
+    end
   end
 
   # POST /resources/1/:custom_action(.{format})
@@ -144,26 +150,31 @@ class ResourceController < ApplicationController
       @interaction = @action.interaction.run(inputs)
 
       if @interaction.valid?
-        format.html do
-          redirect_to adapt_route_args(@interaction.result),
-                      notice: "#{helpers.resource_name(resource_class)} was successfully updated.",
-                      status: :see_other
-        end
+        flash[:notice] = "#{helpers.resource_name(resource_class)} was successfully updated."
+
+        format.html { redirect_to adapt_route_args(@interaction.result), status: :see_other }
         format.any { render :show, status: :ok, location: adapt_route_args(@interaction.result) }
+
+        if helpers.current_turbo_frame == 'modal'
+          format.turbo_stream do
+            render turbo_stream: [
+              turbo_stream.redirect(url_for(adapt_route_args(@interaction.result)))
+            ]
+          end
+        end
       else
         format.html do
           render :custom_action, status: :unprocessable_entity
+        end
+        format.any do
+          @errors = @interaction.errors
+          render 'errors', status: :unprocessable_entity
         end
 
         if helpers.current_turbo_frame == 'modal'
           format.turbo_stream do
             render turbo_stream: turbo_stream.replace(:modal, partial: 'custom_action_form')
           end
-        end
-
-        format.any do
-          @errors = @interaction.errors
-          render 'errors', status: :unprocessable_entity
         end
       end
     end

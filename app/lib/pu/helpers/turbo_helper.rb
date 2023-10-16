@@ -8,8 +8,6 @@ module Pu
       end
 
       def modal_frame_tag
-        return if /custom_action/.match?(controller.action_name)
-
         turbo_frame_tag 'modal'
       end
     end
