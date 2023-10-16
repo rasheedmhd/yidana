@@ -205,7 +205,7 @@ class ResourceController < ApplicationController
   class << self
     attr_reader :resource_class, :resource_search_field
 
-    def controller_for(resource_class, resource_search_field)
+    def controller_for(resource_class, resource_search_field = nil)
       @resource_class = resource_class
       @resource_search_field = resource_search_field
     end
