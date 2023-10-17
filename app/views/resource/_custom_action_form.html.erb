@@ -7,14 +7,15 @@
 <% if current_turbo_frame == 'modal' %>
 
   <%= turbo_frame_tag "modal" do %>
-    <div class="modal" tabindex="-1" data-controller="modal">
-      <div class="modal-dialog">
+    <div class="modal " tabindex="-1" data-controller="modal">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <%= simple_form_for @interaction, as: :resource,
                                           method: :post,
                                           turbo_frame: :modal,
                                           url: adapt_route_args(@interaction.resource,  action: :custom_action) do |f| %>
           <div class="modal-content">
             <div class="modal-header">
+              <h1 class="modal-title fs-5"><%= @action.name.to_s.titleize %></h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
