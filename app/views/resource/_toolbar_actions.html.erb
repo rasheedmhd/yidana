@@ -5,14 +5,15 @@
   # }
 %>
 
-<% actions.each do |action| %>
-  <% if action.is_a? Pu::Builders::Action::IconButton %>
+<% actions.values.each do |action| %>
+  <% if action.button.is_a? Pu::UI::Button %>
     <%=
-      toolbar_icon_button adapt_route_args(resource, action: action.action),
-                          icon: action.icon,
-                          button_class: action.button_class,
-                          method: action.method,
-                          confirm: action.confirm
+      toolbar_action_button adapt_route_args(resource, action: action.route.action, **action.route.options),
+                          icon: action.button.icon,
+                          button_class: action.button.button_class,
+                          method: action.route.method,
+                          confirm: action.confirmation,
+                          turbo_frame: action.turbo_frame
     %>
   <% end %>
 <% end %>

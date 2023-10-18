@@ -2,17 +2,16 @@
 
 module EntityResources
   class Presenter
-    def initialize(entity:, user:)
-      @entity = entity
-      @user = user
+    def initialize(context)
+      @context = context
     end
 
     private
 
-    attr_reader :entity, :user
+    attr_reader :context
 
     def organisations_selection
-      entity.organisations.all
+      context.entity.organisations.all
     end
   end
 end

@@ -10,12 +10,12 @@
 
     <%=
       render partial: 'toolbar_actions', locals: {
-        actions: @table.toolbar_actions.permitted_actions_for(policy(resource_class)),
+        actions: @table.actions.permitted_actions_for(policy(resource_class)),
         resource: resource_class
       }
     %>
   <% end %>
-<% end  %>
+<% end %>
 
 <%=
   render partial: 'associations_bar', locals: {

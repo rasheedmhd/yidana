@@ -2,7 +2,7 @@
 
 module EntityResources
   class OrganisationPolicy
-    include Concerns::ResourcePolicy
+    include Pu::Policy::EntityResourcePolicy
 
     def permitted_attributes_for_read
       %i[id name headline description website_url
@@ -23,8 +23,16 @@ module EntityResources
       [JobDescription]
     end
 
+    def simple_action?
+      true
+    end
+
+    def advanced_action?
+      true
+    end
+
     class Scope
-      include Concerns::ResourcePolicyInitializer
+      include Pu::Policy::Initializer
 
       def resolve
         @context.parent.organisations.includes(:entity)

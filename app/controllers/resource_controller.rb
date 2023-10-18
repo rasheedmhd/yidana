@@ -7,6 +7,7 @@ class ResourceController < ApplicationController
   before_action :set_page_title
   before_action :set_sidebar_menu
   before_action :set_associations
+  before_action :authorize_custom_action, only: %i[custom_action commit_custom_action]
 
   after_action :verify_authorized
   after_action :verify_policy_scoped, except: %i[new create]
@@ -22,7 +23,7 @@ class ResourceController < ApplicationController
 
     q = policy_scope(resource_class).ransack(params[:q])
     pagy, @resource_records = pagy q.result
-    @table = build_table
+    @table = build_collection
              .with_records(@resource_records)
              .with_pagination(pagy)
              .search_with(q, resource_search_field)
@@ -33,7 +34,7 @@ class ResourceController < ApplicationController
     authorize resource_record
 
     @record = resource_record
-    @details = build_details.with_record(@record)
+    @detail = build_detail.with_record(@record)
   end
 
   # GET /resources/new
@@ -128,14 +129,83 @@ class ResourceController < ApplicationController
     end
   end
 
+  # GET /resources/1/:custom_action
+  def custom_action
+    @action = custom_actions[params[:custom_action]&.to_sym]
+    @interaction = @action.interaction.new resource: resource_record
+
+    if helpers.current_turbo_frame == 'modal'
+      render layout: false
+    else
+      render
+    end
+  end
+
+  # POST /resources/1/:custom_action(.{format})
+  def commit_custom_action
+    @action = custom_actions[params[:custom_action]&.to_sym]
+
+    respond_to do |format|
+      inputs = (params[:resource] || {}).merge(resource: resource_record)
+      @interaction = @action.interaction.run(inputs)
+
+      if @interaction.valid?
+        flash[:notice] = "#{helpers.resource_name(resource_class)} was successfully updated."
+
+        format.html { redirect_to adapt_route_args(@interaction.result), status: :see_other }
+        format.any { render :show, status: :ok, location: adapt_route_args(@interaction.result) }
+
+        if helpers.current_turbo_frame == 'modal'
+          format.turbo_stream do
+            render turbo_stream: [
+              turbo_stream.redirect(url_for(adapt_route_args(@interaction.result)))
+            ]
+          end
+        end
+      else
+        format.html do
+          render :custom_action, status: :unprocessable_entity
+        end
+        format.any do
+          @errors = @interaction.errors
+          render 'errors', status: :unprocessable_entity
+        end
+
+        if helpers.current_turbo_frame == 'modal'
+          format.turbo_stream do
+            render turbo_stream: turbo_stream.replace(:modal, partial: 'custom_action_form')
+          end
+        end
+      end
+    end
+  end
+
   private
+
+  def current_layout
+    send :_layout, lookup_context, []
+  end
+
+  def custom_actions
+    @custom_actions ||= current_presenter.build_actions.action_definitions.except :create, :show, :edit, :destroy
+  end
+
+  def authorize_custom_action
+    custom_action = params[:custom_action]&.to_sym
+
+    unless custom_actions.key?(custom_action)
+      raise ::AbstractController::ActionNotFound, "Undefined action #{custom_action}'"
+    end
+
+    authorize resource_record, "#{custom_action}?".to_sym
+  end
 
   # Resource
 
   class << self
     attr_reader :resource_class, :resource_search_field
 
-    def controller_for(resource_class, resource_search_field)
+    def controller_for(resource_class, resource_search_field = nil)
       @resource_class = resource_class
       @resource_search_field = resource_search_field
     end
@@ -155,6 +225,7 @@ class ResourceController < ApplicationController
 
     @resource_record ||= policy_scope(resource_class).from_path_param(params[:id]).first!
   end
+  helper_method :resource_record
 
   def resource_params
     # we don't care much about strong parameters since we have our own whitelist
@@ -176,23 +247,23 @@ class ResourceController < ApplicationController
     resource_presenter resource_class
   end
 
-  def build_table
-    table = current_presenter.build_table(permitted_attributes)
-    table.except!(parent_param_key.to_s.gsub(/_id$/, '')) if current_parent.present?
+  def build_collection
+    table = current_presenter.build_collection(permitted_attributes)
+    table.except_fields!(parent_param_key.to_s.gsub(/_id$/, '').to_sym) if current_parent.present?
 
     table
   end
 
-  def build_details
-    details = current_presenter.build_details(permitted_attributes)
-    details.except!(parent_param_key.to_s.gsub(/_id$/, '')) if current_parent.present?
+  def build_detail
+    detail = current_presenter.build_detail(permitted_attributes)
+    detail.except_fields!(parent_param_key.to_s.gsub(/_id$/, '').to_sym) if current_parent.present?
 
-    details
+    detail
   end
 
   def build_form
     form = current_presenter.build_form(permitted_attributes)
-    form.except!(parent_param_key) if current_parent.present?
+    form.except_inputs!(parent_param_key) if current_parent.present?
 
     form
   end

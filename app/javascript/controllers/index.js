@@ -13,6 +13,9 @@ application.register("color-modes", ColorModesController)
 import FormController from "./form_controller"
 application.register("form", FormController)
 
+import ModalController from "./modal_controller"
+application.register("modal", ModalController)
+
 import QuillEditorController from "./quill_editor_controller"
 application.register("quill-editor", QuillEditorController)
 

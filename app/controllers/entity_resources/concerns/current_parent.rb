@@ -18,7 +18,7 @@ module EntityResources
         return unless parent_param_key.present?
 
         @current_parent ||= begin
-          parent_name = parent_param_key.gsub(/_id$/, '')
+          parent_name = parent_param_key.to_s.gsub(/_id$/, '')
 
           if respond_to?(:current_entity, true)
             parent_association = parent_name.pluralize.to_sym
@@ -30,7 +30,7 @@ module EntityResources
       def parent_param_key
         @parent_param_key ||= begin
           path_param_keys = params.keys.last(4) - %w[controller action entity_id id format]
-          path_param_keys.select { |key| /_id$/.match? key }.last
+          path_param_keys.select { |key| /_id$/.match? key }.last&.to_sym
         end
       end
     end

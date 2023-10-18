@@ -2,55 +2,41 @@
 
 module EntityResources
   class JobDescriptionPresenter < Presenter
-    def build_table(permitted_attributes)
-      columns = permitted_attributes & table_columns
-      table = Pu::Builders::Table.new(JobDescription)
-                                 .with_columns(columns)
-                                 .with_record_actions(actions.only!(:show, :edit, :destroy))
-                                 .with_toolbar_actions(actions.only!(:create))
+    def build_collection(permitted_attributes)
+      fields = permitted_attributes & collection_fields
 
-      # define custom transformations
-      %i[job_type job_role experience_level technologies].each do |name|
-        table.define_column(name, display_helper: :display_name_of)
-      end
-
-      table
+      customize_fields(Pu::UI::Builder::Collection.new(JobDescription))
+        .with_record_actions(build_actions.only!(:show, :edit, :destroy))
+        .with_actions(build_actions.only!(:create))
+        .with_fields(fields)
     end
 
     def build_form(permitted_attributes)
       inputs = permitted_attributes & form_inputs
-      Pu::Builders::Form.new(JobDescription)
-                        .with_inputs(inputs)
-                        .define_input(:description, type: :quill)
-                        .define_input(:organisation_id, collection: organisations_selection)
-                        .define_input(:job_type, collection: JobType.collection, as: :radio_buttons)
-                        .define_input(:job_role, collection: JobRole.collection)
-                        .define_input(:experience_level, collection: ExperienceLevel.collection)
-                        .define_input(:technologies, collection: Technology.collection)
+
+      customize_inputs(Pu::UI::Builder::Form.new(JobDescription))
+        .with_inputs(inputs)
     end
 
-    def build_details(permitted_attributes)
+    def build_detail(permitted_attributes)
       fields = permitted_attributes & detail_fields
-      details = Pu::Builders::Details.new(JobDescription)
-                                     .with_fields(fields)
-                                     .with_actions(actions.except!(:create, :show))
-                                     .define_field(:description, display_helper: :display_clamped_quill)
 
-      # define custom transformations
-      %i[job_type job_role experience_level technologies].each do |name|
-        details.define_field(name, display_helper: :display_name_of)
-      end
-
-      details
+      customize_fields(Pu::UI::Builder::Detail.new(JobDescription))
+        .with_actions(build_actions.except!(:create, :show))
+        .with_fields(fields)
     end
 
     def build_associations(_permitted_associations)
       Pu::Builders::Associations.new
     end
 
+    def build_actions
+      Pu::UI::Builder::Actions.new.with_standard_actions
+    end
+
     private
 
-    def table_columns
+    def collection_fields
       %i[organisation title job_role experience_level job_type
          created_at updated_at]
     end
@@ -72,8 +58,30 @@ module EntityResources
       []
     end
 
-    def actions
-      Pu::Builders::Actions.new.with_standard_actions
+    def customize_fields(builder)
+      %i[job_type job_role].each do |name|
+        builder.define_field(Pu::UI::Field.new(name, display_helper: :display_name_of))
+      end
+
+      %i[experience_level technologies].each do |name|
+        builder.define_field(Pu::UI::Field.new(name, display_helper: :display_name_of, stack: true))
+      end
+
+      builder.define_field(Pu::UI::Field.new(:description, display_helper: :display_clamped_quill))
+    end
+
+    def customize_inputs(builder)
+      builder
+        .define_input(Pu::UI::Input.build(:description, type: :quill))
+        .define_input(Pu::UI::Input.new(:minimum_annual_salary, wrapper: :input_group, prepend: '$'))
+        .define_input(Pu::UI::Input.new(:maximum_annual_salary, wrapper: :input_group, prepend: '$'))
+        .define_input(Pu::UI::Input.new(:job_type, collection: JobType.collection, as: :radio_buttons))
+        .define_input(Pu::UI::Input.for_attribute(JobDescription, :job_role, collection: JobRole.collection))
+        .define_input(Pu::UI::Input.for_attribute(JobDescription, :technologies, collection: Technology.collection))
+        .define_input(Pu::UI::Input.for_attribute(JobDescription, :organisation_id,
+                                                  collection: organisations_selection))
+        .define_input(Pu::UI::Input.for_attribute(JobDescription, :experience_level,
+                                                  collection: ExperienceLevel.collection))
     end
   end
 end

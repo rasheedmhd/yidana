@@ -15,13 +15,11 @@
     <% if resource.present? %>
       <li class="breadcrumb-item"><%= link_to resource_name_plural(resource_class), adapt_route_args(resource_class), class: 'text-decoration-none' %></li>
 
-      <% if ['edit'].include? action_name %>
+      <% if %w[edit update custom_action commit_custom_action].include? action_name %>
         <li class="breadcrumb-item"><%= link_to display_name_of(resource), adapt_route_args(resource), class: 'text-decoration-none' %></li>
-        <li class="breadcrumb-item active" aria-current="page">Edit</li>
+        <li class="breadcrumb-item active" aria-current="page"><%= (params[:custom_action] || 'Edit').titleize %></li>
       <% else %>
-        <li class="breadcrumb-item active" aria-current="page">
-          <%= resource.persisted? ? display_name_of(resource) : 'New'  %>
-        </li>
+        <li class="breadcrumb-item active" aria-current="page"><%= resource.persisted? ? display_name_of(resource) : 'New' %></li>
       <% end %>
     <% else %>
       <li class="breadcrumb-item"><%= resource_name_plural(resource_class) %></li>

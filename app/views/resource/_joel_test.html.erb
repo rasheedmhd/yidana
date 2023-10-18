@@ -1,5 +1,5 @@
 <% JoelTest.collection.each do |test| %>
-  <% icon, clazz = value.include?(test) ? %i[check success] : %i[x danger]  %>
+  <% icon, clazz = value.include?(test) ? %i[check success] : %i[x danger] %>
   <div>
     <span class="badge bg-<%= clazz %> text-white">
       <i class="bi bi-<%= icon %>"></i>

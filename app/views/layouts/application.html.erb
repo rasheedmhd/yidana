@@ -19,6 +19,7 @@
     <%= yield(:head) %>
   </head>
   <body class="bg-body-tertiary">
+    <%= modal_frame_tag %>
     <%= render "messages" %>
     <%= content_for?(:header) ? yield(:header) : render("shared/header") %>
     <%= yield(:content) %>
