@@ -8,7 +8,10 @@ Rails.application.routes.draw do
 
   # Add your routes after this line
 
-  # pu:start routes
+  ## pu:start routes
+
+  # This following is required for plutonium to work correctly.
+  # Do not modify unless you know what you are doing.
 
   entity_concerns = []
   common_resource_concerns = %i[custom_actions]
@@ -33,17 +36,6 @@ Rails.application.routes.draw do
   end
   entity_concerns << :job_description_routes
 
-  # This following is required for plutonium to work correctly.
-  # Do not modify unless you know what you are doing.
-
-  # pu:routes:concerns
-  concern :custom_actions do
-    member do
-      get 'action/:custom_action', action: :custom_action, as: :custom_action
-      post 'action/:custom_action', action: :commit_custom_action
-    end
-  end
-
   # Generic dashboard route
   get 'dashboard', to: 'dashboard#index' # pu:routes:dashboard
 
@@ -54,6 +46,15 @@ Rails.application.routes.draw do
     # pu:routes:onboarding
   end
 
+  # pu:routes:concerns
+
+  concern :custom_actions do
+    member do
+      get 'action/:custom_action', action: :custom_action, as: :custom_action
+      post 'action/:custom_action', action: :commit_custom_action
+    end
+  end
+
   # Entity resources routes
   scope ':entity_id/dashboard', module: :entity_resources, as: :entity do
     get '', to: 'index#index'
@@ -61,5 +62,5 @@ Rails.application.routes.draw do
     # pu:routes:entity
   end
 
-  # pu:end routes
+  ## pu:end routes
 end
