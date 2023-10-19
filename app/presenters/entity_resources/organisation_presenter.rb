@@ -80,12 +80,12 @@ module EntityResources
 
     def customize_fields(builder)
       %i[industry company_size company_type country].each do |name|
-        builder.define_field(Pu::UI::Field.new(name, display_helper: :display_name_of))
+        builder.define_field(Pu::UI::Field.new(name, helper: :display_name_of))
       end
 
       builder
-        .define_field(Pu::UI::Field.new(:description, display_helper: :display_clamped_quill))
-        .define_field(Pu::UI::Field.new(:joel_test, display_helper: :joel_test_details, stack: false))
+        .define_field(Pu::UI::Field.new(:description, helper: :display_clamped_quill))
+        .define_field(Pu::UI::Field.new(:joel_test, helper: :joel_test_details, stack: false))
     end
 
     def customize_inputs(builder)

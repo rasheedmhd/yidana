@@ -51,11 +51,11 @@
             <% table.fields.each do |name, field| %>
               <%
                 value = resource.send(name)
-                display_helper = field.display_helper
+                helper = field.helper
                 options = field.options
               %>
               <td class='text-truncate resource-table-cell-attr' style="max-width: <%= options[:max_width] %>px;">
-                <%= display_field value:, display_helper:, options: %>
+                <%= display_field value:, helper:, options: %>
               </td>
             <% end %>
 

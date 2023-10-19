@@ -10,7 +10,7 @@ module Pu
         @options = options
       end
 
-      def self.build(name, type:, options: {})
+      def self.build(name, type:, **options)
         multiple = options[:multiple]
 
         definition = {}
@@ -58,7 +58,7 @@ module Pu
         type ||= column.type
         options[:multiple] ||= column.array? if column.respond_to? :array?
 
-        build name, type:, options:
+        build name, type:, **options
       end
     end
   end

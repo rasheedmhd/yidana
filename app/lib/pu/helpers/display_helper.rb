@@ -3,24 +3,24 @@
 module Pu
   module Helpers
     module DisplayHelper
-      def display_field(value:, display_helper: nil, title: nil, options: {})
-        stack = options.key?(:stack) ? options[:stack] : display_helper != :display_name_of
+      def display_field(value:, helper: nil, title: nil, options: {})
+        stack = options.key?(:stack) ? options[:stack] : helper != :display_name_of
         if value.respond_to?(:each) && stack
           tag.ul class: 'list-unstyled' do
             value.each do |val|
-              rendered = display_field_value(value: val, display_helper:, title:)
+              rendered = display_field_value(value: val, helper:, title:)
               concat tag.li(rendered)
             end
           end
         else
-          rendered = display_field_value(value:, display_helper:, title:)
+          rendered = display_field_value(value:, helper:, title:)
           tag.span rendered
         end
       end
 
-      def display_field_value(value:, display_helper: nil, title: nil)
+      def display_field_value(value:, helper: nil, title: nil)
         title =  title != false ? title || value : nil
-        rendered = display_helper.present? ? send(display_helper, value) : value
+        rendered = helper.present? ? send(helper, value) : value
         tag.span rendered, title:
       end
 

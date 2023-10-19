@@ -60,14 +60,14 @@ module EntityResources
 
     def customize_fields(builder)
       %i[job_type job_role].each do |name|
-        builder.define_field(Pu::UI::Field.new(name, display_helper: :display_name_of))
+        builder.define_field(Pu::UI::Field.new(name, helper: :display_name_of))
       end
 
       %i[experience_level technologies].each do |name|
-        builder.define_field(Pu::UI::Field.new(name, display_helper: :display_name_of, stack: true))
+        builder.define_field(Pu::UI::Field.new(name, helper: :display_name_of, stack: true))
       end
 
-      builder.define_field(Pu::UI::Field.new(:description, display_helper: :display_clamped_quill))
+      builder.define_field(Pu::UI::Field.new(:description, helper: :display_clamped_quill))
     end
 
     def customize_inputs(builder)
