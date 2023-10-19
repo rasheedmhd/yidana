@@ -28,6 +28,8 @@ module Pu
                                :display_boolean_value
                              when :association
                                :display_association
+                             when :attachment
+                               :display_attachment
                              end
 
         # binary:      { name: "blob" },
@@ -41,15 +43,19 @@ module Pu
       end
 
       def self.for_attribute(model_class, name, type: nil, **options)
-        column = model_class.column_for_attribute name
+        column = model_class.column_for_attribute name if model_class.respond_to? :column_for_attribute
         attachment = model_class.reflect_on_attachment name if model_class.respond_to? :reflect_on_attachment
-        association = %i[belongs_to has_one].include?(model_class.reflect_on_association(name)&.macro)
+        association = model_class.reflect_on_association name if model_class.respond_to? :reflect_on_association
 
-        type ||= :file if attachment.present?
-        type ||= :association if association.present?
-        type ||= column.type
-
-        options[:stack] = column.array? if options[:stack].nil? && column.respond_to?(:array?)
+        if attachment.present?
+          type ||= :attachment
+          options[:stack] = true if options[:stack].nil? && attachment.macro == :has_many_attached
+        elsif association.present?
+          type ||= :association if %i[belongs_to has_one].include? association.macro
+        elsif column.present?
+          type ||= column.type
+          options[:stack] = column.array? if options[:stack].nil? && column.respond_to?(:array?)
+        end
 
         build name, type:, **options
       end

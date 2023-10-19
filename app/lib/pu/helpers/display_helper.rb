@@ -60,6 +60,10 @@ module Pu
       def display_clamped_quill(value)
         clamp quill(value)
       end
+
+      def display_attachment(value)
+        link_to value.blob.filename, value, target: :blank
+      end
     end
   end
 end

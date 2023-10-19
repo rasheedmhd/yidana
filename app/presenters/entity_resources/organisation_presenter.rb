@@ -66,12 +66,12 @@ module EntityResources
     end
 
     def detail_fields
-      %i[name headline description website_url company_type company_size industry country joel_test
+      %i[logo name headline description website_url company_type company_size industry country joel_test docs
          created_at updated_at]
     end
 
     def form_inputs
-      %i[entity_id name headline description website_url company_type company_size industry country joel_test]
+      %i[entity_id logo name headline description website_url company_type company_size industry country joel_test docs]
     end
 
     def associations_list
