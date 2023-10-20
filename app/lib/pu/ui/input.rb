@@ -44,6 +44,9 @@ module Pu
           end
         when :quill
           definition = { wrapper: :quill }
+        when :money
+          currency = options.delete(:currency) || '$'
+          definition = { wrapper: :input_group, prepend: currency }
         when :attachment
           type = :file
           definition = {
