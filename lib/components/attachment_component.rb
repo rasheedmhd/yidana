@@ -8,9 +8,9 @@ module AttachmentPreserver
       if value.respond_to?(:each)
         [
           @builder.hidden_field(attribute_name, multiple: true, value: attachment.signed_id),
-          template.content_tag(:p, 'Remove', class: 'text-danger',
-                                             role: :button,
-                                             data: { action: 'click->attachment#remove' })
+          template.content_tag(:p, class: 'text-danger', role: :button, data: { action: 'click->attachment#remove' }) do
+            template.content_tag :span, ' Delete', class: 'bi bi-trash'
+          end
         ]
       end
     end
