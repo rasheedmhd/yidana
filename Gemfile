@@ -77,6 +77,8 @@ group :development do
   gem 'awesome_print'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'guard', require: false
+  gem 'guard-rails', require: false
   gem 'htmlbeautifier'
   gem 'plutonium_generators', path: '/Users/stefan/code/plutonium/plutonium_generators'
   gem 'rubocop', require: false
