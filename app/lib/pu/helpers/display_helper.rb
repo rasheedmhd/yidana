@@ -72,13 +72,18 @@ module Pu
       end
 
       def display_single_attachment(attachment)
-        tag.div class: 'attachment d-inline-block text-center', title: attachment.blob.filename do
+        tag.div class: 'attachment d-inline-block text-center',
+                title: attachment.blob.filename,
+                data: { controller: :attachment } do
           tag.figure class: 'figure', style: 'width: 160px;' do
             concat display_attachment_representation(attachment)
             concat begin
               tag.figcaption class: 'figure-caption text-truncate' do
                 concat link_to(attachment.blob.filename, attachment, class: 'text-decoration-none', target: :blank)
-                concat yield(attachment) if block_given?
+                if block_given?
+                  elements = Array(yield attachment).compact
+                  elements.each { |elem| concat elem }
+                end
               end
             end
           end

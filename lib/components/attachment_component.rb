@@ -4,8 +4,15 @@ module AttachmentPreserver
   def attachment(_wrapper_options = nil)
     return unless value.present?
 
-    template.display_attachment value do |attachment|
-      @builder.hidden_field(attribute_name, multiple: true, value: attachment.signed_id) unless value.respond_to?(:each)
+    template.display_attachment(value) do |attachment|
+      if value.respond_to?(:each)
+        [
+          @builder.hidden_field(attribute_name, multiple: true, value: attachment.signed_id),
+          template.content_tag(:p, 'Remove', class: 'text-danger',
+                                             role: :button,
+                                             data: { action: 'click->attachment#remove' })
+        ]
+      end
     end
   end
 
