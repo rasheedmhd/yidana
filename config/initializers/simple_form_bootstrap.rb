@@ -107,6 +107,7 @@ SimpleForm.setup do |config|
     b.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
     b.use :full_error, wrap_with: { class: 'invalid-feedback' }
     b.use :hint, wrap_with: { class: 'form-text' }
+    b.optional :attachment
   end
 
   # vertical select input
@@ -215,6 +216,7 @@ SimpleForm.setup do |config|
       ba.use :full_error, wrap_with: { class: 'invalid-feedback' }
       ba.use :hint, wrap_with: { class: 'form-text' }
     end
+    b.optional :attachment
   end
 
   # horizontal select input

@@ -61,8 +61,43 @@ module Pu
         clamp quill(value)
       end
 
-      def display_attachment(value)
-        link_to value.blob.filename, value, target: :blank
+      def display_attachment(value, &block)
+        return display_single_attachment(value, &block) unless value.respond_to? :each
+
+        tag.div class: 'attachments d-flex flex-wrap gap-1 my-1' do
+          value.each do |attachment|
+            concat display_single_attachment(attachment, &block)
+          end
+        end
+      end
+
+      def display_single_attachment(attachment)
+        tag.div class: 'attachment d-inline-block text-center', title: attachment.blob.filename do
+          tag.figure class: 'figure', style: 'width: 160px;' do
+            concat display_attachment_representation(attachment)
+            concat begin
+              tag.figcaption class: 'figure-caption text-truncate' do
+                concat link_to(attachment.blob.filename, attachment, class: 'text-decoration-none', target: :blank)
+                concat yield(attachment) if block_given?
+              end
+            end
+          end
+        end
+      end
+
+      def display_attachment_representation(attachment)
+        if attachment.representable?
+          link_to attachment, target: :blank do
+            image_tag attachment.representation(resize_to_fill: [150, 150]), class: 'img-thumbnail'
+          end
+        else
+          tag.div class: 'd-inline-block img-thumbnail' do
+            filename = attachment.blob.filename.extension_with_delimiter
+            link_to filename, attachment, class: 'd-block text-decoration-none user-select-none fs-5 font-monospace text-body-secondary',
+                                          style: 'width:150px; height:150px; line-height: 150px;',
+                                          target: :blank
+          end
+        end
       end
     end
   end

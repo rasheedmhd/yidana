@@ -49,7 +49,7 @@ module Pu
 
         if attachment.present?
           type ||= :attachment
-          options[:stack] = true if options[:stack].nil? && attachment.macro == :has_many_attached
+          options[:stack] = false if options[:stack].nil?
         elsif association.present?
           type ||= :association if %i[belongs_to has_one].include? association.macro
         elsif column.present?

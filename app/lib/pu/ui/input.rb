@@ -50,7 +50,8 @@ module Pu
         when :attachment
           type = :file
           definition = {
-            input_html: { multiple: }
+            input_html: { multiple: },
+            attachment: true
           }
         end
 
