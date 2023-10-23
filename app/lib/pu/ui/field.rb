@@ -21,15 +21,15 @@ module Pu
                              when :string, :text, :citext
                                :display_url_value if name.ends_with? '_url'
                              when :integer, :float, :decimal
-                               :number_with_delimiter
+                               :display_numeric_value
                              when :datetime, :timestamp, :time, :date
                                :timeago
                              when :boolean
                                :display_boolean_value
                              when :association
-                               :display_association
+                               :display_association_value
                              when :attachment
-                               :display_attachment
+                               :display_attachment_value
                              end
 
         # binary:      { name: "blob" },
