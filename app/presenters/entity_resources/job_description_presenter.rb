@@ -64,7 +64,7 @@ module EntityResources
       end
 
       %i[experience_level technologies].each do |name|
-        builder.define_field(Pu::UI::Field.new(name, helper: :display_name_of, stack: true))
+        builder.define_field(Pu::UI::Field.new(name, helper: :display_name_of, stack_multiple: true))
       end
 
       builder.define_field(Pu::UI::Field.new(:description, helper: :display_clamped_quill))

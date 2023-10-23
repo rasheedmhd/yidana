@@ -3,24 +3,32 @@
 module Pu
   module Helpers
     module DisplayHelper
-      def display_field(value:, helper: nil, title: nil, options: {})
-        stack = options.key?(:stack) ? options[:stack] : helper != :display_name_of
-        if value.respond_to?(:each) && stack
+      def display_field(value:, helper: nil, **options)
+        stack_multiple = options.key?(:stack_multiple) ? options.delete(:stack_multiple) : helper != :display_name_of
+
+        # clean options list
+        options.select! { |k, _v| !k.starts_with? 'pu_' }
+
+        if value.respond_to?(:each) && stack_multiple
           tag.ul class: 'list-unstyled m-0' do
             value.each do |val|
-              rendered = display_field_value(value: val, helper:, title:)
+              rendered = display_field_value(value: val, helper:, **options)
               concat tag.li(rendered)
             end
           end
         else
-          rendered = display_field_value(value:, helper:, title:)
+          rendered = display_field_value(value:, helper:, **options)
           tag.span rendered
         end
       end
 
-      def display_field_value(value:, helper: nil, title: nil)
+      def display_datetime_value(value)
+        timeago value
+      end
+
+      def display_field_value(value:, helper: nil, title: nil, **options)
         title =  title != false ? title || value : nil
-        rendered = helper.present? ? send(helper, value) : value
+        rendered = helper.present? ? send(helper, value, **options) : value
         tag.span rendered, title:
       end
 
@@ -41,7 +49,7 @@ module Pu
         link_to nil, value, class: 'text-decoration-none', target: :blank
       end
 
-      def display_name_of(obj, separator = ', ')
+      def display_name_of(obj, separator: ', ')
         return unless obj.present?
 
         # If this is an array, display for each

@@ -23,7 +23,7 @@ module Pu
                              when :integer, :float, :decimal
                                :display_numeric_value
                              when :datetime, :timestamp, :time, :date
-                               :timeago
+                               :display_datetime_value
                              when :boolean
                                :display_boolean_value
                              when :association
@@ -36,8 +36,8 @@ module Pu
         # blob:        { name: "blob" },
         # json:        { name: "json" },
 
-        options[:max_width] ||= 400 if %i[string text citext].include? type
-        options[:max_width] ||= 250
+        options[:pu_max_width] ||= 400 if %i[string text citext].include? type
+        options[:pu_max_width] ||= 250
 
         new name, **options
       end
@@ -49,12 +49,12 @@ module Pu
 
         if attachment.present?
           type ||= :attachment
-          options[:stack] = false if options[:stack].nil?
+          options[:stack_multiple] = false if options[:stack_multiple].nil?
         elsif association.present?
           type ||= :association if %i[belongs_to has_one].include? association.macro
         elsif column.present?
           type ||= column.type
-          options[:stack] = column.array? if options[:stack].nil? && column.respond_to?(:array?)
+          options[:stack_multiple] = column.array? if options[:stack_multiple].nil? && column.respond_to?(:array?)
         end
 
         build name, type:, **options

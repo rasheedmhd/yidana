@@ -85,7 +85,7 @@ module EntityResources
 
       builder
         .define_field(Pu::UI::Field.new(:description, helper: :display_clamped_quill))
-        .define_field(Pu::UI::Field.new(:joel_test, helper: :joel_test_details, stack: false))
+        .define_field(Pu::UI::Field.new(:joel_test, helper: :joel_test_details, stack_multiple: false))
     end
 
     def customize_inputs(builder)
