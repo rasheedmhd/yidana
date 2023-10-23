@@ -53,7 +53,7 @@ module Pu
         return unless obj.present?
 
         # If this is an array, display for each
-        return obj.map { |i| display_name_of i }.join(separator) if obj.is_a? Array
+        return obj.map { |i| display_name_of i, separator: }.join(separator) if obj.is_a? Array
 
         # Fallback to retrieving the value from a predefined list
         name_method = nil
