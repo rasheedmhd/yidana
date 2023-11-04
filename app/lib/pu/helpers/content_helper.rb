@@ -58,7 +58,7 @@ module Pu
         )
       end
 
-      def clamp(content)
+      def clamp_content(content)
         return if content.blank?
 
         tag.div content, class: 'clamped-content'

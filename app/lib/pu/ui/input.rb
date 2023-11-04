@@ -51,7 +51,8 @@ module Pu
           type = :file
           definition = {
             input_html: { multiple: },
-            attachment: true
+            attachment: true,
+            direct_upload: true
           }
         end
 
@@ -62,13 +63,15 @@ module Pu
 
       def self.for_attribute(model_class, name, type: nil, **options)
         column = model_class.column_for_attribute name if model_class.respond_to? :column_for_attribute
-        attachment = model_class.reflect_on_attachment name if model_class.respond_to? :reflect_on_attachment
+        if model_class.respond_to? :reflect_on_association
+          attachment = model_class.reflect_on_association(:"#{name}_attachment") || model_class.reflect_on_association(:"#{name}_attachments")
+        end
 
         type ||= :slim_select if options.key? :collection
 
         if attachment.present?
           type ||= :attachment
-          options[:multiple] = true if options[:multiple].nil? && attachment.macro == :has_many_attached
+          options[:multiple] = true if options[:multiple].nil? && attachment.macro == :has_many
         elsif column.present?
           type ||= column.type
           options[:multiple] = column.array? if options[:multiple].nil? && column.respond_to?(:array?)

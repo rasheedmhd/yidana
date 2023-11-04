@@ -30,6 +30,7 @@
 #
 class Organisation < ApplicationRecord
   include Slugged
+  include ShrineStorage::Model
 
   serialize :company_type, CompanyType
   serialize :company_size, CompanySize

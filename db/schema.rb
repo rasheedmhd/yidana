@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_19_044421) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_28_024441) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -101,6 +101,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_19_044421) do
     t.datetime "updated_at", null: false
     t.index ["entity_id"], name: "index_organisations_on_entity_id"
     t.index ["slug"], name: "index_organisations_on_slug"
+  end
+
+  create_table "shrine_attachments", force: :cascade do |t|
+    t.string "record_type"
+    t.bigint "record_id"
+    t.string "name", null: false
+    t.string "type", default: "ShrineAttachment", null: false
+    t.jsonb "file_data", null: false
+    t.jsonb "metadata", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["file_data"], name: "index_shrine_attachments_on_file_data", using: :gin
+    t.index ["metadata"], name: "index_shrine_attachments_on_metadata", using: :gin
+    t.index ["name"], name: "index_shrine_attachments_on_name"
+    t.index ["record_type", "record_id"], name: "index_shrine_attachments_on_record"
   end
 
   create_table "user_login_change_keys", force: :cascade do |t|

@@ -43,9 +43,12 @@ module Pu
       end
 
       def self.for_attribute(model_class, name, type: nil, **options)
+        association = attachment = nil
         column = model_class.column_for_attribute name if model_class.respond_to? :column_for_attribute
-        attachment = model_class.reflect_on_attachment name if model_class.respond_to? :reflect_on_attachment
-        association = model_class.reflect_on_association name if model_class.respond_to? :reflect_on_association
+        if model_class.respond_to? :reflect_on_association
+          association = model_class.reflect_on_association name
+          attachment = model_class.reflect_on_association(:"#{name}_attachment") || model_class.reflect_on_association(:"#{name}_attachments")
+        end
 
         if attachment.present?
           type ||= :attachment

@@ -104,10 +104,14 @@ SimpleForm.setup do |config|
     b.optional :minlength
     b.optional :readonly
     b.use :label, class: 'form-label'
-    b.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
-    b.use :full_error, wrap_with: { class: 'invalid-feedback' }
-    b.use :hint, wrap_with: { class: 'form-text' }
-    b.optional :attachment
+    b.wrapper tag: 'div', html: { style: 'display: flex; flex-direction: column-reverse;' } do |ba|
+      ba.optional :attachment
+      ba.wrapper tag: 'div' do |bc|
+        bc.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
+        bc.use :full_error, wrap_with: { class: 'invalid-feedback' }
+        bc.use :hint, wrap_with: { class: 'form-text' }
+      end
+    end
   end
 
   # vertical select input
@@ -211,12 +215,14 @@ SimpleForm.setup do |config|
     b.optional :minlength
     b.optional :readonly
     b.use :label, class: 'col-sm-3 col-form-label'
-    b.wrapper :grid_wrapper, class: 'col-sm-9' do |ba|
-      ba.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
-      ba.use :full_error, wrap_with: { class: 'invalid-feedback' }
-      ba.use :hint, wrap_with: { class: 'form-text' }
+    b.wrapper tag: 'div', html: { style: 'display: flex; flex-direction: column-reverse;' } do |ba|
+      ba.optional :attachment
+      ba.wrapper :grid_wrapper, class: 'col-sm-9' do |bc|
+        bc.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
+        bc.use :full_error, wrap_with: { class: 'invalid-feedback' }
+        bc.use :hint, wrap_with: { class: 'form-text' }
+      end
     end
-    b.optional :attachment
   end
 
   # horizontal select input

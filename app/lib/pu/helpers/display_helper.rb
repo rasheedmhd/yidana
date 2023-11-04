@@ -70,17 +70,13 @@ module Pu
       end
 
       def display_clamped_quill(value)
-        clamp quill(value)
+        clamp_content quill(value)
       end
 
-      def display_attachment_value(value, &block)
+      def display_attachment_value(value, **options, &block)
         return unless value&.attached?
 
-        if value.respond_to? :each
-          display_attachments(value, &block)
-        else
-          display_attachment(value, &block)
-        end
+        attachment_preview(value, **options, &block)
       end
     end
   end

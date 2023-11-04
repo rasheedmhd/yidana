@@ -3,6 +3,9 @@
 @import "./quill.bootstrap";
 @import "./slim-select.bootstrap";
 @import "./dashboard";
+@import "@uppy/core/dist/style.min";
+@import "@uppy/dashboard/dist/style.min";
+@import "@uppy/image-editor/dist/style.min";
 
 html {
   height: -webkit-fill-available;
