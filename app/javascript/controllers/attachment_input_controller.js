@@ -119,7 +119,7 @@ export default class extends Controller {
     if (!this.deleteAllTrigger) return;
 
     const len = this.attachmentPreviewOutlets.length
-    if (len > 0) {
+    if (len > 1) {
       this.deleteAllTrigger.style["display"] = 'initial'
       this.deleteAllTrigger.textContent = `Delete ${this.attachmentPreviewOutlets.length}`
     }
