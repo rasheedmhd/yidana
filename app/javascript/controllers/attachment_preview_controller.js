@@ -14,7 +14,7 @@ export default class extends Controller {
     mime.icon.style["height"] = "70%"
     mime.icon.style["width"] = "60%"
     mime.icon.style["background-color"] = "white"
-    mime.icon.classList.add("rounded")
+    mime.icon.classList.add("rounded", "shadow-lg")
 
     if (this.hasThumbnailTarget) {
       this.thumbnailTarget.style["background-color"] = mime.color
