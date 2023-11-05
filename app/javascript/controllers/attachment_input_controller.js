@@ -36,7 +36,7 @@ export default class extends Controller {
     this.configureUppy()
 
     // build trigger
-    this.buildTrigger()
+    this.buildTriggers()
   }
 
   disconnect() {
@@ -116,37 +116,52 @@ export default class extends Controller {
   }
 
   onAttachmentsChanged() {
-    if (!this.deleteElem) return;
+    if (!this.deleteAllTrigger) return;
 
     const len = this.attachmentPreviewOutlets.length
     if (len > 0) {
-      this.deleteElem.style["display"] = 'initial'
-      this.deleteElem.textContent = `Delete ${this.attachmentPreviewOutlets.length}`
+      this.deleteAllTrigger.style["display"] = 'initial'
+      this.deleteAllTrigger.textContent = `Delete ${this.attachmentPreviewOutlets.length}`
     }
     else {
-      this.deleteElem.style["display"] = 'none'
+      this.deleteAllTrigger.style["display"] = 'none'
     }
   }
 
   //======= Builders
 
-  buildTrigger() {
+  buildTriggers() {
+    this.triggerContainer = document.createElement("div")
+    this.triggerContainer.classList.add("mb-2")
+    this.element.insertAdjacentElement('afterend', this.triggerContainer)
+
+    this.buildUploadTrigger()
+    this.buildDeleteAllTrigger()
+
+    if (this.uploadTrigger) this.triggerContainer.append(this.uploadTrigger)
+    if (this.deleteAllTrigger) this.triggerContainer.append(this.deleteAllTrigger)
+  }
+
+  buildUploadTrigger() {
     const triggerPrompt = this.multiple ? "Choose files" : "Choose file"
-    this.triggerElem = DomElement.fromTemplate(
+    this.uploadTrigger = DomElement.fromTemplate(
       `<button type="button" class="attachment-input-trigger btn btn-outline-secondary">${triggerPrompt}</button>`,
       false
     )
-    this.triggerElem.addEventListener('click', this.onModalTriggered.bind(this))
-    this.element.insertAdjacentElement('afterend', this.triggerElem)
+    this.uploadTrigger.addEventListener('click', this.onModalTriggered.bind(this))
 
-    this.deleteElem = DomElement.fromTemplate(
+  }
+
+
+  buildDeleteAllTrigger() {
+    this.deleteAllTrigger = DomElement.fromTemplate(
       `<button type="button" class="attachment-input-trigger btn btn-outline-danger mx-1">Delete ${this.attachmentPreviewOutlets.length}</button>`,
       false
     )
-    this.deleteElem.addEventListener('click', () => {
+    this.deleteAllTrigger.addEventListener('click', () => {
       if (confirm('Are you sure?')) this.attachmentPreviewContainerOutlet.clear()
     })
-    this.triggerElem.insertAdjacentElement('afterend', this.deleteElem)
+    this.onAttachmentsChanged()
   }
 
   buildPreview(data, url) {

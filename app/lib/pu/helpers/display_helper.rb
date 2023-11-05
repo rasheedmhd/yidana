@@ -74,8 +74,6 @@ module Pu
       end
 
       def display_attachment_value(value, **options, &block)
-        return unless value&.attached?
-
         attachment_preview(value, **options, &block)
       end
     end
