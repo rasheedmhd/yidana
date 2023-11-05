@@ -62,5 +62,10 @@ Rails.application.routes.draw do
     # pu:routes:entity
   end
 
+  constraints Rodauth::Rails.authenticate(:user) do
+    # pu:routes:shrine
+    mount Shrine.upload_endpoint(:cache) => '/upload'
+  end
+
   ## pu:end routes
 end

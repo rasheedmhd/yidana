@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+using Pu::Refinements::ParameterRefinements
+
 class ResourceController < ApplicationController
   include CurrentUser
   include Pundit::Authorization
@@ -131,7 +133,7 @@ class ResourceController < ApplicationController
 
   # GET /resources/1/:custom_action
   def custom_action
-    @action = custom_actions[params[:custom_action]&.to_sym]
+    @action = custom_actions[params[:custom_action].to_sym]
     @interaction = @action.interaction.new resource: resource_record
 
     if helpers.current_turbo_frame == 'modal'
@@ -143,7 +145,7 @@ class ResourceController < ApplicationController
 
   # POST /resources/1/:custom_action(.{format})
   def commit_custom_action
-    @action = custom_actions[params[:custom_action]&.to_sym]
+    @action = custom_actions[params[:custom_action].to_sym]
 
     respond_to do |format|
       inputs = (params[:resource] || {}).merge(resource: resource_record)
@@ -234,7 +236,7 @@ class ResourceController < ApplicationController
     form_params = params.require(resource_param_key).permit!.slice(*permitted_attributes)
     form_params[parent_param_key] = current_parent.id if current_parent.present?
 
-    form_params
+    form_params.nilify
   end
 
   def resource_param_key

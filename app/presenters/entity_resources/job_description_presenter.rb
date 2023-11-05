@@ -60,21 +60,21 @@ module EntityResources
 
     def customize_fields(builder)
       %i[job_type job_role].each do |name|
-        builder.define_field(Pu::UI::Field.new(name, display_helper: :display_name_of))
+        builder.define_field(Pu::UI::Field.new(name, helper: :display_name_of))
       end
 
       %i[experience_level technologies].each do |name|
-        builder.define_field(Pu::UI::Field.new(name, display_helper: :display_name_of, stack: true))
+        builder.define_field(Pu::UI::Field.new(name, helper: :display_name_of, stack_multiple: true))
       end
 
-      builder.define_field(Pu::UI::Field.new(:description, display_helper: :display_clamped_quill))
+      builder.define_field(Pu::UI::Field.new(:description, helper: :display_clamped_quill))
     end
 
     def customize_inputs(builder)
       builder
         .define_input(Pu::UI::Input.build(:description, type: :quill))
-        .define_input(Pu::UI::Input.new(:minimum_annual_salary, wrapper: :input_group, prepend: '$'))
-        .define_input(Pu::UI::Input.new(:maximum_annual_salary, wrapper: :input_group, prepend: '$'))
+        .define_input(Pu::UI::Input.build(:minimum_annual_salary, type: :money))
+        .define_input(Pu::UI::Input.build(:maximum_annual_salary, type: :money))
         .define_input(Pu::UI::Input.new(:job_type, collection: JobType.collection, as: :radio_buttons))
         .define_input(Pu::UI::Input.for_attribute(JobDescription, :job_role, collection: JobRole.collection))
         .define_input(Pu::UI::Input.for_attribute(JobDescription, :technologies, collection: Technology.collection))

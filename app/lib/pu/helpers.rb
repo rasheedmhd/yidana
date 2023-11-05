@@ -12,6 +12,7 @@ module Pu
         include Pu::Helpers::PaginationHelper
         include Pu::Helpers::DisplayHelper
         include Pu::Helpers::TurboHelper
+        include Pu::Helpers::AttachmentHelper
       end
     end
   end

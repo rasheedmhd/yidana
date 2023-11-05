@@ -16,12 +16,15 @@ gem 'sidekiq-failures'
 
 gem 'active_interaction'
 gem 'bullet', group: 'development'
+gem 'fastimage'
+gem 'mime-types'
 gem 'oj'
 gem 'pagy'
 gem 'pundit'
 gem 'rabl'
 gem 'ransack'
 gem 'rodauth-rails'
+gem 'shrine'
 gem 'simple_form'
 gem 'strong_migrations'
 
@@ -62,7 +65,7 @@ gem 'bootsnap', require: false
 # gem "sassc-rails"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem 'image_processing', '~> 1.2'
 
 group :development, :test do
   gem 'factory_bot_rails'
@@ -77,6 +80,8 @@ group :development do
   gem 'awesome_print'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'guard', require: false
+  gem 'guard-rails', require: false
   gem 'htmlbeautifier'
   # gem 'plutonium_generators'
   # path: '/Users/stefan/code/plutonium/plutonium_generators'

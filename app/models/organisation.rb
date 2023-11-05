@@ -31,6 +31,7 @@
 #
 class Organisation < ApplicationRecord
   include Slugged
+  include ShrineStorage::Model
 
   serialize :company_type, CompanyType
   serialize :company_size, CompanySize
@@ -41,6 +42,9 @@ class Organisation < ApplicationRecord
   belongs_to :entity
 
   has_many :job_descriptions
+
+  has_one_attached :logo
+  has_many_attached :docs
 
   before_validation :clean_up_lists
   before_validation :maybe_set_slug

@@ -66,12 +66,12 @@ module EntityResources
     end
 
     def detail_fields
-      %i[name headline description website_url company_type company_size industry country joel_test
+      %i[logo name headline description website_url company_type company_size industry country joel_test docs
          created_at updated_at]
     end
 
     def form_inputs
-      %i[entity_id name headline description website_url company_type company_size industry country joel_test]
+      %i[entity_id logo name headline description website_url company_type company_size industry country joel_test docs]
     end
 
     def associations_list
@@ -80,12 +80,12 @@ module EntityResources
 
     def customize_fields(builder)
       %i[industry company_size company_type country].each do |name|
-        builder.define_field(Pu::UI::Field.new(name, display_helper: :display_name_of))
+        builder.define_field(Pu::UI::Field.new(name, helper: :display_name_of))
       end
 
       builder
-        .define_field(Pu::UI::Field.new(:description, display_helper: :display_clamped_quill))
-        .define_field(Pu::UI::Field.new(:joel_test, display_helper: :joel_test_details, stack: false))
+        .define_field(Pu::UI::Field.new(:description, helper: :display_clamped_quill))
+        .define_field(Pu::UI::Field.new(:joel_test, helper: :joel_test_details, stack_multiple: false))
     end
 
     def customize_inputs(builder)

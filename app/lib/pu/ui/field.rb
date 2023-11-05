@@ -3,12 +3,12 @@
 module Pu
   module UI
     class Field
-      attr_reader :name, :label, :display_helper, :options
+      attr_reader :name, :label, :helper, :options
 
-      def initialize(name, label: nil, display_helper: nil, **options)
+      def initialize(name, **options)
         @name = name
-        @label = label
-        @display_helper = display_helper
+        @label = options.delete :label
+        @helper = options.delete :helper
         @options = options
       end
 
@@ -16,36 +16,51 @@ module Pu
         @label ||= name.to_s.titleize(keep_id_suffix: true)
       end
 
-      def self.for_attribute(model_class, name, label: nil, options: {})
-        column = model_class.columns_hash[name.to_s]
+      def self.build(name, type:, **options)
+        options[:helper] ||= case type
+                             when :string, :text, :citext
+                               :display_url_value if name.ends_with? '_url'
+                             when :integer, :float, :decimal
+                               :display_numeric_value
+                             when :datetime, :timestamp, :time, :date
+                               :display_datetime_value
+                             when :boolean
+                               :display_boolean_value
+                             when :association
+                               :display_association_value
+                             when :attachment
+                               :display_attachment_value
+                             end
 
-        display_helper = nil
+        # binary:      { name: "blob" },
+        # blob:        { name: "blob" },
+        # json:        { name: "json" },
 
-        if %i[belongs_to has_one].include?(model_class.reflect_on_association(name)&.macro)
-          display_helper = :display_association
-        else
-          type = column.type
-          case type
-          when :string, :text, :citext
-            options[:max_width] ||= 400
-            display_helper = :display_url_value if name.ends_with? '_url'
-          when :integer, :float, :decimal
-            display_helper = :number_with_delimiter
-          when :datetime, :timestamp, :time, :date
-            display_helper = :timeago
-          when :boolean
-            display_helper = :display_boolean_value
-          end
+        options[:pu_max_width] ||= 400 if %i[string text citext].include? type
+        options[:pu_max_width] ||= 250
 
-          # binary:      { name: "blob" },
-          # blob:        { name: "blob" },
-          # json:        { name: "json" },
-          options[:stack] = column.array? if options[:stack].nil?
+        new name, **options
+      end
+
+      def self.for_attribute(model_class, name, type: nil, **options)
+        association = attachment = nil
+        column = model_class.column_for_attribute name if model_class.respond_to? :column_for_attribute
+        if model_class.respond_to? :reflect_on_association
+          association = model_class.reflect_on_association name
+          attachment = model_class.reflect_on_association(:"#{name}_attachment") || model_class.reflect_on_association(:"#{name}_attachments")
         end
 
-        options[:max_width] = 250 if options[:max_width].nil?
+        if attachment.present?
+          type ||= :attachment
+          options[:stack_multiple] = false if options[:stack_multiple].nil?
+        elsif association.present?
+          type ||= :association if %i[belongs_to has_one].include? association.macro
+        elsif column.present?
+          type ||= column.type
+          options[:stack_multiple] = column.array? if options[:stack_multiple].nil? && column.respond_to?(:array?)
+        end
 
-        new name, label:, display_helper:, **options
+        build name, type:, **options
       end
     end
   end
