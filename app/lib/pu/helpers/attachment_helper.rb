@@ -8,6 +8,8 @@ module Pu
           tag.div class: [options[:identity_class], 'attachment-preview-container d-flex flex-wrap gap-1 my-1'],
                   data: { controller: 'attachment-preview-container' } do
             Array(attachments).each do |attachment|
+            	next unless attachment.file.present?
+
               concat begin
                 tag.div class: [options[:identity_class], 'attachment-preview d-inline-block text-center'],
                         title: attachment.file.original_filename,
@@ -36,6 +38,8 @@ module Pu
       end
 
       def attachment_preview_thumnail(attachment)
+      	return unless attachment.file.present?
+
         # Any changes made here must be reflected in attachment_input_controller#buildPreviewTemplate
 
         if false && true # false && attachment.representable?

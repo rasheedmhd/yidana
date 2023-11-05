@@ -15,7 +15,7 @@ module ShrineStorage
       end
 
       def attachments
-        ShrineStorage::Attachment.none
+        ShrineAttachment.none
       end
 
       def save

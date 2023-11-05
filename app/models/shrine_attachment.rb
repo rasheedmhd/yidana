@@ -32,7 +32,7 @@ class ShrineAttachment < ApplicationRecord
   before_save :maybe_store_record
 
   def signed_id
-    value = ({ id:, file: file.to_json } if file.present?) || {}
+    value = ({ id:, file: file.to_json, unsafe: metadata['unsafe'] } if file.present?) || {}
     Rails.application.message_verifier(:attachment).generate value
   end
 
@@ -41,13 +41,21 @@ class ShrineAttachment < ApplicationRecord
 
     # Handle value set from form
     if value.is_a?(String)
-      metadata['unsafe'] = true
-      value = JSON.parse value
+			begin
+			  metadata['unsafe'] = true
+			  value = JSON.parse value
+			rescue JSON::ParserError
+				unsigned = Rails.application.message_verifier(:attachment).verify value
+				value = unsigned[:file]
+				metadata['unsafe'] = unsigned['unsafe']
+			end
     else
       metadata.delete 'unsafe'
     end
 
     super(value)
+  rescue ActiveSupport::MessageVerifier::InvalidSignature
+  	errors.add(:file, 'is invalid')
   end
 
   def purge
