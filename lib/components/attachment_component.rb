@@ -65,7 +65,7 @@ module AttachmentComponent
       min_file_num: nil,
       allowed_file_types: nil,
       required_meta_fields: nil
-    }.compact.each do |key, default_value|
+    }.each do |key, default_value|
       value = options.key?(key) ? options.delete(key) : default_value
       direct_upload_options[:data][:"attachment_input_#{key}_value"] = value
     end
