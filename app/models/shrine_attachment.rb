@@ -41,21 +41,21 @@ class ShrineAttachment < ApplicationRecord
 
     # Handle value set from form
     if value.is_a?(String)
-			begin
-			  metadata['unsafe'] = true
-			  value = JSON.parse value
-			rescue JSON::ParserError
-				unsigned = Rails.application.message_verifier(:attachment).verify value
-				value = unsigned[:file]
-				metadata['unsafe'] = unsigned['unsafe']
-			end
+      begin
+        metadata['unsafe'] = true
+        value = JSON.parse value
+      rescue JSON::ParserError
+        unsigned = Rails.application.message_verifier(:attachment).verify value
+        value = unsigned[:file]
+        metadata['unsafe'] = unsigned['unsafe']
+      end
     else
       metadata.delete 'unsafe'
     end
 
     super(value)
   rescue ActiveSupport::MessageVerifier::InvalidSignature
-  	errors.add(:file, 'is invalid')
+    errors.add(:file, 'is invalid')
   end
 
   def purge
@@ -70,6 +70,14 @@ class ShrineAttachment < ApplicationRecord
   rescue NoMethodError
     raise NotImplementedError, ('You need to enable Shrine backgrounding to use purge_later: ' \
                                 'https://shrinerb.com/docs/plugins/backgrounding')
+  end
+
+  def representable?
+    %r{image/.*}.match? file.mime_type
+  end
+
+  def thumbnail_url
+    file_url if representable?
   end
 
   private

@@ -185,9 +185,12 @@ export default class extends Controller {
 
   buildPreviewTemplate(filename, extension, mimeType, url) {
     // Any changes made here must be reflected in attachment_helper#attachment_preview_thumnail
+
+    const thumbnailUrl = /image\/*/.test(mimeType) ? url : null;
     return `
       <div class="${this.identifierValue} attachment-preview d-inline-block text-center" title="${filename}"
-            data-controller="attachment-preview" data-attachment-preview-mime-type-value="${mimeType}">
+            data-controller="attachment-preview" data-attachment-preview-mime-type-value="${mimeType}"
+            data-attachment-preview-thumbnail-url-value="${thumbnailUrl}">
           <figure class="figure my-1" style="width: 160px;">
               <div class="d-inline-block img-thumbnail" data-attachment-preview-target="thumbnail">
                 <a class="d-block text-decoration-none user-select-none fs-5 font-monospace text-body-secondary"
