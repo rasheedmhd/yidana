@@ -1,9 +1,25 @@
-<% unless rodauth(:user).login_form_footer_links.empty? %>
-  <%== rodauth(:user).login_form_footer_links_heading %>
+<%
+  login_form_footer_links = rodauth(:user).login_form_footer_links.reject do |link|
+    next true if rodauth(:user).respond_to?(:create_account_route) && link[1].include?(rodauth(:user).create_account_route)
+    next true if rodauth(:user).respond_to?(:reset_password_request_route) && link[1].include?(rodauth(:user).reset_password_request_route)
+  end
+%>
 
-  <ul>
-    <% rodauth(:user).login_form_footer_links.sort.each do |_, link, text| %>
-      <li><%= link_to text, link %></li>
+<% if rodauth(:user).respond_to?(:create_account_route) %>
+  <div class="mt-4">
+    Don't have an account?
+    <%= link_to "Sign Up", rodauth(:user).create_account_route, class: 'text-decoration-none' %>
+  </div>
+<% end %>
+
+<% unless login_form_footer_links.empty? %>
+  <hr class="mx-auto my-4 w-75" />
+
+  <%#== rodauth(:user).login_form_footer_links_heading %>
+
+  <ul class="list-unstyled">
+    <% login_form_footer_links.sort.each do |_, link, text| %>
+      <li><%= link_to text, link, class: 'text-decoration-none' %></li>
     <% end %>
   </ul>
 <% end %>

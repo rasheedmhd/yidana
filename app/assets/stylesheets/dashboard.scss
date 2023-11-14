@@ -43,7 +43,11 @@
   max-height: 75vh;
 }
 
-//# Pagination
+.min-vh-75 {
+  min-height: 75vh;
+}
+
+// Pagination
 
 .pagy-bootstrap-nav {
   display: inline-block !important;
@@ -75,4 +79,10 @@
 .clamped-content::-webkit-scrollbar {
   width: 8px;
   height: 10px;
+}
+
+// color modes
+
+.color-mode-separator {
+  height: 120px;
 }
