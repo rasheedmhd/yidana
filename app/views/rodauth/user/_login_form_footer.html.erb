@@ -1,14 +1,14 @@
 <%
   login_form_footer_links = rodauth(:user).login_form_footer_links.reject do |link|
-    next true if rodauth(:user).respond_to?(:create_account_route) && link[1].include?(rodauth(:user).create_account_route)
-    next true if rodauth(:user).respond_to?(:reset_password_request_route) && link[1].include?(rodauth(:user).reset_password_request_route)
+    next true if rodauth(:user).try(:create_account_path) == link[1]
+    next true if rodauth(:user).try(:reset_password_request_path) == link[1]
   end
 %>
 
-<% if rodauth(:user).respond_to?(:create_account_route) %>
+<% if rodauth(:user).respond_to?(:create_account_path) %>
   <div class="mt-4">
     Don't have an account?
-    <%= link_to "Sign Up", rodauth(:user).create_account_route, class: 'text-decoration-none' %>
+    <%= link_to "Sign Up", rodauth(:user).reset_password_request_path, class: 'text-decoration-none' %>
   </div>
 <% end %>
 

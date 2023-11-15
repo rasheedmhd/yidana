@@ -26,9 +26,9 @@
           <label for="formCheck" class="form-check-label text-secondary"><small>Remember Me</small></label> %>
       </div>
       <div>
-          <% if rodauth(:user).respond_to?(:reset_password_request_route) %>
+          <% if (reset_password_request_path = rodauth(:user).try(:reset_password_request_path)) %>
             <small>
-              <%= link_to "Forgot Password?", rodauth(:user).reset_password_request_route, class: 'text-decoration-none' %>
+              <%= link_to "Forgot Password?", reset_password_request_path, class: 'text-decoration-none' %>
             </small>
           <% end %>
       </div>
