@@ -20,7 +20,21 @@
     </div>
   <% end %>
 
+  <div class="input-group mb-4 d-flex justify-content-between">
+      <div>
+          <%# <input type="checkbox" class="form-check-input" id="formCheck">
+          <label for="formCheck" class="form-check-label text-secondary"><small>Remember Me</small></label> %>
+      </div>
+      <div>
+          <% if (reset_password_request_path = rodauth(:user).try(:reset_password_request_path)) %>
+            <small>
+              <%= link_to "Forgot Password?", reset_password_request_path, class: 'text-decoration-none' %>
+            </small>
+          <% end %>
+      </div>
+  </div>
+
   <div class="form-group mb-3">
-    <%= form.submit rodauth(:user).login_button, class: "btn btn-primary" %>
+    <%= form.submit rodauth(:user).login_button, class: "btn btn-lg btn-primary w-100 fs-6" %>
   </div>
 <% end %>

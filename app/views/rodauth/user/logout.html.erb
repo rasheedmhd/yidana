@@ -1,14 +1,43 @@
-<%= form_with url: rodauth(:user).logout_path, method: :post, data: { turbo: false } do |form| %>
-  <% if rodauth(:user).features.include?(:active_sessions) %>
-    <div class="form-group mb-3">
-      <div class="form-check">
-        <%= form.check_box rodauth(:user).global_logout_param, id: "global-logout", class: "form-check-input", include_hidden: false %>
-        <%= form.label "global-logout", rodauth(:user).global_logout_label, class: "form-check-label" %>
+<% content_for :head do %>
+  <style>
+    .color-mode-separator {
+      display: none;
+    }
+  </style>
+<% end %>
+
+<% content_for(:header) do %>
+  &nbsp;
+<% end  %>
+
+<% content_for :content do %>
+    <div class="container-md py-5 px-4 d-flex justify-content-center flex-column min-vh-100">
+      <div class="row border rounded-3 p-3 shadow">
+        <div class="col-md-12 py-4 px-5">
+          <div class="row text-center">
+          <p>Are you sure you want to log out of your account?</p>
+            <%= form_with url: rodauth(:user).logout_path, method: :post, data: { turbo: false } do |form| %>
+              <% if rodauth(:user).features.include?(:active_sessions) %>
+                <div class="form-group mb-3">
+                  <div class="form-check">
+                    <%= form.check_box rodauth(:user).global_logout_param, id: "global-logout", class: "form-check-input", include_hidden: false %>
+                    <%= form.label "global-logout", rodauth(:user).global_logout_label, class: "form-check-label" %>
+                  </div>
+                </div>
+              <% end %>
+
+              <div class="form-group">
+                <%= form.submit rodauth(:user).logout_button, class: "btn btn-lg btn-warning w-50 fs-6" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+          <nav class="nav justify-content-center">
+            <%= link_to 'Home', root_path, class: 'nav-link'  %>
+            <%= link_to 'Dashboard', dashboard_path, class: 'nav-link'  %>
+          </nav>
       </div>
     </div>
-  <% end %>
-
-  <div class="form-group mb-3">
-    <%= form.submit rodauth(:user).logout_button, class: "btn btn-warning" %>
-  </div>
 <% end %>

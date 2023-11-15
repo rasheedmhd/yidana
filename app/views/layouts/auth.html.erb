@@ -1,38 +1,45 @@
 <% content_for :head do %>
   <style>
-    html, body {
-      height: 100%;
-    }
-
-    .form {
-      max-width: 350px;
-      padding: 1rem;
-    }
-
-    .form .form-floating:focus-within {
-      z-index: 2;
-    }
-
-    .form input[type="email"] {
-      margin-bottom: -1px;
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-
-    .form input[type="password"] {
-      margin-bottom: 10px;
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
+    .color-mode-separator {
+      display: none;
     }
   </style>
 <% end %>
 
+<% content_for(:header) do %>
+  &nbsp;
+<% end  %>
+
 <% content_for :content do %>
-  <div class="d-flex align-items-center py-4">
-    <main class="form w-100 m-auto">
-        <%= yield %>
-    </main>
-  </div>
+    <div class="container-md py-5 px-4 d-flex justify-content-center flex-column min-vh-100">
+      <div class="row border rounded-3 p-3 shadow">
+        <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column py-4">
+            <div>
+              <%=
+                link_to root_path do
+                  image_tag 'header-logo', class:"img-fluid", style:"width: 300px;"
+                end
+              %>
+            </div>
+
+            <p class="fs-2 d-none d-md-block mt-3" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">Build Fast</p>
+            <small class="text-wrap text-center d-none d-md-block" style="width: 17rem;font-family: 'Courier New', Courier, monospace;">Build with experienced Developers.</small>
+        </div>
+        <div class="col-md-6 py-4 px-5">
+          <div class="row align-items-center">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+          <nav class="nav justify-content-center">
+            <%= link_to 'Home', root_path, class: 'nav-link'  %>
+            <%= link_to 'Privacy Policy', '#', class: 'nav-link'  %>
+            <%= link_to 'Terms & Conditions', '#', class: 'nav-link'  %>
+            <%= link_to 'Contact Us', '#', class: 'nav-link'  %>
+          </nav>
+      </div>
+    </div>
 <% end %>
 
 <%= render template: "layouts/application" %>

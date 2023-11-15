@@ -90,6 +90,7 @@ module EntityResources
 
     def customize_inputs(builder)
       builder
+        .define_input(Pu::UI::Input.build(:logo, type: :attachment, allowed_file_types: ['image/*']))
         .define_input(Pu::UI::Input.build(:description, type: :quill))
         .define_input(Pu::UI::Input.new(:joel_test, collection: JoelTest.collection, as: :check_boxes))
         .define_input(Pu::UI::Input.new(:company_type, collection: CompanyType.collection, as: :radio_buttons))

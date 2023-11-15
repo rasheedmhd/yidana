@@ -7,8 +7,9 @@ class RodauthController < ApplicationController
   private
 
   def rodauth_layout
-    'auth'
-    # case request.path
+    case request.path
+    when rodauth(:user).logout_path
+      nil
     # when rodauth.login_path,
     #      rodauth.create_account_path,
     #      rodauth.verify_account_path,
@@ -16,8 +17,8 @@ class RodauthController < ApplicationController
     #      rodauth.reset_password_path,
     #      rodauth.reset_password_request_path
     #   "authentication"
-    # else
-    #   "auth"
-    # end
+    else
+      'auth'
+    end
   end
 end
