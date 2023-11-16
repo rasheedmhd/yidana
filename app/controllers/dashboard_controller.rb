@@ -8,6 +8,7 @@ class DashboardController < ApplicationController
   #
   def index
     redirect_to entity_path(current_entity)
+    # redirect_to current_user
   end
 
   #

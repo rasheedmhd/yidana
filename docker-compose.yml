@@ -10,7 +10,7 @@ services:
     restart: unless-stopped
     image: postgres:15
     environment:
-      POSTGRES_MULTIPLE_DATABASES: my_app,my_app_testd
+      POSTGRES_MULTIPLE_DATABASES: yidana,my_app_testd
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:

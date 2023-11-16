@@ -41,7 +41,7 @@ module EntityResources
       @sidebar_menu = {
         dashboard: {
           home: entity_path(current_entity),
-          organisations: entity_organisations_path(current_entity),
+          houses: entity_houses_path(current_entity),
           job_descriptions: entity_job_descriptions_path(current_entity)
         },
         separated: {

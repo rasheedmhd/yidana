@@ -8,7 +8,7 @@
 <% if rodauth(:user).respond_to?(:create_account_path) %>
   <div class="mt-4">
     Don't have an account?
-    <%= link_to "Sign Up", rodauth(:user).reset_password_request_path, class: 'text-decoration-none' %>
+    <%= link_to "Sign Up", rodauth(:user).create_account_route, class: 'text-decoration-none' %>
   </div>
 <% end %>
 
