@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module EntityResources
-  class OrganisationPresenter < Presenter
+  class HousePresenter < Presenter
     def build_collection(permitted_attributes)
       fields = permitted_attributes & collection_fields
 
-      customize_fields(Pu::UI::Builder::Collection.new(Organisation))
+      customize_fields(Pu::UI::Builder::Collection.new(House))
         .with_record_actions(build_actions.only!(:show, :edit, :destroy))
         .with_actions(build_actions.only!(:create))
         .with_fields(fields)
@@ -14,7 +14,7 @@ module EntityResources
     def build_detail(permitted_attributes)
       fields = permitted_attributes & detail_fields
 
-      customize_fields(Pu::UI::Builder::Detail.new(Organisation))
+      customize_fields(Pu::UI::Builder::Detail.new(House))
         .with_actions(build_actions.except!(:create, :show))
         .with_fields(fields)
     end
@@ -22,7 +22,7 @@ module EntityResources
     def build_form(permitted_attributes)
       inputs = permitted_attributes & form_inputs
 
-      customize_inputs(Pu::UI::Builder::Form.new(Organisation))
+      customize_inputs(Pu::UI::Builder::Form.new(House))
         .with_inputs(inputs)
     end
 
@@ -43,7 +43,7 @@ module EntityResources
                                   ),
                                   route: { method: :post }
                                 )
-                                .with_interaction(Organisations::SimpleAction)
+                                .with_interaction(houses::SimpleAction)
                               )
                               .define_action(
                                 Pu::UI::Action::InteractiveAction
@@ -53,7 +53,7 @@ module EntityResources
                                     icon: 'border-all', label: 'Advanced', button_class: 'primary'
                                   )
                                 )
-                                .with_interaction(Organisations::AdvancedAction)
+                                .with_interaction(houses::AdvancedAction)
                               )
                               .with_actions(:simple_action, :advanced_action)
                               .with_standard_actions
@@ -95,8 +95,8 @@ module EntityResources
         .define_input(Pu::UI::Input.new(:joel_test, collection: JoelTest.collection, as: :check_boxes))
         .define_input(Pu::UI::Input.new(:company_type, collection: CompanyType.collection, as: :radio_buttons))
         .define_input(Pu::UI::Input.new(:company_size, collection: CompanySize.collection, as: :radio_buttons))
-        .define_input(Pu::UI::Input.for_attribute(Organisation, :industry, collection: Industry.collection))
-        .define_input(Pu::UI::Input.for_attribute(Organisation, :country, collection: Country.collection))
+        .define_input(Pu::UI::Input.for_attribute(House, :industry, collection: Industry.collection))
+        .define_input(Pu::UI::Input.for_attribute(House, :country, collection: Country.collection))
     end
   end
 end

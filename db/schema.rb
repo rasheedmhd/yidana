@@ -68,7 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_28_024441) do
   end
 
   create_table "job_descriptions", force: :cascade do |t|
-    t.bigint "organisation_id", null: false
+    t.bigint "house_id", null: false
     t.string "title", null: false
     t.string "job_role", null: false
     t.string "experience_level", default: [], null: false, array: true
@@ -82,10 +82,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_28_024441) do
     t.boolean "relocation_assistance", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["organisation_id"], name: "index_job_descriptions_on_organisation_id"
+    t.index ["house_id"], name: "index_job_descriptions_on_house_id"
   end
 
-  create_table "organisations", force: :cascade do |t|
+  create_table "houses", force: :cascade do |t|
     t.bigint "entity_id", null: false
     t.string "name", null: false
     t.citext "slug", null: false
@@ -99,9 +99,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_28_024441) do
     t.string "country", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["entity_id", "slug"], name: "index_organisations_on_entity_id_and_slug", unique: true
-    t.index ["entity_id"], name: "index_organisations_on_entity_id"
-    t.index ["slug"], name: "index_organisations_on_slug"
+    t.index ["entity_id", "slug"], name: "index_houses_on_entity_id_and_slug", unique: true
+    t.index ["entity_id"], name: "index_houses_on_entity_id"
+    t.index ["slug"], name: "index_houses_on_slug"
   end
 
   create_table "shrine_attachments", force: :cascade do |t|
@@ -154,8 +154,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_28_024441) do
   add_foreign_key "entities", "users"
   add_foreign_key "entity_users", "entities"
   add_foreign_key "entity_users", "users"
-  add_foreign_key "job_descriptions", "organisations"
-  add_foreign_key "organisations", "entities"
+  add_foreign_key "job_descriptions", "houses"
+  add_foreign_key "houses", "entities"
   add_foreign_key "user_login_change_keys", "users", column: "id"
   add_foreign_key "user_password_reset_keys", "users", column: "id"
   add_foreign_key "user_remember_keys", "users", column: "id"

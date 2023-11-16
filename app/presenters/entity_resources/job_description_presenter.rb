@@ -37,18 +37,18 @@ module EntityResources
     private
 
     def collection_fields
-      %i[organisation title job_role experience_level job_type
+      %i[house title job_role experience_level job_type
          created_at updated_at]
     end
 
     def form_inputs
-      %i[organisation_id title description job_role experience_level job_type
+      %i[house_id title description job_role experience_level job_type
          minimum_annual_salary maximum_annual_salary technologies
          offers_equity visa_sponsorship relocation_assistance]
     end
 
     def detail_fields
-      %i[organisation title description job_role experience_level job_type
+      %i[house title description job_role experience_level job_type
          minimum_annual_salary maximum_annual_salary technologies
          offers_equity visa_sponsorship relocation_assistance
          created_at updated_at]
@@ -78,8 +78,8 @@ module EntityResources
         .define_input(Pu::UI::Input.new(:job_type, collection: JobType.collection, as: :radio_buttons))
         .define_input(Pu::UI::Input.for_attribute(JobDescription, :job_role, collection: JobRole.collection))
         .define_input(Pu::UI::Input.for_attribute(JobDescription, :technologies, collection: Technology.collection))
-        .define_input(Pu::UI::Input.for_attribute(JobDescription, :organisation_id,
-                                                  collection: organisations_selection))
+        .define_input(Pu::UI::Input.for_attribute(JobDescription, :house_id,
+                                                  collection: houses_selection))
         .define_input(Pu::UI::Input.for_attribute(JobDescription, :experience_level,
                                                   collection: ExperienceLevel.collection))
     end

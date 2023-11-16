@@ -79,7 +79,7 @@ class ResourceController < ApplicationController
     end
   end
 
-  # PATCH/PUT /organisations/1(.{format})
+  # PATCH/PUT /houses/1(.{format})
   def update
     authorize resource_record
 
@@ -105,7 +105,7 @@ class ResourceController < ApplicationController
     end
   end
 
-  # DELETE /organisations/1(.{format})
+  # DELETE /houses/1(.{format})
   def destroy
     authorize resource_record
 

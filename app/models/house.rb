@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: organisations
+# Table name: houses
 #
 #  id           :bigint           not null, primary key
 #  company_size :string           not null
@@ -21,9 +21,9 @@
 #
 # Indexes
 #
-#  index_organisations_on_entity_id           (entity_id)
-#  index_organisations_on_entity_id_and_slug  (entity_id,slug) UNIQUE
-#  index_organisations_on_slug                (slug)
+#  index_houses_on_entity_id           (entity_id)
+#  index_houses_on_entity_id_and_slug  (entity_id,slug) UNIQUE
+#  index_houses_on_slug                (slug)
 #
 # Foreign Keys
 #

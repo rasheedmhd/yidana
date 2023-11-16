@@ -10,8 +10,8 @@ module EntityResources
 
     attr_reader :context
 
-    def organisations_selection
-      context.entity.organisations.all
+    def houses_selection
+      context.entity.houses.all
     end
   end
 end

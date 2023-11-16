@@ -18,15 +18,15 @@
 #  visa_sponsorship      :boolean          default(FALSE), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
-#  organisation_id       :bigint           not null
+#  house_id       :bigint           not null
 #
 # Indexes
 #
-#  index_job_descriptions_on_organisation_id  (organisation_id)
+#  index_job_descriptions_on_house_id  (house_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (organisation_id => organisations.id)
+#  fk_rails_...  (house_id => houses.id)
 #
 class JobDescription < ApplicationRecord
   serialize :job_role, JobRole
@@ -34,11 +34,11 @@ class JobDescription < ApplicationRecord
   serialize :job_type, JobType
   serialize :technologies, Technology
 
-  belongs_to :organisation
+  belongs_to :house
 
-  has_one :entity, through: :organisation
+  has_one :entity, through: :house
 
-  validates :organisation_id, presence: true
+  validates :house_id, presence: true
   validates :title, presence: true
   validates :job_role, presence: true, inclusion: { in: JobRole.collection }
   validates :experience_level, presence: true,

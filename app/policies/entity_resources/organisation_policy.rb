@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module EntityResources
-  class OrganisationPolicy
+  class HousePolicy
     include Pu::Policy::EntityResourcePolicy
 
     def permitted_attributes_for_read
@@ -35,7 +35,7 @@ module EntityResources
       include Pu::Policy::Initializer
 
       def resolve
-        @context.parent.organisations.includes(:entity).with_attached_docs
+        @context.parent.houses.includes(:entity).with_attached_docs
       end
     end
   end

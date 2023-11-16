@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Organisations
-  class OrganisationInteraction < ResourceInteraction
-    object :resource, class: Organisation
+module houses
+  class HouseInteraction < ResourceInteraction
+    object :resource, class: House
   end
 end

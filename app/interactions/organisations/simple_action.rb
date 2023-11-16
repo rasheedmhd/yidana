@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Organisations
-  class SimpleAction < OrganisationInteraction
+module houses
+  class SimpleAction < HouseInteraction
     def execute
       if resource.name == 'Set By Simple Action'
         errors.add :resource, 'has already been updated'

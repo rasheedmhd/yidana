@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class CreateOrganisations < ActiveRecord::Migration[7.0]
+class Createhouses < ActiveRecord::Migration[7.0]
   def change
-    create_table :organisations do |t|
+    create_table :houses do |t|
       t.belongs_to :entity, foreign_key: true, null: false
       t.string :name, null: false
       t.citext :slug, null: false, index: true
@@ -18,6 +18,6 @@ class CreateOrganisations < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    add_index :organisations, %i[entity_id slug], unique: true
+    add_index :houses, %i[entity_id slug], unique: true
   end
 end

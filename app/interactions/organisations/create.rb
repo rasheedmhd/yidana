@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Organisations
+module houses
   class Create < ActiveInteraction::Base
     def to_model
-      Organisation.new
+      House.new
     end
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Organisations
-  class AdvancedAction < OrganisationInteraction
+module houses
+  class AdvancedAction < HouseInteraction
     string :name
 
     def execute

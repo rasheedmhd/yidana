@@ -5,14 +5,14 @@ module EntityResources
     include Pu::Policy::EntityResourcePolicy
 
     def permitted_attributes_for_read
-      %i[id organisation title description job_role experience_level job_type
+      %i[id house title description job_role experience_level job_type
          minimum_annual_salary maximum_annual_salary technologies
          offers_equity visa_sponsorship relocation_assistance
          created_at updated_at]
     end
 
     def permitted_attributes_for_create
-      %i[organisation_id title description job_role experience_level job_type
+      %i[house_id title description job_role experience_level job_type
          minimum_annual_salary maximum_annual_salary technologies
          offers_equity visa_sponsorship relocation_assistance]
     end

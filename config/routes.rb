@@ -19,10 +19,10 @@ Rails.application.routes.draw do
   # pu:routes:resources
 
   concern :house_routes do
-    organisation_concerns = %i[job_description_routes]
-    organisation_concerns += common_resource_concerns
-    resources :houses, concerns: organisation_concerns do
-      # pu:routes:organisations
+    house_concerns = %i[job_description_routes]
+    house_concerns += common_resource_concerns
+    resources :houses, concerns: house_concerns do
+      # pu:routes:houses
     end
   end
   entity_concerns << :house_routes

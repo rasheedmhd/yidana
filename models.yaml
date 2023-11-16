@@ -45,7 +45,7 @@ EntityUser:
 # EntityUser: gives a user access to an entity. actions are by acl controlled
 
 # = Recruiter (Individual | Agency)
-# + Organisation
+# + House
 #   + JobDescription
 #     + Listing
 #   + GigDescription
@@ -53,13 +53,13 @@ EntityUser:
 
 # = Talent (TBD)
 
-# rails g model job_position organisation:belongs_to title:string job_role:string experience_level:string job_type:string description:text \
+# rails g model job_position house:belongs_to title:string job_role:string experience_level:string job_type:string description:text \
 #                            minimum_annual_salary:integer maximum_annual_salary:integer offers_equity:boolean technologies:string \
 #                            visa_sponsorship:boolean relocation_assistance:boolean
 
 job_position:
-  entity: belongs_to_through :organisation
-  organisation: belongs_to
+  entity: belongs_to_through :house
+  house: belongs_to
   title: string
   job_role:
     - Backend Developer
@@ -109,7 +109,7 @@ job_position:
   visa_sponsorship: Boolean?
   relocation_assistance: Boolean?
 
-# rails g model organisation name:string headline:string description:text website_url:string industry:string company_size:string company_type:string benefits:string joel_test:jsonb
+# rails g model house name:string headline:string description:text website_url:string industry:string company_size:string company_type:string benefits:string joel_test:jsonb
 Company:
   name: Text
   headline: Text
